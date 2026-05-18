@@ -29,7 +29,7 @@ export default function AdminDashboard() {
   // Fetch Products
   const fetchProducts = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/products?t=${Date.now()}`);
+      const response = await fetch(`https://milgan-backend.onrender.com/api/products?t=${Date.now()}`);
       const data = await response.json();
       setProducts(data);
     } catch (error) {
@@ -152,7 +152,7 @@ export default function AdminDashboard() {
       return;
     }
     try {
-      const response = await fetch(`http://localhost:5000/api/products/${id}`, {
+      const response = await fetch(`https://milgan-backend.onrender.com/api/products/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -178,8 +178,8 @@ export default function AdminDashboard() {
 
     try {
       const url = editingId 
-        ? `http://localhost:5000/api/products/${editingId}`
-        : 'http://localhost:5000/api/products';
+        ? `https://milgan-backend.onrender.com/api/products/${editingId}`
+        : 'https://milgan-backend.onrender.com/api/products';
       
       const method = editingId ? 'PUT' : 'POST';
 

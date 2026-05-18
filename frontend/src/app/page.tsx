@@ -21,7 +21,7 @@ export default function Home() {
 
     const fetchProducts = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/products?t=${Date.now()}`);
+        const response = await fetch(`https://milgan-backend.onrender.com/api/products?t=${Date.now()}`);
         const data = await response.json();
         setProducts(data);
       } catch (error) {

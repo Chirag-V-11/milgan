@@ -34,8 +34,8 @@ export default function UserAuthModal({ isOpen, onClose, onAuthenticated }: {
     setLoading(true);
     try {
       const url = isLoginMode 
-        ? 'http://localhost:5000/api/users/login' // New dedicated login endpoint
-        : 'http://localhost:5000/api/users/profile';
+        ? 'https://milgan-backend.onrender.com/api/users/login' // New dedicated login endpoint
+        : 'https://milgan-backend.onrender.com/api/users/profile';
       
       const options = {
         method: 'POST',
