@@ -14,13 +14,13 @@ export default function ProductCard({ product }: { product: any }) {
     }
   }, [product]);
   
-  const allImages = Array.from(new Set(
+  const allImages: string[] = Array.from(new Set<string>(
     (product.image_urls && product.image_urls.length > 0)
       ? product.image_urls.filter((url: string) => url && url.trim() !== '')
       : (product.image_url ? [product.image_url] : [])
   )).filter(url => url !== null);
 
-  const displayImage = allImages[currentImageIndex] || "https://images.unsplash.com/photo-1633519074163-95c029a1b8c0?auto=format&fit=crop&q=80&w=1000";
+  const displayImage: string = allImages[currentImageIndex] || "https://images.unsplash.com/photo-1633519074163-95c029a1b8c0?auto=format&fit=crop&q=80&w=1000";
 
   React.useEffect(() => {
     let interval: NodeJS.Timeout;
