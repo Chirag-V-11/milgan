@@ -105,8 +105,8 @@ export default function ContactPage() {
 
         {/* Form Section */}
         <div className="relative">
-          <div className="absolute inset-0 bg-gold/5 blur-3xl rounded-full" />
-          <div className="relative bg-white p-12 rounded-[3rem] shadow-[0_30px_100px_rgba(27,67,50,0.08)] border border-gold/10">
+          <div className="absolute inset-0 bg-cream/15 blur-3xl rounded-full animate-pulse duration-[8s]" />
+          <div className="relative bg-white p-12 rounded-[3rem] shadow-[0_30px_100px_rgba(27,67,50,0.08),0_0_80px_rgba(253,195,51,0.1)] border border-cream/20">
             <form onSubmit={handleSubmit} className="space-y-8">
               <div className="space-y-3">
                 <label className="text-[10px] font-black text-forest/40 uppercase tracking-widest ml-1">Your Full Name</label>
@@ -116,7 +116,7 @@ export default function ContactPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Mr. Chirag V"
-                  className="w-full bg-cream/30 px-6 py-4 rounded-2xl border border-transparent focus:bg-white focus:border-gold/30 outline-none transition-all"
+                  className="w-full bg-cream/20 px-6 py-4 rounded-2xl border border-transparent focus:bg-white focus:border-cream/50 focus:ring-4 focus:ring-cream/5 outline-none transition-all"
                 />
               </div>
               <div className="space-y-3">
@@ -127,7 +127,7 @@ export default function ContactPage() {
                   value={contact}
                   onChange={(e) => setContact(e.target.value)}
                   placeholder="how shall we reach you?"
-                  className="w-full bg-cream/30 px-6 py-4 rounded-2xl border border-transparent focus:bg-white focus:border-gold/30 outline-none transition-all"
+                  className="w-full bg-cream/20 px-6 py-4 rounded-2xl border border-transparent focus:bg-white focus:border-cream/50 focus:ring-4 focus:ring-cream/5 outline-none transition-all"
                 />
               </div>
               <div className="space-y-3">
@@ -138,7 +138,7 @@ export default function ContactPage() {
                   value={inquiry}
                   onChange={(e) => setInquiry(e.target.value)}
                   placeholder="Tell us about your requirements..."
-                  className="w-full bg-cream/30 px-6 py-4 rounded-2xl border border-transparent focus:bg-white focus:border-gold/30 outline-none transition-all resize-none"
+                  className="w-full bg-cream/20 px-6 py-4 rounded-2xl border border-transparent focus:bg-white focus:border-cream/50 focus:ring-4 focus:ring-cream/5 outline-none transition-all resize-none"
                 />
               </div>
               <button

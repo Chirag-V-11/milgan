@@ -224,9 +224,9 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#07130F] via-[#040C09] to-[#010403] p-6 md:p-16 font-sans selection:bg-gold/30 relative overflow-hidden text-white">
+    <div className="min-h-screen bg-gradient-to-br from-forest via-[#0A2637] to-[#041017] p-6 md:p-16 font-sans selection:bg-cream/30 relative overflow-hidden text-gold">
       {/* Premium Dark Amber Glowing Orbs */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-gold/[0.03] rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+      <div className="absolute top-0 left-0 w-96 h-96 bg-cream/[0.03] rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-forest/[0.03] rounded-full blur-3xl translate-x-1/3 translate-y-1/3 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
@@ -235,17 +235,17 @@ export default function AdminDashboard() {
         <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-6">
           <div className="space-y-2">
             <div className="flex items-center gap-3">
-              <span className="text-[9px] font-black text-gold uppercase tracking-[0.5em]">Sanctuary Administration</span>
-              <div className="h-px w-12 bg-gold/30" />
+              <span className="text-[9px] font-black text-cream uppercase tracking-[0.5em]">Sanctuary Administration</span>
+              <div className="h-px w-12 bg-cream/30" />
             </div>
-            <h1 className="text-5xl md:text-6xl font-serif font-bold text-white tracking-tighter">
-              Boutique <span className="text-gold italic font-light">Control</span>
+            <h1 className="text-5xl md:text-6xl font-serif font-bold text-gold tracking-tighter">
+              Boutique <span className="text-cream italic font-light">Control</span>
             </h1>
-            <p className="text-white/40 text-sm font-serif italic font-light">Manage your golden legacy and curated organic treasures</p>
+            <p className="text-gold/40 text-sm font-serif italic font-light">Manage your golden legacy and curated organic treasures</p>
           </div>
           <div className="flex gap-4 items-center bg-white/[0.02] backdrop-blur-2xl p-3 border border-white/10 rounded-[2rem] shadow-2xl">
-            <Link href="/admin/users" className="text-[9px] font-black uppercase tracking-[0.2em] bg-gold text-white px-7 py-3 rounded-2xl hover:bg-forest transition-all shadow-md shadow-gold/25 hover:shadow-forest/25">Artisans</Link>
-            <Link href="/" className="text-[9px] font-black uppercase tracking-[0.2em] border border-white/10 px-7 py-3 rounded-2xl text-white hover:bg-white hover:text-forest transition-all">Visit Boutique</Link>
+            <Link href="/admin/users" className="text-[9px] font-black uppercase tracking-[0.2em] bg-cream text-forest px-7 py-3 rounded-2xl hover:bg-gold hover:text-forest transition-all shadow-md shadow-cream/25 hover:shadow-forest/25">Artisans</Link>
+            <Link href="/" className="text-[9px] font-black uppercase tracking-[0.2em] border border-white/10 px-7 py-3 rounded-2xl text-gold hover:bg-gold hover:text-forest transition-all">Visit Boutique</Link>
             <button onClick={handleLogout} className="bg-red-950/20 hover:bg-red-900/40 border border-red-500/20 text-red-300 px-7 py-3 rounded-2xl text-[9px] font-black uppercase tracking-[0.2em] transition-all">Logout</button>
           </div>
         </header>
@@ -255,13 +255,13 @@ export default function AdminDashboard() {
           {/* Form Section */}
           <div className="xl:col-span-7 space-y-8">
             <div className="bg-white/[0.02] backdrop-blur-3xl rounded-[3rem] shadow-[0_50px_100px_rgba(0,0,0,0.5)] border border-white/5 overflow-hidden">
-              <div className="bg-gradient-to-r from-[#0C241B] to-[#06140F] p-10 text-white flex justify-between items-center relative overflow-hidden border-b border-white/5">
+              <div className="bg-gradient-to-r from-forest/40 to-forest/10 p-10 text-gold flex justify-between items-center relative overflow-hidden border-b border-white/5 backdrop-blur-md">
                 <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1582233228805-72861066532d?auto=format&fit=crop&q=80&w=1000')] bg-cover opacity-[0.02] pointer-events-none" />
                 <div className="space-y-1 relative z-10">
                   <h2 className="text-3xl font-serif font-bold tracking-tight">
                     {editingId ? '✦ Refine Masterpiece' : '✦ New Curated Treasure'}
                   </h2>
-                  <p className="text-white/40 text-[9px] font-black uppercase tracking-[0.3em]">Weaving pure quality into the catalog</p>
+                  <p className="text-gold/40 text-[9px] font-black uppercase tracking-[0.3em]">Weaving pure quality into the catalog</p>
                 </div>
                 {editingId && (
                   <button onClick={cancelEditing} className="relative z-10 text-[9px] font-black uppercase tracking-[0.2em] bg-white/5 px-5 py-2.5 rounded-2xl border border-white/10 hover:bg-white/10 transition-all">Cancel Edit</button>
@@ -275,7 +275,7 @@ export default function AdminDashboard() {
                     <label className="text-[10px] font-black text-white/40 uppercase tracking-widest ml-1">Masterpiece Title</label>
                     <input
                       type="text" required placeholder="e.g. Traditional A2 Gir Cow Ghee"
-                      className="w-full px-6 py-4.5 rounded-2xl bg-black/40 border border-white/10 focus:bg-[#07130F] focus:border-gold focus:ring-4 focus:ring-gold/5 outline-none transition-all font-medium text-white text-sm placeholder:text-white/20 shadow-inner"
+                      className="w-full px-6 py-4.5 rounded-2xl bg-black/40 border border-white/10 focus:bg-[#061C2C] focus:border-gold focus:ring-4 focus:ring-gold/5 outline-none transition-all font-medium text-white text-sm placeholder:text-white/20 shadow-inner"
                       value={product.name} onChange={(e) => setProduct({ ...product, name: e.target.value })}
                     />
                   </div>
@@ -284,7 +284,7 @@ export default function AdminDashboard() {
                     <label className="text-[10px] font-black text-white/40 uppercase tracking-widest ml-1">The Craftsmanship Narrative</label>
                     <textarea
                       rows={4} required placeholder="Tell the story of this batch..."
-                      className="w-full px-6 py-4.5 rounded-2xl bg-black/40 border border-white/10 focus:bg-[#07130F] focus:border-gold focus:ring-4 focus:ring-gold/5 outline-none transition-all font-medium text-white text-sm placeholder:text-white/20 shadow-inner"
+                      className="w-full px-6 py-4.5 rounded-2xl bg-black/40 border border-white/10 focus:bg-[#061C2C] focus:border-gold focus:ring-4 focus:ring-gold/5 outline-none transition-all font-medium text-white text-sm placeholder:text-white/20 shadow-inner"
                       value={product.description} onChange={(e) => setProduct({ ...product, description: e.target.value })}
                     />
                   </div>
@@ -316,14 +316,14 @@ export default function AdminDashboard() {
                     <div className="space-y-3">
                       <label className="text-[10px] font-black text-white/40 uppercase tracking-widest ml-1">Amazon Link</label>
                       <input
-                        type="text" placeholder="https://amazon.in/..." className="w-full px-5 py-4 rounded-2xl bg-black/40 border border-white/10 focus:bg-[#07130F] focus:border-gold focus:ring-4 focus:ring-gold/5 outline-none text-xs text-white transition-all"
+                        type="text" placeholder="https://amazon.in/..." className="w-full px-5 py-4 rounded-2xl bg-black/40 border border-white/10 focus:bg-[#061C2C] focus:border-gold focus:ring-4 focus:ring-gold/5 outline-none text-xs text-white transition-all"
                         value={product.amazon_url} onChange={(e) => setProduct({ ...product, amazon_url: e.target.value })}
                       />
                     </div>
                     <div className="space-y-3">
                       <label className="text-[10px] font-black text-white/40 uppercase tracking-widest ml-1">Blinkit Link</label>
                       <input
-                        type="text" placeholder="https://blinkit.com/..." className="w-full px-5 py-4 rounded-2xl bg-black/40 border border-white/10 focus:bg-[#07130F] focus:border-gold focus:ring-4 focus:ring-gold/5 outline-none text-xs text-white transition-all"
+                        type="text" placeholder="https://blinkit.com/..." className="w-full px-5 py-4 rounded-2xl bg-black/40 border border-white/10 focus:bg-[#061C2C] focus:border-gold focus:ring-4 focus:ring-gold/5 outline-none text-xs text-white transition-all"
                         value={product.blinkit_url} onChange={(e) => setProduct({ ...product, blinkit_url: e.target.value })}
                       />
                     </div>
@@ -338,9 +338,9 @@ export default function AdminDashboard() {
                     <div className="space-y-4">
                       {product.quantity_options.map((opt, idx) => (
                         <div key={idx} className="grid grid-cols-1 sm:grid-cols-4 gap-4 bg-black/30 p-5 rounded-[2rem] shadow-sm border border-white/5 items-center">
-                          <input placeholder="Size (e.g. 500ml)" className="text-xs font-bold p-3 border border-white/10 bg-black/40 text-white focus:bg-[#07130F] focus:border-gold rounded-xl outline-none transition-all" value={opt.size} onChange={(e) => handleOptionChange(idx, 'size', e.target.value)} />
-                          <input placeholder="Price (₹)" type="number" className="text-xs font-bold p-3 border border-white/10 bg-black/40 text-white focus:bg-[#07130F] focus:border-gold rounded-xl outline-none transition-all" value={opt.baseCost} onChange={(e) => handleOptionChange(idx, 'baseCost', Number(e.target.value))} />
-                          <input placeholder="Disc %" type="number" className="text-xs font-bold p-3 border border-white/10 bg-black/40 text-white focus:bg-[#07130F] focus:border-gold rounded-xl outline-none transition-all" value={opt.discountPercentage} onChange={(e) => handleOptionChange(idx, 'discountPercentage', Number(e.target.value))} />
+                          <input placeholder="Size (e.g. 500ml)" className="text-xs font-bold p-3 border border-white/10 bg-black/40 text-white focus:bg-[#061C2C] focus:border-gold rounded-xl outline-none transition-all" value={opt.size} onChange={(e) => handleOptionChange(idx, 'size', e.target.value)} />
+                          <input placeholder="Price (₹)" type="number" className="text-xs font-bold p-3 border border-white/10 bg-black/40 text-white focus:bg-[#061C2C] focus:border-gold rounded-xl outline-none transition-all" value={opt.baseCost} onChange={(e) => handleOptionChange(idx, 'baseCost', Number(e.target.value))} />
+                          <input placeholder="Disc %" type="number" className="text-xs font-bold p-3 border border-white/10 bg-black/40 text-white focus:bg-[#061C2C] focus:border-gold rounded-xl outline-none transition-all" value={opt.discountPercentage} onChange={(e) => handleOptionChange(idx, 'discountPercentage', Number(e.target.value))} />
                           <button type="button" onClick={() => handleRemoveOption(idx)} className="text-red-400 hover:text-red-600 transition-colors text-[10px] font-black uppercase tracking-wider text-center sm:text-right">Remove</button>
                         </div>
                       ))}
@@ -356,7 +356,7 @@ export default function AdminDashboard() {
                   )}
                   <button
                     type="submit" disabled={loading}
-                    className="w-full bg-gold text-white py-6 rounded-3xl font-black uppercase tracking-[0.4em] text-xs shadow-2xl shadow-gold/25 hover:bg-white hover:text-forest transition-all duration-500 transform active:scale-[0.99] disabled:opacity-50"
+                    className="w-full bg-cream text-forest py-6 rounded-3xl font-black uppercase tracking-[0.4em] text-xs shadow-2xl shadow-cream/20 hover:bg-gold hover:text-forest border border-cream hover:border-cream transition-all duration-500 transform active:scale-[0.99] disabled:opacity-50"
                   >
                     {loading ? 'Processing...' : (editingId ? 'Refine & Republish' : 'Publish to Boutique')}
                   </button>
