@@ -9,7 +9,7 @@ const app = express();
 
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL ? [process.env.FRONTEND_URL, 'http://localhost:3000'] : '*',
+  origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
@@ -26,11 +26,13 @@ const whatsappRoutes = require('./src/routes/whatsapp');
 const productRoutes = require('./src/routes/products');
 const authRoutes = require('./src/routes/auth');
 const userRoutes = require('./src/routes/users');
+const inquiryRoutes = require('./src/routes/inquiry');
 
 app.use('/api/whatsapp', whatsappRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/inquiry', inquiryRoutes);
 
 app.get('/', (req, res) => {
   res.send('API is running...');

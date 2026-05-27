@@ -21,7 +21,8 @@ export default function Home() {
 
     const fetchProducts = async () => {
       try {
-        const response = await fetch(`https://milgan-backend.onrender.com/api/products?t=${Date.now()}`);
+        const apiBase = process.env.NEXT_PUBLIC_API_URL || 'https://milgan-backend.onrender.com';
+        const response = await fetch(`${apiBase}/api/products?t=${Date.now()}`);
         const data = await response.json();
         setProducts(data);
       } catch (error) {
@@ -51,12 +52,12 @@ export default function Home() {
       <section className="relative h-[100vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-[#FDC333] via-[#FDE17A] to-[#FCE38A]">
         <div className="absolute inset-0 z-0 bg-transparent" />
 
-        <div className="relative z-10 text-center space-y-12 md:space-y-16 px-6 max-w-7xl">
+        <div className="relative z-10 text-center space-y-12 md:space-y-16 px-6 max-w-7xl translate-y-8 md:translate-y-12">
           <div className="space-y-4 md:space-y-6">
             <h1 className="text-[18vw] md:text-[15vw] font-serif font-black text-forest tracking-tighter leading-[0.7] select-none">MILGAN</h1>
             <div className="flex items-center justify-center gap-4 md:gap-6">
               <div className="h-px w-12 md:w-20 bg-forest" />
-              <p className="text-forest text-[10px] md:text-sm font-black uppercase tracking-[0.8em]">Liquid Vedic Gold</p>
+              <p className="text-forest text-[10px] md:text-sm font-black uppercase tracking-[0.8em]">Fresh | Pure | Delicious</p>
               <div className="h-px w-12 md:w-20 bg-forest" />
             </div>
           </div>
@@ -68,53 +69,57 @@ export default function Home() {
       </section>
 
       {/* 2. PILLARS */}
-      <section className="py-20 px-6 max-w-7xl mx-auto relative z-10 bg-gradient-to-b from-[#FCE38A] to-[#FCFCFC]">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-          {[{ title: 'Ancient Bilona', icon: '🏺' }, { title: 'A2 Heritage', icon: '🌿' }, { title: 'Small Batch', icon: '✨' }, { title: 'Forest Fed', icon: '🐄' }].map((p, i) => (
-            <div key={i} className="p-8 md:p-12 bg-white/20 backdrop-blur-md rounded-[2.5rem] md:rounded-[3rem] border border-white/30 flex flex-col items-center justify-center space-y-6 md:space-y-8 group hover:bg-white/40 transition-all duration-700 hover:-translate-y-2">
-              <div className="text-4xl md:text-6xl group-hover:scale-125 group-hover:rotate-12 transition-all duration-700 inline-block animate-float" style={{ animationDelay: `${i * 0.5}s` }}>{p.icon}</div>
-              <h3 className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em] text-forest group-hover:text-forest transition-colors text-center">{p.title}</h3>
-            </div>
-          ))}
+      <section className="py-20 relative z-10 bg-gradient-to-b from-[#FCE38A] to-[#FCFCFC]">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            {[{ title: 'Ancient Bilona', icon: '🏺' }, { title: 'A2 Heritage', icon: '🌿' }, { title: 'Small Batch', icon: '✨' }, { title: 'Forest Fed', icon: '🐄' }].map((p, i) => (
+              <div key={i} className="p-8 md:p-12 bg-white/20 backdrop-blur-md rounded-[2.5rem] md:rounded-[3rem] border border-white/30 flex flex-col items-center justify-center space-y-6 md:space-y-8 group hover:bg-white/40 transition-all duration-700 hover:-translate-y-2">
+                <div className="text-4xl md:text-6xl group-hover:scale-125 group-hover:rotate-12 transition-all duration-700 inline-block animate-float" style={{ animationDelay: `${i * 0.5}s` }}>{p.icon}</div>
+                <h3 className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em] text-forest group-hover:text-forest transition-colors text-center">{p.title}</h3>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* 2.5 ABOUT US (THE HERITAGE) */}
-      <section className="py-24 md:py-40 px-6 mx-auto relative z-10 bg-[#FCFCFC]">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 items-center">
-          <div className="relative aspect-square md:aspect-[4/5] rounded-[3rem] overflow-hidden border border-white/30 shadow-2xl group">
-            <img
-              src="image/image.png"
-              className="w-full h-full object-cover transition-transform duration-[3000ms] group-hover:scale-105"
-              alt="Vedic Churning Process"
-            />
-            <div className="absolute inset-0 bg-forest/10 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-            <div className="absolute bottom-8 left-8 right-8 p-6 bg-white/20 backdrop-blur-xl border border-white/30 rounded-3xl">
-              <p className="text-white font-serif italic text-sm md:text-base leading-relaxed shadow-sm">
-                "Every jar is a testament to patience. We don't just make ghee; we preserve a 5,000-year-old ritual."
-              </p>
+      <section className="py-24 md:py-40 relative z-10 bg-[#FCFCFC]">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 items-center">
+            <div className="relative aspect-square md:aspect-[4/5] rounded-[3rem] overflow-hidden border border-white/30 shadow-2xl group">
+              <img
+                src="image/image.png"
+                className="w-full h-full object-cover transition-transform duration-[3000ms] group-hover:scale-105"
+                alt="Vedic Churning Process"
+              />
+              <div className="absolute inset-0 bg-forest/10 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+              <div className="absolute bottom-8 left-8 right-8 p-6 bg-white/20 backdrop-blur-xl border border-white/30 rounded-3xl">
+                <p className="text-white font-serif italic text-sm md:text-base leading-relaxed shadow-sm">
+                  "Every jar is a testament to patience. We don't just make ghee; we preserve a 5,000-year-old ritual."
+                </p>
+              </div>
             </div>
-          </div>
-          <div className="space-y-10 md:space-y-12">
-            <div className="space-y-4">
-              <span className="text-white text-[10px] md:text-xs font-black uppercase tracking-[0.8em]">Our Legacy</span>
-              <h2 className="text-5xl md:text-7xl font-serif font-bold text-forest tracking-tighter leading-[1.1]">The Return to <br /><span className="italic font-light">Purity.</span></h2>
-            </div>
-            <div className="space-y-6 text-forest/80 text-lg md:text-xl font-serif leading-relaxed">
-              <p>
-                Milgan was born out of a longing for the truth. In a world of mass production and forgotten roots, we chose the harder, slower path.
-              </p>
-              <p>
-                We partner exclusively with indigenous farms where purebred A2 Gir cows graze freely in sunlit pastures. We follow the sacred Bilona method—curding the milk, churning it in two directions before dawn, and slow-cooking the makhan over a gentle wood fire.
-              </p>
-              <p className="font-bold text-forest">
-                The result is not merely an ingredient, but liquid life force. This is our promise. This is Milgan.
-              </p>
-            </div>
-            <div className="pt-4 flex items-center gap-8">
-              <div className="text-forest text-4xl">🌿</div>
-              <div className="h-px flex-1 bg-white/30" />
-              <div className="text-[10px] font-black uppercase tracking-[0.4em] text-forest">Since Time Immemorial</div>
+            <div className="space-y-10 md:space-y-12">
+              <div className="space-y-4">
+                <span className="text-white text-[10px] md:text-xs font-black uppercase tracking-[0.8em]">Our Legacy</span>
+                <h2 className="text-5xl md:text-7xl font-serif font-bold text-forest tracking-tighter leading-[1.1]">The Return to <br /><span className="italic font-light">Purity.</span></h2>
+              </div>
+              <div className="space-y-6 text-forest/80 text-lg md:text-xl font-serif leading-relaxed">
+                <p>
+                  Milgan was born out of a longing for the truth. In a world of mass production and forgotten roots, we chose the harder, slower path.
+                </p>
+                <p>
+                  We partner exclusively with indigenous farms where purebred A2 Gir cows graze freely in sunlit pastures. We follow the sacred Bilona method—curding the milk, churning it in two directions before dawn, and slow-cooking the makhan over a gentle wood fire.
+                </p>
+                <p className="font-bold text-forest">
+                  The result is not merely an ingredient, but liquid life force. This is our promise. This is Milgan.
+                </p>
+              </div>
+              <div className="pt-4 flex items-center gap-8">
+                <div className="text-forest text-4xl">🌿</div>
+                <div className="h-px flex-1 bg-white/30" />
+                <div className="text-[10px] font-black uppercase tracking-[0.4em] text-forest">Since Time Immemorial</div>
+              </div>
             </div>
           </div>
         </div>
@@ -179,9 +184,9 @@ export default function Home() {
                             <span className="text-2xl font-serif font-bold text-white">₹{finalPrice || 'TBA'}</span>
                             {discount > 0 && <span className="text-sm font-bold text-white/50 line-through mb-1">₹{baseCost}</span>}
                           </div>
-                          <button className="px-8 py-4 bg-white text-forest rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-forest hover:text-white transition-colors">
+                          <Link href={`/product/${product.id}`} className="px-8 py-4 bg-white text-forest rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-forest hover:text-white transition-colors">
                             Acquire
-                          </button>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -265,19 +270,15 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="break-inside-avoid p-10 bg-forest/10 rounded-[2.5rem] space-y-8 hover:bg-forest transition-all duration-700 group/edit">
+            <div className="break-inside-avoid p-10 bg-forest/10 rounded-[2.5rem] space-y-8 hover:bg-forest transition-all duration-700 group">
               <p className="text-forest group-hover:text-white transition-colors text-xl font-serif italic leading-relaxed font-medium">"It's like farm to table, but sacred to table. Milgan solves the search for real A2 purity."</p>
               <div className="space-y-1">
                 <div className="text-sm font-bold text-forest group-hover:text-white transition-colors">Sneha Kapur</div>
                 <div className="text-[9px] font-black uppercase tracking-widest text-forest group-hover:text-white transition-colors">Wellness Editor</div>
               </div>
             </div>
-            <div className="break-inside-avoid relative aspect-square rounded-[2.5rem] overflow-hidden group border border-white/20">
-              <img src="https://images.unsplash.com/photo-1582233228805-72861066532d?auto=format&fit=crop&q=80&w=1000" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="Process" />
-              <div className="absolute inset-0 bg-forest/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-white text-4xl opacity-0 group-hover:opacity-100 transition-opacity">🏺</div>
-              </div>
+            <div className="break-inside-avoid relative aspect-square rounded-[2.5rem] overflow-hidden border border-white/20">
+              <img src="/image/place_the_ghee_jar_2K_202605141500.jpeg" className="w-full h-full object-cover" alt="Process" />
             </div>
           </div>
         </div>

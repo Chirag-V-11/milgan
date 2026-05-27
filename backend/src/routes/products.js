@@ -18,6 +18,28 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Get product by ID
+router.get('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { data, error } = await supabase
+      .from('products')
+      .select('*')
+      .eq('id', id)
+      .single();
+    if (error) {
+      if (error.code === 'PGRST116') {
+        // Not found
+        return res.status(404).json({ error: 'Product not found' });
+      }
+      throw error;
+    }
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Add a new product (Protected)
 router.post('/', authMiddleware, async (req, res) => {
   try {

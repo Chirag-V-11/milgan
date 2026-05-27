@@ -16,7 +16,8 @@ export default function AdminLogin() {
     setError('');
 
     try {
-      const response = await fetch('https://milgan-backend.onrender.com/api/auth/login', {
+      const apiBase = process.env.NEXT_PUBLIC_API_URL || 'https://milgan-backend.onrender.com';
+      const response = await fetch(`${apiBase}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -38,7 +39,7 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4 font-sans selection:bg-gold/30 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-[#FCFAF7] via-[#F6F3ED] to-[#EAE4D7] flex items-center justify-center p-4 font-sans selection:bg-gold/30 relative overflow-hidden">
       {/* Abstract Background Elements */}
       <div className="absolute top-0 left-0 w-64 h-64 bg-gold/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-forest/5 rounded-full blur-3xl translate-x-1/3 translate-y-1/3" />

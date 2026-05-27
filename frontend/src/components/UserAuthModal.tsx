@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useUser } from '@/context/UserContext';
 
-export default function UserAuthModal({ isOpen, onClose, onAuthenticated }: { 
-  isOpen: boolean; 
-  onClose: () => void; 
+export default function UserAuthModal({ isOpen, onClose, onAuthenticated }: {
+  isOpen: boolean;
+  onClose: () => void;
   onAuthenticated?: () => void;
 }) {
   const { login } = useUser();
@@ -33,10 +33,11 @@ export default function UserAuthModal({ isOpen, onClose, onAuthenticated }: {
     e.preventDefault();
     setLoading(true);
     try {
-      const url = isLoginMode 
-        ? 'https://milgan-backend.onrender.com/api/users/login' // New dedicated login endpoint
-        : 'https://milgan-backend.onrender.com/api/users/profile';
-      
+      const apiBase = process.env.NEXT_PUBLIC_API_URL || 'https://milgan-backend.onrender.com';
+      const url = isLoginMode
+        ? `${apiBase}/api/users/login` // New dedicated login endpoint
+        : `${apiBase}/api/users/profile`;
+
       const options = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -45,7 +46,7 @@ export default function UserAuthModal({ isOpen, onClose, onAuthenticated }: {
 
       const response = await fetch(url, options);
       const data = await response.json();
-      
+
       if (response.ok) {
         login(data);
         if (onAuthenticated) onAuthenticated();
@@ -63,21 +64,21 @@ export default function UserAuthModal({ isOpen, onClose, onAuthenticated }: {
   const modalContent = (
     <div className="fixed inset-0 w-screen h-screen z-[99999] grid place-items-center p-6 bg-forest/95 backdrop-blur-xl transition-all duration-500 overflow-y-auto">
       <div className="fixed inset-0 cursor-pointer" onClick={onClose} />
-      
+
       <div className="relative bg-[#FCFAF7] w-full max-w-2xl rounded-[3rem] shadow-[0_50px_100px_rgba(0,0,0,0.6)] overflow-hidden transition-all duration-700 flex flex-col md:flex-row border border-white/10 animate-in zoom-in-95 duration-500">
-        
+
         {/* Decorative Side Narrative */}
         <div className="md:w-1/3 bg-forest p-10 text-white flex flex-col justify-between relative overflow-hidden">
           <div className="absolute top-0 right-0 w-full h-full opacity-10 bg-[url('https://images.unsplash.com/photo-1582233228805-72861066532d?auto=format&fit=crop&q=80&w=1000')] bg-cover" />
           <div className="relative z-10 space-y-4">
-             <div className="text-5xl animate-bounce-slow">🏺</div>
-             <h2 className="text-2xl font-serif font-bold leading-tight tracking-tight">
-               {isLoginMode ? 'Welcome Back.' : 'The Artisan Register.'}
-             </h2>
-             <div className="h-px w-12 bg-gold/30" />
+            <div className="text-5xl animate-bounce-slow">🏺</div>
+            <h2 className="text-2xl font-serif font-bold leading-tight tracking-tight">
+              {isLoginMode ? 'Welcome Back.' : 'The Artisan Register.'}
+            </h2>
+            <div className="h-px w-12 bg-gold/30" />
           </div>
           <div className="relative z-10">
-             <p className="text-[9px] font-black uppercase tracking-[0.4em] text-gold">Secure Portal</p>
+            <p className="text-[9px] font-black uppercase tracking-[0.4em] text-gold">Secure Portal</p>
           </div>
         </div>
 
@@ -94,14 +95,14 @@ export default function UserAuthModal({ isOpen, onClose, onAuthenticated }: {
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-5">
-              
+
               {!isLoginMode && (
                 <div className="space-y-1 group">
                   <label className="text-[9px] font-black text-forest/30 uppercase tracking-widest ml-1 transition-colors group-focus-within:text-gold">Full Name</label>
                   <input
                     required type="text" placeholder="John Doe"
                     className="w-full px-0 py-2 bg-transparent border-b border-forest/10 focus:border-gold outline-none transition-all text-sm font-medium text-forest placeholder:text-forest/10"
-                    value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})}
+                    value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })}
                   />
                 </div>
               )}
@@ -112,17 +113,17 @@ export default function UserAuthModal({ isOpen, onClose, onAuthenticated }: {
                   <input
                     required type="tel" placeholder="+91 ..."
                     className="w-full px-0 py-2 bg-transparent border-b border-forest/10 focus:border-gold outline-none transition-all text-sm font-medium text-forest placeholder:text-forest/10"
-                    value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})}
+                    value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })}
                   />
                 </div>
-                
+
                 {!isLoginMode && (
                   <div className="space-y-1 group">
                     <label className="text-[9px] font-black text-forest/30 uppercase tracking-widest ml-1 transition-colors group-focus-within:text-gold">Email Address</label>
                     <input
                       required type="email" placeholder="john@example.com"
                       className="w-full px-0 py-2 bg-transparent border-b border-forest/10 focus:border-gold outline-none transition-all text-sm font-medium text-forest placeholder:text-forest/10"
-                      value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})}
+                      value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })}
                     />
                   </div>
                 )}
@@ -134,7 +135,7 @@ export default function UserAuthModal({ isOpen, onClose, onAuthenticated }: {
                 <input
                   required type="password" placeholder="••••••••"
                   className="w-full px-0 py-2 bg-transparent border-b border-forest/10 focus:border-gold outline-none transition-all text-sm font-medium text-forest placeholder:text-forest/10"
-                  value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})}
+                  value={formData.password} onChange={e => setFormData({ ...formData, password: e.target.value })}
                 />
               </div>
 
@@ -144,7 +145,7 @@ export default function UserAuthModal({ isOpen, onClose, onAuthenticated }: {
                   <textarea
                     required rows={2} placeholder="House No, Street, City, State, PIN"
                     className="w-full px-0 py-2 bg-transparent border-b border-forest/10 focus:border-gold outline-none transition-all text-sm font-medium resize-none text-forest placeholder:text-forest/10"
-                    value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})}
+                    value={formData.address} onChange={e => setFormData({ ...formData, address: e.target.value })}
                   />
                 </div>
               )}
@@ -157,10 +158,10 @@ export default function UserAuthModal({ isOpen, onClose, onAuthenticated }: {
               >
                 {loading ? 'Authenticating...' : (isLoginMode ? 'Access My Legacy' : 'Confirm & Join')}
               </button>
-              
+
               <div className="flex justify-between items-center px-1">
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   onClick={() => setIsLoginMode(!isLoginMode)}
                   className="text-[8px] font-black uppercase tracking-widest text-gold hover:text-forest transition-colors"
                 >
@@ -177,7 +178,7 @@ export default function UserAuthModal({ isOpen, onClose, onAuthenticated }: {
     </div>
   );
 
-  return typeof document !== 'undefined' 
-    ? createPortal(modalContent, document.body) 
+  return typeof document !== 'undefined'
+    ? createPortal(modalContent, document.body)
     : null;
 }

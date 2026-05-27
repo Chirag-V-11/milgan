@@ -10,7 +10,8 @@ export default function AdminUsersPage() {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch('https://milgan-backend.onrender.com/api/users/all');
+      const apiBase = process.env.NEXT_PUBLIC_API_URL || 'https://milgan-backend.onrender.com';
+      const response = await fetch(`${apiBase}/api/users/all`);
       const data = await response.json();
       if (Array.isArray(data)) {
         setUsers(data);

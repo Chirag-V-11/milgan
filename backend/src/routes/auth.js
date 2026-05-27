@@ -48,4 +48,9 @@ router.post('/login', async (req, res) => {
   }
 });
 
+const authMiddleware = require('../middleware/auth');
+router.get('/verify', authMiddleware, (req, res) => {
+  res.status(200).json({ valid: true, admin: req.admin });
+});
+
 module.exports = router;
