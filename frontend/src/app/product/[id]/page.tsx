@@ -240,10 +240,10 @@ Total Price: ₹${Math.round(finalPrice)}`;
                 <button
                   onClick={() => product.blinkit_url && window.open(product.blinkit_url, '_blank')}
                   className={`py-4 rounded-2xl font-bold text-[10px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 ${product.blinkit_url
-                    ? 'bg-[#FFD33D] text-black hover:bg-yellow-400 shadow-lg shadow-yellow-500/15 hover:-translate-y-0.5'
+                    ? 'bg-[#2874F0] text-white hover:bg-blue-600 shadow-lg shadow-blue-500/15 hover:-translate-y-0.5'
                     : 'bg-forest/5 text-forest/20 cursor-not-allowed'}`}
                 >
-                  <span className={`font-black italic ${!product.blinkit_url && 'opacity-20'}`}>blinkit</span>
+                  <span className={`font-black italic ${!product.blinkit_url && 'opacity-20'}`}>Flipkart</span>
                   {!product.blinkit_url && '(Soon)'}
                 </button>
               </div>

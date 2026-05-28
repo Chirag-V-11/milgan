@@ -224,7 +224,7 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-forest via-[#0A2637] to-[#041017] p-6 md:p-16 font-sans selection:bg-cream/30 relative overflow-hidden text-gold">
+    <div className="min-h-screen bg-gradient-to-br from-forest via-[#0A2637] to-[#041017] p-4 sm:p-8 md:p-16 font-sans selection:bg-cream/30 relative overflow-hidden text-gold">
       {/* Premium Dark Amber Glowing Orbs */}
       <div className="absolute top-0 left-0 w-96 h-96 bg-cream/[0.03] rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-forest/[0.03] rounded-full blur-3xl translate-x-1/3 translate-y-1/3 pointer-events-none" />
@@ -232,50 +232,50 @@ export default function AdminDashboard() {
       <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Dynamic Header */}
-        <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-6">
-          <div className="space-y-2">
+        <header className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-12 sm:mb-16 gap-6">
+          <div className="space-y-2 w-full lg:w-auto">
             <div className="flex items-center gap-3">
               <span className="text-[9px] font-black text-cream uppercase tracking-[0.5em]">Sanctuary Administration</span>
               <div className="h-px w-12 bg-cream/30" />
             </div>
-            <h1 className="text-5xl md:text-6xl font-serif font-bold text-gold tracking-tighter">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-serif font-bold text-gold tracking-tighter leading-tight">
               Boutique <span className="text-cream italic font-light">Control</span>
             </h1>
-            <p className="text-gold/40 text-sm font-serif italic font-light">Manage your golden legacy and curated organic treasures</p>
+            <p className="text-gold/40 text-xs sm:text-sm font-serif italic font-light">Manage your golden legacy and curated organic treasures</p>
           </div>
-          <div className="flex gap-4 items-center bg-white/[0.02] backdrop-blur-2xl p-3 border border-white/10 rounded-[2rem] shadow-2xl">
-            <Link href="/admin/users" className="text-[9px] font-black uppercase tracking-[0.2em] bg-cream text-forest px-7 py-3 rounded-2xl hover:bg-gold hover:text-forest transition-all shadow-md shadow-cream/25 hover:shadow-forest/25">Artisans</Link>
-            <Link href="/" className="text-[9px] font-black uppercase tracking-[0.2em] border border-white/10 px-7 py-3 rounded-2xl text-gold hover:bg-gold hover:text-forest transition-all">Visit Boutique</Link>
-            <button onClick={handleLogout} className="bg-red-950/20 hover:bg-red-900/40 border border-red-500/20 text-red-300 px-7 py-3 rounded-2xl text-[9px] font-black uppercase tracking-[0.2em] transition-all">Logout</button>
+          <div className="flex flex-wrap gap-2 sm:gap-4 items-center bg-white/[0.02] backdrop-blur-2xl p-2 sm:p-3 border border-white/10 rounded-2xl sm:rounded-[2rem] shadow-2xl w-full lg:w-auto justify-center lg:justify-start">
+            <Link href="/admin/users" className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] border border-white/10 px-4 sm:px-7 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-gold hover:bg-gold hover:text-forest transition-all flex-1 sm:flex-initial text-center">Users</Link>
+            <Link href="/" className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] border border-white/10 px-4 sm:px-7 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-gold hover:bg-gold hover:text-forest transition-all flex-1 sm:flex-initial text-center">Visit Boutique</Link>
+            <button onClick={handleLogout} className="bg-red-950/20 hover:bg-red-900/40 border border-red-500/20 text-red-300 px-4 sm:px-7 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-[8px] sm:text-[9px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] transition-all flex-1 sm:flex-initial text-center">Logout</button>
           </div>
         </header>
 
-        <div className="grid grid-cols-1 xl:grid-cols-12 gap-16">
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 sm:gap-16">
 
           {/* Form Section */}
           <div className="xl:col-span-7 space-y-8">
-            <div className="bg-white/[0.02] backdrop-blur-3xl rounded-[3rem] shadow-[0_50px_100px_rgba(0,0,0,0.5)] border border-white/5 overflow-hidden">
-              <div className="bg-gradient-to-r from-forest/40 to-forest/10 p-10 text-gold flex justify-between items-center relative overflow-hidden border-b border-white/5 backdrop-blur-md">
+            <div className="bg-white/[0.02] backdrop-blur-3xl rounded-[2rem] sm:rounded-[3rem] shadow-[0_50px_100px_rgba(0,0,0,0.5)] border border-white/5 overflow-hidden">
+              <div className="bg-gradient-to-r from-forest/40 to-forest/10 p-5 sm:p-10 text-gold flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 relative overflow-hidden border-b border-white/5 backdrop-blur-md">
                 <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1582233228805-72861066532d?auto=format&fit=crop&q=80&w=1000')] bg-cover opacity-[0.02] pointer-events-none" />
                 <div className="space-y-1 relative z-10">
-                  <h2 className="text-3xl font-serif font-bold tracking-tight">
+                  <h2 className="text-2xl sm:text-3xl font-serif font-bold tracking-tight">
                     {editingId ? '✦ Refine Masterpiece' : '✦ New Curated Treasure'}
                   </h2>
                   <p className="text-gold/40 text-[9px] font-black uppercase tracking-[0.3em]">Weaving pure quality into the catalog</p>
                 </div>
                 {editingId && (
-                  <button onClick={cancelEditing} className="relative z-10 text-[9px] font-black uppercase tracking-[0.2em] bg-white/5 px-5 py-2.5 rounded-2xl border border-white/10 hover:bg-white/10 transition-all">Cancel Edit</button>
+                  <button onClick={cancelEditing} className="relative z-10 text-[9px] font-black uppercase tracking-[0.2em] bg-white/5 px-5 py-2.5 rounded-2xl border border-white/10 hover:bg-white/10 transition-all w-full sm:w-auto text-center">Cancel Edit</button>
                 )}
               </div>
 
-              <form onSubmit={handleSubmit} className="p-10 space-y-8">
-                <div className="space-y-8">
+              <form onSubmit={handleSubmit} className="p-5 sm:p-10 space-y-6 sm:space-y-8">
+                <div className="space-y-6 sm:space-y-8">
                   
                   <div className="space-y-3">
                     <label className="text-[10px] font-black text-white/40 uppercase tracking-widest ml-1">Masterpiece Title</label>
                     <input
                       type="text" required placeholder="e.g. Traditional A2 Gir Cow Ghee"
-                      className="w-full px-6 py-4.5 rounded-2xl bg-black/40 border border-white/10 focus:bg-[#061C2C] focus:border-gold focus:ring-4 focus:ring-gold/5 outline-none transition-all font-medium text-white text-sm placeholder:text-white/20 shadow-inner"
+                      className="w-full px-4 sm:px-6 py-3.5 sm:py-4.5 rounded-2xl bg-black/40 border border-white/10 focus:bg-[#061C2C] focus:border-gold focus:ring-4 focus:ring-gold/5 outline-none transition-all font-medium text-white text-sm placeholder:text-white/20 shadow-inner"
                       value={product.name} onChange={(e) => setProduct({ ...product, name: e.target.value })}
                     />
                   </div>
@@ -284,7 +284,7 @@ export default function AdminDashboard() {
                     <label className="text-[10px] font-black text-white/40 uppercase tracking-widest ml-1">The Craftsmanship Narrative</label>
                     <textarea
                       rows={4} required placeholder="Tell the story of this batch..."
-                      className="w-full px-6 py-4.5 rounded-2xl bg-black/40 border border-white/10 focus:bg-[#061C2C] focus:border-gold focus:ring-4 focus:ring-gold/5 outline-none transition-all font-medium text-white text-sm placeholder:text-white/20 shadow-inner"
+                      className="w-full px-4 sm:px-6 py-3.5 sm:py-4.5 rounded-2xl bg-black/40 border border-white/10 focus:bg-[#061C2C] focus:border-gold focus:ring-4 focus:ring-gold/5 outline-none transition-all font-medium text-white text-sm placeholder:text-white/20 shadow-inner"
                       value={product.description} onChange={(e) => setProduct({ ...product, description: e.target.value })}
                     />
                   </div>
@@ -297,15 +297,17 @@ export default function AdminDashboard() {
                     </div>
                     <div className="grid grid-cols-1 gap-4">
                       {product.image_urls.map((url, idx) => (
-                        <div key={idx} className="p-5 bg-black/20 rounded-[2rem] border border-white/5 flex items-center gap-4 shadow-sm hover:shadow transition-shadow">
+                        <div key={idx} className="p-4 sm:p-5 bg-black/20 rounded-2xl sm:rounded-[2rem] border border-white/5 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 shadow-sm hover:shadow transition-shadow relative">
                           <input
                             type="text" placeholder="https://unsplash.com/..." className="flex-1 bg-black/40 px-4 py-3 border border-white/10 rounded-xl text-xs text-white outline-none focus:border-gold transition-all"
                             value={url} onChange={(e) => handleImageChange(idx, e.target.value)}
                           />
-                          <label className="cursor-pointer bg-gold/10 text-gold hover:bg-gold hover:text-white px-4 py-3 rounded-xl text-[9px] font-black uppercase tracking-wider transition-all">
-                            Upload <input type="file" className="hidden" onChange={(e) => e.target.files && handleFileUpload(idx, e.target.files[0])} />
-                          </label>
-                          <button type="button" onClick={() => handleRemoveImage(idx)} className="text-red-400 hover:text-red-600 transition-colors p-2 text-sm font-bold">✕</button>
+                          <div className="flex items-center gap-3 w-full sm:w-auto">
+                            <label className="cursor-pointer bg-gold/10 text-gold hover:bg-gold hover:text-white px-4 py-3 rounded-xl text-[9px] font-black uppercase tracking-wider transition-all text-center flex-1 sm:flex-initial">
+                              Upload <input type="file" className="hidden" onChange={(e) => e.target.files && handleFileUpload(idx, e.target.files[0])} />
+                            </label>
+                            <button type="button" onClick={() => handleRemoveImage(idx)} className="text-red-400 hover:text-red-600 transition-colors px-3 py-2.5 rounded-xl border border-red-500/10 hover:bg-red-500/10 text-[10px] font-black uppercase tracking-widest sm:border-none sm:p-2 sm:text-sm text-center flex-1 sm:flex-initial">Remove</button>
+                          </div>
                         </div>
                       ))}
                     </div>
@@ -321,27 +323,27 @@ export default function AdminDashboard() {
                       />
                     </div>
                     <div className="space-y-3">
-                      <label className="text-[10px] font-black text-white/40 uppercase tracking-widest ml-1">Blinkit Link</label>
+                      <label className="text-[10px] font-black text-white/40 uppercase tracking-widest ml-1">Flipkart Link</label>
                       <input
-                        type="text" placeholder="https://blinkit.com/..." className="w-full px-5 py-4 rounded-2xl bg-black/40 border border-white/10 focus:bg-[#061C2C] focus:border-gold focus:ring-4 focus:ring-gold/5 outline-none text-xs text-white transition-all"
+                        type="text" placeholder="https://flipkart.com/..." className="w-full px-5 py-4 rounded-2xl bg-black/40 border border-white/10 focus:bg-[#061C2C] focus:border-gold focus:ring-4 focus:ring-gold/5 outline-none text-xs text-white transition-all"
                         value={product.blinkit_url} onChange={(e) => setProduct({ ...product, blinkit_url: e.target.value })}
                       />
                     </div>
                   </div>
 
                   {/* Variants */}
-                  <div className="space-y-6 bg-white/[0.01] p-8 rounded-[2.5rem] border border-white/5">
-                    <div className="flex justify-between items-center">
+                  <div className="space-y-6 bg-white/[0.01] p-4 sm:p-8 rounded-[1.5rem] sm:rounded-[2.5rem] border border-white/5">
+                    <div className="flex justify-between items-center gap-2">
                       <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-white/60">Variants & Pricing</h3>
-                      <button type="button" onClick={handleAddOption} className="bg-forest text-white px-5 py-2.5 rounded-2xl text-[9px] font-black uppercase tracking-wider hover:bg-gold transition-all shadow-md shadow-forest/10 hover:shadow-gold/25">+ Add Size</button>
+                      <button type="button" onClick={handleAddOption} className="bg-forest text-white px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl text-[9px] font-black uppercase tracking-wider hover:bg-gold transition-all shadow-md shadow-forest/10 hover:shadow-gold/25">+ Add Size</button>
                     </div>
                     <div className="space-y-4">
-                      {product.quantity_options.map((opt, idx) => (
-                        <div key={idx} className="grid grid-cols-1 sm:grid-cols-4 gap-4 bg-black/30 p-5 rounded-[2rem] shadow-sm border border-white/5 items-center">
-                          <input placeholder="Size (e.g. 500ml)" className="text-xs font-bold p-3 border border-white/10 bg-black/40 text-white focus:bg-[#061C2C] focus:border-gold rounded-xl outline-none transition-all" value={opt.size} onChange={(e) => handleOptionChange(idx, 'size', e.target.value)} />
-                          <input placeholder="Price (₹)" type="number" className="text-xs font-bold p-3 border border-white/10 bg-black/40 text-white focus:bg-[#061C2C] focus:border-gold rounded-xl outline-none transition-all" value={opt.baseCost} onChange={(e) => handleOptionChange(idx, 'baseCost', Number(e.target.value))} />
-                          <input placeholder="Disc %" type="number" className="text-xs font-bold p-3 border border-white/10 bg-black/40 text-white focus:bg-[#061C2C] focus:border-gold rounded-xl outline-none transition-all" value={opt.discountPercentage} onChange={(e) => handleOptionChange(idx, 'discountPercentage', Number(e.target.value))} />
-                          <button type="button" onClick={() => handleRemoveOption(idx)} className="text-red-400 hover:text-red-600 transition-colors text-[10px] font-black uppercase tracking-wider text-center sm:text-right">Remove</button>
+                      {(product.quantity_options || []).map((opt, idx) => (
+                        <div key={idx} className="grid grid-cols-1 sm:grid-cols-4 gap-3 sm:gap-4 bg-black/30 p-4 sm:p-5 rounded-2xl sm:rounded-[2rem] shadow-sm border border-white/5 items-center">
+                          <input placeholder="Size (e.g. 500ml, 1L)" className="text-xs font-bold p-3 border border-white/10 bg-black/40 text-white focus:bg-[#061C2C] focus:border-gold rounded-xl outline-none transition-all" value={opt.size} onChange={(e) => handleOptionChange(idx, 'size', e.target.value)} />
+                          <input placeholder="Price (e.g. 1500 ₹)" type="number" className="text-xs font-bold p-3 border border-white/10 bg-black/40 text-white focus:bg-[#061C2C] focus:border-gold rounded-xl outline-none transition-all" value={opt.baseCost || ''} onChange={(e) => handleOptionChange(idx, 'baseCost', e.target.value === '' ? '' : Number(e.target.value))} />
+                          <input placeholder="Discount (e.g. 10 %)" type="number" className="text-xs font-bold p-3 border border-white/10 bg-black/40 text-white focus:bg-[#061C2C] focus:border-gold rounded-xl outline-none transition-all" value={opt.discountPercentage || ''} onChange={(e) => handleOptionChange(idx, 'discountPercentage', e.target.value === '' ? '' : Number(e.target.value))} />
+                          <button type="button" onClick={() => handleRemoveOption(idx)} className="text-red-400 hover:text-red-600 transition-colors text-[10px] font-black uppercase tracking-wider text-center sm:text-right py-2 rounded-xl border border-red-500/10 hover:bg-red-500/10 sm:border-none sm:p-0">Remove</button>
                         </div>
                       ))}
                     </div>
@@ -356,7 +358,7 @@ export default function AdminDashboard() {
                   )}
                   <button
                     type="submit" disabled={loading}
-                    className="w-full bg-cream text-forest py-6 rounded-3xl font-black uppercase tracking-[0.4em] text-xs shadow-2xl shadow-cream/20 hover:bg-gold hover:text-forest border border-cream hover:border-cream transition-all duration-500 transform active:scale-[0.99] disabled:opacity-50"
+                    className="w-full bg-cream text-forest py-5 sm:py-6 rounded-2xl sm:rounded-3xl font-black uppercase tracking-[0.3em] sm:tracking-[0.4em] text-[10px] sm:text-xs shadow-2xl shadow-cream/20 hover:bg-gold hover:text-forest border border-cream hover:border-cream transition-all duration-500 transform active:scale-[0.99] disabled:opacity-50"
                   >
                     {loading ? 'Processing...' : (editingId ? 'Refine & Republish' : 'Publish to Boutique')}
                   </button>
@@ -378,19 +380,19 @@ export default function AdminDashboard() {
               ) : products.length === 0 ? (
                 <div className="text-center py-32 text-white/30 font-serif italic">No treasures have been curated yet.</div>
               ) : products.map((p) => (
-                <div key={p.id} className="bg-white/[0.02] backdrop-blur-md p-5 rounded-[2.5rem] border border-white/5 shadow-[0_15px_40px_rgba(0,0,0,0.3)] flex items-center gap-6 group hover:border-gold/40 hover:shadow-2xl transition-all duration-500">
-                  <div className="h-24 w-24 rounded-2xl overflow-hidden bg-black/40 border border-white/5 shadow-inner flex-shrink-0">
+                <div key={p.id} className="bg-white/[0.02] backdrop-blur-md p-4 sm:p-5 rounded-2xl sm:rounded-[2.5rem] border border-white/5 shadow-[0_15px_40px_rgba(0,0,0,0.3)] flex items-center gap-4 sm:gap-6 group hover:border-gold/40 hover:shadow-2xl transition-all duration-500">
+                  <div className="h-16 w-16 sm:h-24 sm:w-24 rounded-xl sm:rounded-2xl overflow-hidden bg-black/40 border border-white/5 shadow-inner flex-shrink-0">
                     <img src={p.image_url} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h4 className="text-base font-serif font-bold text-white leading-tight mb-2 truncate group-hover:text-gold transition-colors">{p.name}</h4>
-                    <p className="text-[10px] text-white/40 font-black uppercase tracking-wider">
-                      ₹{p.quantity_options?.[0]?.baseCost || 0} • {p.quantity_options?.length || 0} Variants
+                    <h4 className="text-sm sm:text-base font-serif font-bold text-white leading-tight mb-1 sm:mb-2 truncate group-hover:text-gold transition-colors">{p.name}</h4>
+                    <p className="text-[9px] sm:text-[10px] text-white/40 font-black uppercase tracking-wider">
+                      ₹{p.quantity_options?.[0]?.baseCost || 0} • {p.quantity_options?.length || 0} Var
                     </p>
                   </div>
-                  <div className="flex flex-col gap-3 flex-shrink-0">
-                    <button onClick={() => startEditing(p)} className="text-[9px] font-black uppercase tracking-widest text-gold hover:text-white transition-colors">Edit</button>
-                    <button onClick={() => handleDelete(p.id)} className="text-[9px] font-black uppercase tracking-widest text-red-400 hover:text-red-500 transition-colors">Delete</button>
+                  <div className="flex flex-col gap-2.5 sm:gap-3 flex-shrink-0">
+                    <button onClick={() => startEditing(p)} className="text-[8px] sm:text-[9px] font-black uppercase tracking-widest text-gold hover:text-white transition-colors text-right">Edit</button>
+                    <button onClick={() => handleDelete(p.id)} className="text-[8px] sm:text-[9px] font-black uppercase tracking-widest text-red-400 hover:text-red-500 transition-colors text-right">Delete</button>
                   </div>
                 </div>
               ))}

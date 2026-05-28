@@ -55,10 +55,10 @@ export default function Home() {
         <div className="relative z-10 text-center space-y-12 md:space-y-16 px-6 max-w-7xl translate-y-8 md:translate-y-12">
           <div className="space-y-4 md:space-y-6">
             <h1 className="text-[18vw] md:text-[15vw] font-serif font-black text-forest tracking-tighter leading-[0.7] select-none">MILGAN</h1>
-            <div className="flex items-center justify-center gap-4 md:gap-6">
-              <div className="h-px w-12 md:w-20 bg-forest" />
-              <p className="text-forest text-[10px] md:text-sm font-black uppercase tracking-[0.8em]">Fresh | Pure | Delicious</p>
-              <div className="h-px w-12 md:w-20 bg-forest" />
+            <div className="flex items-center justify-center gap-2 md:gap-6">
+              <div className="h-px w-6 sm:w-12 md:w-20 bg-forest" />
+              <p className="text-forest text-[8px] sm:text-[10px] md:text-sm font-black uppercase tracking-[0.3em] md:tracking-[0.8em] whitespace-nowrap">Fresh | Pure | Delicious</p>
+              <div className="h-px w-6 sm:w-12 md:w-20 bg-forest" />
             </div>
           </div>
           <button onClick={() => document.getElementById('boutique')?.scrollIntoView({ behavior: 'smooth' })} className="group relative px-12 md:px-16 py-5 md:py-7 bg-forest text-white rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-2xl">
@@ -82,8 +82,91 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 3. STAGGERED BOUTIQUE GALLERY */}
+      <section id="boutique" className="py-24 md:py-48 relative border-y border-forest/10 scroll-mt-24 overflow-hidden bg-gradient-to-b from-[#FCFCFC] via-[#FDFBF7] to-[#FCE38A]">
+        <div className="absolute top-1/2 left-0 -translate-y-1/2 text-[20vw] font-serif font-black text-forest/[0.05] select-none pointer-events-none whitespace-nowrap tracking-tighter">
+          COLLECTION COLLECTION COLLECTION
+        </div>
+
+        <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-24 md:space-y-32 relative z-10">
+          <div className="flex flex-col items-center text-center space-y-6 max-w-2xl mx-auto">
+            <span className="text-forest text-[10px] font-black uppercase tracking-[0.8em]">Artisanal Selection</span>
+            <h2 className="text-4xl md:text-8xl font-serif font-bold text-forest tracking-tighter leading-tight italic">Liquid Gold, <br /><span className="text-[#D49800] not-italic">Captured.</span></h2>
+          </div>
+
+          {loading ? (
+            <div className="flex overflow-x-auto gap-6 md:grid md:grid-cols-3 md:gap-12 pb-4 scrollbar-none">
+              {[1, 2, 3, 4].map(i => <div key={i} className="flex-shrink-0 w-[85%] md:w-auto aspect-[4/5] rounded-[2.5rem] md:rounded-[3rem] bg-forest/5 animate-pulse" />)}
+            </div>
+          ) : (
+            <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-6 md:grid md:grid-cols-12 md:gap-16 pb-4">
+              {products.map((product: any, i: number) => {
+                const isLarge = i % 3 === 0;
+                // Calculate display price and discount from nested quantity options
+                const firstOption = product.quantity_options && product.quantity_options.length > 0 ? product.quantity_options[0] : null;
+                const baseCost = product.price || (firstOption ? (firstOption.baseCost || firstOption.price) : 0);
+                const discount = firstOption ? (firstOption.discountPercentage || 0) : 0;
+                const finalPrice = discount > 0 ? Math.round(baseCost * (1 - discount / 100)) : baseCost;
+
+                return (
+                  <div
+                    key={product.id}
+                    className={`
+                      flex-shrink-0 w-[85%] snap-center md:w-auto group transition-all duration-1000
+                      ${isLarge ? 'md:col-span-8' : 'md:col-span-4'}
+                      ${i % 2 === 1 ? 'md:mt-24' : 'md:mt-0'}
+                    `}
+                  >
+                    <Link
+                      href={`/product/${product.id}`}
+                      className="block relative aspect-[4/5] md:aspect-auto md:h-[600px] rounded-[2.5rem] md:rounded-[3rem] overflow-hidden bg-white/10 backdrop-blur-sm border border-white/20 shadow-sm group-hover:shadow-2xl transition-all duration-700"
+                    >
+                      <img
+                        src={product.image_url || product.image || "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=1000"}
+                        className="w-full h-full object-cover transition-transform duration-[2000ms] group-hover:scale-110"
+                        alt={product.name}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-forest/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
+                      <div className="absolute top-8 left-8">
+                        <span className="px-5 py-2 bg-white/90 backdrop-blur-md rounded-full text-[9px] font-black uppercase tracking-widest text-forest border border-forest/5">
+                          {product.category || 'Limited Stocks'}
+                        </span>
+                      </div>
+
+                      <div className="absolute bottom-10 left-10 right-10 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 space-y-6">
+                        <div className="space-y-2">
+                          <h3 className="text-3xl md:text-4xl font-serif font-bold text-white tracking-tight">{product.name}</h3>
+                          <p className="text-white/60 text-sm italic line-clamp-2">{product.description}</p>
+                        </div>
+                        <div className="pt-4 border-t border-white/20">
+                          <span className="text-[10px] font-black uppercase tracking-widest text-white/80 group-hover:text-white transition-colors">
+                            Acquire Curation ➔
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
+
+                    <div className="mt-8 space-y-3 group-hover:opacity-0 transition-opacity duration-500">
+                      <div className="flex items-center justify-between gap-4">
+                        <h3 className="text-xl font-serif font-bold text-forest">{product.name}</h3>
+                        <div className="flex items-center gap-2 flex-shrink-0">
+                          <div className="w-1.5 h-1.5 bg-forest rounded-full animate-pulse" />
+                          <span className="text-[10px] font-black uppercase tracking-widest text-forest">Limited Batch available</span>
+                        </div>
+                      </div>
+                      <div className="h-px w-full bg-white/30" />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </section>
+
       {/* 2.5 ABOUT US (THE HERITAGE) */}
-      <section className="py-24 md:py-40 relative z-10 bg-[#FCFCFC]">
+      <section className="py-24 md:py-40 relative z-10 bg-gradient-to-b from-[#FCE38A] to-[#FCFCFC]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 items-center">
             <div className="relative aspect-square md:aspect-[4/5] rounded-[3rem] overflow-hidden border border-white/30 shadow-2xl group">
@@ -125,96 +208,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 3. STAGGERED BOUTIQUE GALLERY */}
-      <section id="boutique" className="py-24 md:py-48 relative border-y border-forest/10 scroll-mt-24 overflow-hidden bg-gradient-to-b from-[#FCFCFC] via-[#FDFBF7] to-[#FCE38A]">
-        <div className="absolute top-1/2 left-0 -translate-y-1/2 text-[20vw] font-serif font-black text-forest/[0.05] select-none pointer-events-none whitespace-nowrap tracking-tighter">
-          COLLECTION COLLECTION COLLECTION
-        </div>
-
-        <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-24 md:space-y-32 relative z-10">
-          <div className="flex flex-col items-center text-center space-y-6 max-w-2xl mx-auto">
-            <span className="text-forest text-[10px] font-black uppercase tracking-[0.8em]">Artisanal Selection</span>
-            <h2 className="text-4xl md:text-8xl font-serif font-bold text-forest tracking-tighter leading-tight italic">Liquid Gold, <br /><span className="text-[#D49800] not-italic">Captured.</span></h2>
-          </div>
-
-          {loading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-              {[1, 2, 3].map(i => <div key={i} className="aspect-[4/5] rounded-[3rem] bg-forest/5 animate-pulse" />)}
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
-              {products.map((product: any, i: number) => {
-                const isLarge = i % 3 === 0;
-                // Calculate display price and discount from nested quantity options
-                const firstOption = product.quantity_options && product.quantity_options.length > 0 ? product.quantity_options[0] : null;
-                const baseCost = product.price || (firstOption ? (firstOption.baseCost || firstOption.price) : 0);
-                const discount = firstOption ? (firstOption.discountPercentage || 0) : 0;
-                const finalPrice = discount > 0 ? Math.round(baseCost * (1 - discount / 100)) : baseCost;
-
-                return (
-                  <div
-                    key={product.id}
-                    className={`
-                      relative group transition-all duration-1000
-                      ${isLarge ? 'md:col-span-8' : 'md:col-span-4'}
-                      ${i % 2 === 1 ? 'md:mt-24' : 'md:mt-0'}
-                    `}
-                  >
-                    <div className="relative aspect-[4/5] md:aspect-auto md:h-[600px] rounded-[3rem] overflow-hidden bg-white/10 backdrop-blur-sm border border-white/20 shadow-sm group-hover:shadow-2xl transition-all duration-700">
-                      <img
-                        src={product.image_url || product.image || "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=1000"}
-                        className="w-full h-full object-cover transition-transform duration-[2000ms] group-hover:scale-110"
-                        alt={product.name}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-forest/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-
-                      <div className="absolute top-8 left-8">
-                        <span className="px-5 py-2 bg-white/90 backdrop-blur-md rounded-full text-[9px] font-black uppercase tracking-widest text-forest border border-forest/5">
-                          {product.category || 'Vedic Ghee'}
-                        </span>
-                      </div>
-
-                      <div className="absolute bottom-10 left-10 right-10 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 space-y-6">
-                        <div className="space-y-2">
-                          <h3 className="text-3xl md:text-4xl font-serif font-bold text-white tracking-tight">{product.name}</h3>
-                          <p className="text-white/60 text-sm italic line-clamp-2">{product.description}</p>
-                        </div>
-                        <div className="flex items-center justify-between gap-6 pt-4 border-t border-white/20">
-                          <div className="flex items-end gap-3">
-                            <span className="text-2xl font-serif font-bold text-white">₹{finalPrice || 'TBA'}</span>
-                            {discount > 0 && <span className="text-sm font-bold text-white/50 line-through mb-1">₹{baseCost}</span>}
-                          </div>
-                          <Link href={`/product/${product.id}`} className="px-8 py-4 bg-white text-forest rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-forest hover:text-white transition-colors">
-                            Acquire
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="mt-8 space-y-3 group-hover:opacity-0 transition-opacity duration-500">
-                      <div className="flex items-center justify-between">
-                        <h3 className="text-xl font-serif font-bold text-forest">{product.name}</h3>
-                        <div className="flex items-center gap-3">
-                          {discount > 0 && <span className="text-sm font-bold text-forest/50 line-through">₹{baseCost}</span>}
-                          <span className="text-forest font-bold text-xl">₹{finalPrice || 'TBA'}</span>
-                        </div>
-                      </div>
-                      <div className="h-px w-full bg-white/30" />
-                      <div className="flex items-center gap-3">
-                        <div className="w-1.5 h-1.5 bg-forest rounded-full animate-pulse" />
-                        <span className="text-[10px] font-black uppercase tracking-widest text-forest">Limited Batch available</span>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      </section>
-
       {/* 4. MEDICINAL GOLD */}
-      <section className="py-24 md:py-40 relative overflow-hidden bg-gradient-to-b from-[#FCE38A] via-[#FDC333] to-[#E59500]">
+      <section className="py-24 md:py-40 relative overflow-hidden bg-gradient-to-b from-[#FCFCFC] via-[#FDC333] to-[#E59500]">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 items-center">
           <div className="space-y-12 md:space-y-16 relative z-10">
             <h2 className="text-5xl md:text-9xl font-serif font-bold text-forest tracking-tighter leading-tight text-center lg:text-left">Liquid <br /><span className="text-white italic font-light">Wisdom.</span></h2>
@@ -313,11 +308,6 @@ export default function Home() {
                 <h2 className="text-4xl font-serif font-bold text-forest tracking-tighter">Milgan.</h2>
               </div>
               <p className="text-forest/70 text-xl font-serif italic max-w-sm mx-auto md:mx-0 leading-relaxed">"Honoring the ancient Vedic rhythms of preparation to deliver the purest organic ghee in the world."</p>
-              <div className="pt-4 flex justify-center md:justify-start gap-8">
-                {['Instagram', 'WhatsApp', 'Email'].map(link => (
-                  <a key={link} href="#" className="text-[10px] font-black uppercase tracking-[0.4em] text-forest hover:text-[#D49800] transition-colors">{link}</a>
-                ))}
-              </div>
             </div>
             <div className="space-y-10 text-center md:text-left">
               <h4 className="text-[11px] font-black uppercase tracking-[0.5em] text-forest/60">The Vault</h4>
@@ -326,7 +316,6 @@ export default function Home() {
             <div className="space-y-10 text-center md:text-left">
               <h4 className="text-[11px] font-black uppercase tracking-[0.5em] text-forest/60">Control</h4>
               <ul className="space-y-4"><li><Link href="/admin" className="text-sm font-bold text-forest hover:text-[#D49800] transition-colors">Artisan Portal</Link></li><li><Link href="/admin" className="text-sm font-bold text-forest hover:text-[#D49800] transition-colors">Curation Room</Link></li></ul>
-              <div className="pt-10 flex justify-center md:justify-start"><span className="inline-block px-6 py-2 border border-forest rounded-full text-[9px] font-black text-forest uppercase tracking-[0.3em]">Batch No. 2026-A</span></div>
             </div>
           </div>
           <div className="mt-40 pt-12 border-t border-forest/10 flex flex-col md:flex-row justify-between items-center gap-8">

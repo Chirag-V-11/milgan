@@ -36,10 +36,10 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-10">
-            {['Boutique', 'Legacy'].map((item) => (
+            {['Prodectes', 'Contact'].map((item) => (
               <Link
                 key={item}
-                href={item === 'Boutique' ? '/#boutique' : '/contact'}
+                href={item === 'Prodectes' ? '/#boutique' : '/contact'}
                 className="relative text-[10px] font-black uppercase tracking-[0.4em] text-forest/50 hover:text-forest transition-all duration-300 py-2 group/link"
               >
                 {item}
@@ -79,10 +79,10 @@ const Navbar = () => {
           ${isMobileMenuOpen ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-10 invisible'}
         `}>
           <div className="flex flex-col gap-8 text-center">
-            {['Boutique', 'Legacy'].map((item) => (
+            {['Prodectes', 'Contact'].map((item) => (
               <Link
                 key={item}
-                href={item === 'Boutique' ? '/#boutique' : '/contact'}
+                href={item === 'Prodectes' ? '/#boutique' : '/contact'}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="text-[12px] font-black uppercase tracking-[0.6em] text-forest/40 hover:text-forest transition-colors"
               >

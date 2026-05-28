@@ -44,8 +44,19 @@ export default function AdminUsersPage() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-6">
-          <div className="space-y-1">
-            <h1 className="text-5xl font-serif font-bold text-gold tracking-tighter">Artisan <span className="text-cream italic">Ledger</span></h1>
+          <div className="space-y-2">
+            <div className="flex items-center gap-3">
+              <span className="text-[9px] font-black text-cream uppercase tracking-[0.5em]">Sanctuary Administration</span>
+              <div className="h-px w-12 bg-cream/30" />
+            </div>
+            <div className="flex flex-wrap items-center gap-4">
+              <h1 className="text-5xl font-serif font-bold text-gold tracking-tighter">Artisan <span className="text-cream italic">Ledger</span></h1>
+              {!loading && (
+                <span className="bg-gold/10 text-gold border border-gold/20 px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest animate-in fade-in zoom-in duration-500">
+                  {users.length} Registered
+                </span>
+              )}
+            </div>
             <p className="text-gold/40 font-medium uppercase tracking-[0.2em] text-[10px] font-black">Managing your golden community</p>
           </div>
           <div className="flex gap-4">

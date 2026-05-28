@@ -1,6 +1,7 @@
 "use client";
 import { usePathname } from 'next/navigation';
 import Navbar from '../components/Navbar';
+import FloatingSocials from '../components/FloatingSocials';
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -17,6 +18,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   return (
     <>
       {!isAdminPage && <Navbar />}
+      {!isAdminPage && <FloatingSocials />}
       <main className={mainClassName || undefined}>
         {children}
       </main>
