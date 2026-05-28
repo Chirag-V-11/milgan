@@ -239,13 +239,13 @@ export default function AdminDashboard() {
               <div className="h-px w-12 bg-cream/30" />
             </div>
             <h1 className="text-3xl sm:text-5xl md:text-6xl font-serif font-bold text-gold tracking-tighter leading-tight">
-              Boutique <span className="text-cream italic font-light">Control</span>
+              Admin <span className="text-cream italic font-light">Control</span>
             </h1>
             <p className="text-gold/40 text-xs sm:text-sm font-serif italic font-light">Manage your golden legacy and curated organic treasures</p>
           </div>
           <div className="flex flex-wrap gap-2 sm:gap-4 items-center bg-white/[0.02] backdrop-blur-2xl p-2 sm:p-3 border border-white/10 rounded-2xl sm:rounded-[2rem] shadow-2xl w-full lg:w-auto justify-center lg:justify-start">
             <Link href="/admin/users" className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] border border-white/10 px-4 sm:px-7 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-gold hover:bg-gold hover:text-forest transition-all flex-1 sm:flex-initial text-center">Users</Link>
-            <Link href="/" className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] border border-white/10 px-4 sm:px-7 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-gold hover:bg-gold hover:text-forest transition-all flex-1 sm:flex-initial text-center">Visit Boutique</Link>
+            <Link href="/" className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] border border-white/10 px-4 sm:px-7 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-gold hover:bg-gold hover:text-forest transition-all flex-1 sm:flex-initial text-center">Visit Website</Link>
             <button onClick={handleLogout} className="bg-red-950/20 hover:bg-red-900/40 border border-red-500/20 text-red-300 px-4 sm:px-7 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-[8px] sm:text-[9px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] transition-all flex-1 sm:flex-initial text-center">Logout</button>
           </div>
         </header>
@@ -360,7 +360,7 @@ export default function AdminDashboard() {
                     type="submit" disabled={loading}
                     className="w-full bg-cream text-forest py-5 sm:py-6 rounded-2xl sm:rounded-3xl font-black uppercase tracking-[0.3em] sm:tracking-[0.4em] text-[10px] sm:text-xs shadow-2xl shadow-cream/20 hover:bg-gold hover:text-forest border border-cream hover:border-cream transition-all duration-500 transform active:scale-[0.99] disabled:opacity-50"
                   >
-                    {loading ? 'Processing...' : (editingId ? 'Refine & Republish' : 'Publish to Boutique')}
+                    {loading ? 'Processing...' : (editingId ? 'Refine & Republish' : 'Publish to Catalog')}
                   </button>
                 </div>
               </form>
@@ -370,7 +370,7 @@ export default function AdminDashboard() {
           {/* Product List Section */}
           <div className="xl:col-span-5 space-y-8">
             <div className="flex items-center gap-3 ml-1">
-              <h3 className="text-[10px] font-black text-white/40 uppercase tracking-widest">Current Boutique Collection</h3>
+              <h3 className="text-[10px] font-black text-white/40 uppercase tracking-widest">Current Catalog Collection</h3>
               <div className="h-px flex-1 bg-white/5" />
             </div>
             

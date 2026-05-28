@@ -304,7 +304,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-24 md:gap-12">
             <div className="md:col-span-2 space-y-12 text-center md:text-left">
               <div className="flex items-center justify-center md:justify-start gap-4">
-                <div className="w-12 h-12 bg-forest rounded-full flex items-center justify-center text-white font-black text-xl">M</div>
+                <img src="/logo.png" alt="Milgan logo" className="w-12 h-12 object-contain" />
                 <h2 className="text-4xl font-serif font-bold text-forest tracking-tighter">Milgan.</h2>
               </div>
               <p className="text-forest/70 text-xl font-serif italic max-w-sm mx-auto md:mx-0 leading-relaxed">"Honoring the ancient Vedic rhythms of preparation to deliver the purest organic ghee in the world."</p>

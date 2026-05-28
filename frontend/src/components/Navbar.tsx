@@ -27,7 +27,7 @@ const Navbar = () => {
         `}>
           {/* Logo Sanctuary */}
           <Link href="/" className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-forest rounded-full flex items-center justify-center text-white text-xs font-black shadow-md shadow-forest/20">M</div>
+            <img src="/logo.png" alt="Milgan" className="w-9 h-9 object-contain" />
             <div className="flex flex-col">
               <span className="text-lg font-serif font-bold text-forest tracking-tight leading-none">Milgan</span>
               <span className="text-[7px] font-black uppercase tracking-[0.3em] text-forest/60 mt-1 leading-none">Organic Alchemy</span>
@@ -36,10 +36,10 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-10">
-            {['Prodectes', 'Contact'].map((item) => (
+            {['Products', 'Contact'].map((item) => (
               <Link
                 key={item}
-                href={item === 'Prodectes' ? '/#boutique' : '/contact'}
+                href={item === 'Products' ? '/#boutique' : '/contact'}
                 className="relative text-[10px] font-black uppercase tracking-[0.4em] text-forest/50 hover:text-forest transition-all duration-300 py-2 group/link"
               >
                 {item}
@@ -79,10 +79,10 @@ const Navbar = () => {
           ${isMobileMenuOpen ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-10 invisible'}
         `}>
           <div className="flex flex-col gap-8 text-center">
-            {['Prodectes', 'Contact'].map((item) => (
+            {['Products', 'Contact'].map((item) => (
               <Link
                 key={item}
-                href={item === 'Prodectes' ? '/#boutique' : '/contact'}
+                href={item === 'Products' ? '/#boutique' : '/contact'}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="text-[12px] font-black uppercase tracking-[0.6em] text-forest/40 hover:text-forest transition-colors"
               >
