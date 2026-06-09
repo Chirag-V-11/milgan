@@ -1,0 +1,264 @@
+"use client";
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import { useUser } from '@/context/UserContext';
+import UserAuthModal from './UserAuthModal';
+
+interface ProductDetailsModalProps {
+  product: any;
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export default function ProductDetailsModal({ product, isOpen, onClose }: ProductDetailsModalProps) {
+  const { user } = useUser();
+  const [selectedSize, setSelectedSize] = useState<any>(null);
+  const [activeImage, setActiveImage] = useState(0);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [addedToCart, setAddedToCart] = useState(false);
+
+  useEffect(() => {
+    if (product && product.quantity_options?.length > 0) {
+      setSelectedSize(product.quantity_options[0]);
+    }
+    setActiveImage(0);
+  }, [product]);
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [onClose]);
+
+  if (!isOpen || !product) return null;
+
+  const allImages: string[] = Array.from(new Set<string>([
+    ...(product.image_urls?.filter((u: string) => u?.trim()) || []),
+    ...(product.image_url ? [product.image_url] : [])
+  ])).filter(Boolean);
+
+  if (allImages.length === 0) {
+    allImages.push("https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=1000");
+  }
+
+  const finalPrice = selectedSize
+    ? Math.round(selectedSize.baseCost * (1 - (selectedSize.discountPercentage || 0) / 100))
+    : 0;
+
+  const handleWhatsAppOrder = () => {
+    if (!user) {
+      setIsAuthModalOpen(true);
+      return;
+    }
+
+    const message = `NEW ORDER RECEIVED
+Customer Details:
+Name: ${user.name}
+Phone: ${user.phone}
+Location: ${user.address}
+
+Product Details:
+Item: ${product.name}
+Size: ${selectedSize?.size}
+Total Price: ₹${Math.round(finalPrice)}`;
+
+    const text = encodeURIComponent(message);
+    window.open(`https://wa.me/918660013411?text=${text}`, '_blank');
+    setAddedToCart(true);
+    setTimeout(() => setAddedToCart(false), 3000);
+  };
+
+  const modalBody = (
+    <div className="fixed inset-0 w-screen h-screen z-[9999] grid place-items-center p-4 sm:p-6 bg-forest/90 backdrop-blur-xl transition-all duration-500 overflow-y-auto">
+      {/* Click outside to close */}
+      <div className="fixed inset-0 cursor-pointer" onClick={onClose} />
+
+      {/* Main Container */}
+      <div className="relative bg-[#FCFAF7] w-full max-w-5xl rounded-[2.5rem] sm:rounded-[3.5rem] shadow-[0_50px_100px_rgba(0,0,0,0.6),0_0_80px_rgba(253,195,51,0.15)] overflow-hidden transition-all duration-700 border border-white/10 animate-in zoom-in-95 duration-500 flex flex-col lg:flex-row max-h-[90vh] lg:max-h-none">
+
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-6 right-6 z-50 w-10 h-10 rounded-full bg-forest text-white flex items-center justify-center text-xl font-bold hover:bg-cream hover:text-forest hover:scale-105 active:scale-95 transition-all shadow-lg"
+          title="Close Modal"
+        >
+          ×
+        </button>
+
+        {/* ── LEFT: Image Gallery ── */}
+        <div className="lg:w-1/2 p-6 sm:p-10 flex flex-col justify-center bg-forest/[0.02] border-b lg:border-b-0 lg:border-r border-forest/5 overflow-y-auto max-h-[40vh] lg:max-h-[80vh] shrink-0">
+          <div className="relative aspect-square rounded-[2rem] overflow-hidden bg-cream/10 shadow-[0_20px_50px_rgba(27,67,50,0.1)] group">
+            <img
+              src={allImages[activeImage]}
+              alt={product.name}
+              className="w-full h-full object-cover transition-all duration-[1500ms]"
+              onError={(e) => { e.currentTarget.src = "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=1000"; }}
+            />
+            {selectedSize?.discountPercentage > 0 && (
+              <div className="absolute top-6 left-6 bg-forest text-white text-[9px] font-black uppercase tracking-widest px-4 py-2 rounded-full shadow-xl">
+                {selectedSize.discountPercentage}% OFF
+              </div>
+            )}
+          </div>
+
+          {/* Thumbnails */}
+          {allImages.length > 1 && (
+            <div className="flex gap-3 overflow-x-auto pb-1 mt-4 scrollbar-none">
+              {allImages.map((url, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setActiveImage(idx)}
+                  className={`flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-all duration-300 ${activeImage === idx ? 'border-forest scale-105 shadow-md' : 'border-transparent opacity-50 hover:opacity-80'}`}
+                >
+                  <img src={url} alt={`${product.name} ${idx + 1}`} className="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* ── RIGHT: Details & Purchases ── */}
+        <div className="lg:w-1/2 p-6 sm:p-10 lg:p-12 overflow-y-auto max-h-[50vh] lg:max-h-[80vh] space-y-8 flex flex-col justify-between">
+          <div className="space-y-6">
+            {/* Header */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <span className="text-[9px] font-black text-gold uppercase tracking-[0.5em]">Artisanal Collection</span>
+                <div className="h-px flex-1 bg-gold/20" />
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-serif font-bold text-forest tracking-tighter leading-tight">
+                {product.name}
+              </h2>
+              <p className="text-forest/60 font-serif italic text-sm leading-relaxed">
+                {product.description}
+              </p>
+            </div>
+
+            {/* Ingredients & Infusion Section */}
+            {(product.name.toLowerCase().includes('ghee') ||
+              product.name.toLowerCase().includes('butter') ||
+              product.name.toLowerCase().includes('makhan') ||
+              product.name.toLowerCase().includes('evning') ||
+              product.description.toLowerCase().includes('ghee') ||
+              product.description.toLowerCase().includes('butter')) && (
+                <div className="space-y-3 pt-5 border-t border-forest/5">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[9px] font-black text-forest/40 uppercase tracking-[0.3em]">The Alchemy of Infusion</span>
+                    <div className="h-px flex-1 bg-forest/5" />
+                  </div>
+                  <p className="text-forest/70 text-[11px] leading-relaxed font-serif italic">
+                    Clarified using pure A2 Cow Butter, infused with traditional elements during slow wood-fire cooking to enrich aroma, shelf-life, and wellness:
+                  </p>
+                  <div className="grid grid-cols-2 gap-2">
+                    {[
+                      { name: 'Elachi', icon: '🏺', detail: 'Digestion & Aroma' },
+                      { name: 'Pepper', icon: '🌶️', detail: 'Vital Warmth' },
+                      { name: 'Methi', icon: '🌱', detail: 'Gut Balance' },
+                      { name: 'Clove', icon: '🍀', detail: 'Preservation' },
+                      { name: 'Beetel Leaf', icon: '🍃', detail: 'Natural Clarifier' },
+                      { name: 'Turmeric', icon: '💛', detail: 'Golden Healing' }
+                    ].map((ing, idx) => (
+                      <div key={idx} className="bg-forest/[0.02] border border-forest/5 p-2 rounded-xl flex items-center gap-2 hover:bg-forest/5 transition-all duration-300">
+                        <span className="text-lg">{ing.icon}</span>
+                        <div className="flex flex-col min-w-0">
+                          <span className="text-[9px] font-black text-forest uppercase tracking-widest truncate">{ing.name}</span>
+                          <span className="text-[7px] text-forest/50 font-serif italic truncate">{ing.detail}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+            {/* Price */}
+            <div className="flex items-end gap-3 py-5 border-y border-forest/5">
+              <span className="text-4xl font-serif font-bold text-forest">₹{finalPrice}</span>
+              {selectedSize?.discountPercentage > 0 && (
+                <div className="space-y-0.5">
+                  <div className="text-xs text-forest/30 line-through font-medium">₹{selectedSize.baseCost}</div>
+                  <div className="text-[8px] font-black text-red-500 uppercase tracking-widest">You save ₹{selectedSize.baseCost - finalPrice}</div>
+                </div>
+              )}
+              <span className="ml-auto text-[8px] font-black text-forest/30 uppercase tracking-widest">Free Delivery</span>
+            </div>
+
+            {/* Size Selector */}
+            {product.quantity_options?.length > 0 && (
+              <div className="space-y-3">
+                <h3 className="text-[9px] font-black text-forest/40 uppercase tracking-[0.3em]">Select Volume</h3>
+                <div className="flex flex-wrap gap-2">
+                  {product.quantity_options.map((opt: any) => {
+                    const optFinal = Math.round(opt.baseCost * (1 - (opt.discountPercentage || 0) / 100));
+                    const isSelected = selectedSize?.size === opt.size;
+                    return (
+                      <button
+                        key={opt.size}
+                        onClick={() => setSelectedSize(opt)}
+                        className={`relative px-4 py-3 rounded-xl border transition-all duration-300 text-left ${isSelected
+                          ? 'border-forest bg-forest text-white shadow-lg shadow-forest/15'
+                          : 'border-forest/10 text-forest hover:border-forest/30 bg-white'}`}
+                      >
+                        <div className={`text-[10px] font-black uppercase tracking-widest ${isSelected ? 'text-white' : 'text-forest'}`}>{opt.size}</div>
+                        <div className={`text-[10px] font-medium mt-0.5 ${isSelected ? 'text-white/70' : 'text-forest/40'}`}>₹{optFinal}</div>
+                        {opt.discountPercentage > 0 && (
+                          <div className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[7px] font-black px-1.5 py-0.5 rounded-full">
+                            -{opt.discountPercentage}%
+                          </div>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* CTA Actions */}
+          <div className="space-y-3 pt-6 border-t border-forest/5">
+            <button
+              onClick={handleWhatsAppOrder}
+              className={`w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-[0.3em] shadow-xl transition-all duration-500 flex items-center justify-center gap-2.5 active:scale-[0.98] ${addedToCart ? 'bg-green-600 text-white' : 'bg-[#25D366] text-white hover:bg-green-600 hover:shadow-green-500/20'}`}
+            >
+              {addedToCart ? '✓ Order Sent!' : 'Order via WhatsApp'}
+            </button>
+
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                onClick={() => product.amazon_url && window.open(product.amazon_url, '_blank')}
+                className={`py-3 rounded-xl font-bold text-[9px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-1.5 ${product.amazon_url
+                  ? 'bg-[#FF9900] text-white hover:bg-[#e68900] shadow-md shadow-orange-500/10'
+                  : 'bg-forest/5 text-forest/20 cursor-not-allowed'}`}
+              >
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Amazon_icon.svg" className={`w-3.5 h-3.5 ${product.amazon_url ? 'brightness-0 invert' : 'opacity-20'}`} alt="Amazon" />
+                {product.amazon_url ? 'Amazon' : 'Amazon (Soon)'}
+              </button>
+              <button
+                onClick={() => product.blinkit_url && window.open(product.blinkit_url, '_blank')}
+                className={`py-3 rounded-xl font-bold text-[9px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-1.5 ${product.blinkit_url
+                  ? 'bg-[#2874F0] text-white hover:bg-blue-600 shadow-md shadow-blue-500/10'
+                  : 'bg-forest/5 text-forest/20 cursor-not-allowed'}`}
+              >
+                <span className={`font-black italic ${!product.blinkit_url && 'opacity-20'}`}>Flipkart</span>
+                {!product.blinkit_url && '(Soon)'}
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <UserAuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        onAuthenticated={() => handleWhatsAppOrder()}
+      />
+    </div>
+  );
+
+  return typeof document !== 'undefined'
+    ? createPortal(modalBody, document.body)
+    : null;
+}

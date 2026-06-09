@@ -12,6 +12,13 @@ export default function AdminUsersPage() {
     try {
       const apiBase = process.env.NEXT_PUBLIC_API_URL || 'https://milgan-backend.onrender.com';
       const response = await fetch(`${apiBase}/api/users/all`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new TypeError("Expected JSON response from server but received HTML or another format.");
+      }
       const data = await response.json();
       if (Array.isArray(data)) {
         setUsers(data);

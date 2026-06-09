@@ -21,9 +21,16 @@ export default function ProductDetails() {
       try {
         const apiBase = process.env.NEXT_PUBLIC_API_URL || 'https://milgan-backend.onrender.com';
         const res = await fetch(`${apiBase}/api/products/${id}`);
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        const contentType = res.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+          throw new TypeError("Expected JSON response from server but received HTML or another format.");
+        }
         const data = await res.json();
         setProduct(data);
-        if (data.quantity_options?.length > 0) {
+        if (data && data.quantity_options?.length > 0) {
           setSelectedSize(data.quantity_options[0]);
         }
       } catch (err) {
@@ -86,12 +93,7 @@ Total Price: ₹${Math.round(finalPrice)}`;
     setTimeout(() => setAddedToCart(false), 3000);
   };
 
-  const benefits = [
-    { icon: '🏺', title: 'Ancient Bilona', desc: 'Traditional hand-churning at dawn preserves all nutrients' },
-    { icon: '🐄', title: 'A2 Gir Cow', desc: 'Purebred indigenous cows, grass-fed in open sanctuaries' },
-    { icon: '🌿', title: '100% Pure', desc: 'No additives, preservatives or artificial colouring' },
-    { icon: '✨', title: 'Small Batch', desc: 'Limited production ensures consistent artisanal quality' },
-  ];
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#FCFAF7] via-[#FDFBF7] to-[#FCE38A]/20 font-sans selection:bg-forest/20 relative overflow-hidden">
@@ -168,6 +170,42 @@ Total Price: ₹${Math.round(finalPrice)}`;
                 {product.description}
               </p>
             </div>
+
+            {/* Ingredients & Infusion Section */}
+            {(product.name.toLowerCase().includes('ghee') || 
+              product.name.toLowerCase().includes('butter') || 
+              product.name.toLowerCase().includes('makhan') ||
+              product.name.toLowerCase().includes('evning') || // fallback for user test products
+              product.description.toLowerCase().includes('ghee') ||
+              product.description.toLowerCase().includes('butter')) && (
+              <div className="space-y-4 pt-6 border-t border-forest/5">
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-black text-forest/40 uppercase tracking-[0.3em]">The Alchemy of Infusion</span>
+                  <div className="h-px flex-1 bg-forest/5" />
+                </div>
+                <p className="text-forest/70 text-xs leading-relaxed font-serif italic">
+                  Clarified using pure A2 Cow Butter, infused with traditional elements during slow wood-fire cooking to enrich aroma, shelf-life, and wellness:
+                </p>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {[
+                    { name: 'Elachi', icon: '🏺', detail: 'Digestion & Aroma' },
+                    { name: 'Pepper', icon: '🌶️', detail: 'Vital Warmth' },
+                    { name: 'Methi', icon: '🌱', detail: 'Gut Balance' },
+                    { name: 'Clove', icon: '🍀', detail: 'Preservation' },
+                    { name: 'Beetel Leaf', icon: '🍃', detail: 'Natural Clarifier' },
+                    { name: 'Turmeric', icon: '💛', detail: 'Golden Healing' }
+                  ].map((ing, idx) => (
+                    <div key={idx} className="bg-forest/[0.02] border border-forest/5 p-3 rounded-2xl flex items-center gap-2.5 hover:bg-forest/5 transition-all duration-300">
+                      <span className="text-xl">{ing.icon}</span>
+                      <div className="flex flex-col min-w-0">
+                        <span className="text-[10px] font-black text-forest uppercase tracking-widest truncate">{ing.name}</span>
+                        <span className="text-[8px] text-forest/50 font-serif italic truncate">{ing.detail}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Price */}
             <div className="flex items-end gap-4 py-6 border-y border-forest/5">
@@ -265,32 +303,6 @@ Total Price: ₹${Math.round(finalPrice)}`;
           </div>
         </div>
 
-        {/* ── BENEFITS SECTION ── */}
-        <div className="mt-24 space-y-12">
-          <div className="text-center space-y-3">
-            <span className="text-[10px] font-black text-gold uppercase tracking-[0.6em]">Why Milgan</span>
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-forest tracking-tighter">The Sacred Difference.</h2>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {benefits.map((b, i) => (
-              <div key={i} className="p-8 bg-white rounded-[2rem] border border-forest/5 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-500 space-y-4 group">
-                <div className="text-4xl group-hover:scale-110 transition-transform duration-500">{b.icon}</div>
-                <h4 className="font-black text-[10px] uppercase tracking-widest text-forest">{b.title}</h4>
-                <p className="text-forest/50 text-xs leading-relaxed font-serif italic">{b.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ── BACK TO COLLECTION ── */}
-        <div className="mt-24 text-center">
-          <Link
-            href="/#boutique"
-            className="inline-flex items-center gap-3 px-10 py-5 bg-forest text-white rounded-full font-black text-[10px] uppercase tracking-[0.4em] hover:bg-cream hover:text-forest hover:shadow-2xl hover:-translate-y-1 transition-all duration-500"
-          >
-            ← Explore Full Collection
-          </Link>
-        </div>
       </div>
 
       <UserAuthModal

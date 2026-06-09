@@ -230,7 +230,7 @@ export default function AdminDashboard() {
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-forest/[0.03] rounded-full blur-3xl translate-x-1/3 translate-y-1/3 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
-        
+
         {/* Dynamic Header */}
         <header className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-12 sm:mb-16 gap-6">
           <div className="space-y-2 w-full lg:w-auto">
@@ -270,11 +270,11 @@ export default function AdminDashboard() {
 
               <form onSubmit={handleSubmit} className="p-5 sm:p-10 space-y-6 sm:space-y-8">
                 <div className="space-y-6 sm:space-y-8">
-                  
+
                   <div className="space-y-3">
                     <label className="text-[10px] font-black text-white/40 uppercase tracking-widest ml-1">Masterpiece Title</label>
                     <input
-                      type="text" required placeholder="e.g. Traditional A2 Gir Cow Ghee"
+                      type="text" required placeholder="e.g. Traditional A2 Cow Ghee"
                       className="w-full px-4 sm:px-6 py-3.5 sm:py-4.5 rounded-2xl bg-black/40 border border-white/10 focus:bg-[#061C2C] focus:border-gold focus:ring-4 focus:ring-gold/5 outline-none transition-all font-medium text-white text-sm placeholder:text-white/20 shadow-inner"
                       value={product.name} onChange={(e) => setProduct({ ...product, name: e.target.value })}
                     />
@@ -373,7 +373,7 @@ export default function AdminDashboard() {
               <h3 className="text-[10px] font-black text-white/40 uppercase tracking-widest">Current Catalog Collection</h3>
               <div className="h-px flex-1 bg-white/5" />
             </div>
-            
+
             <div className="space-y-4 max-h-[850px] overflow-y-auto pr-2 no-scrollbar">
               {fetching ? (
                 <div className="text-center py-32 text-white/20 font-serif italic text-lg animate-pulse">Accessing the vault...</div>

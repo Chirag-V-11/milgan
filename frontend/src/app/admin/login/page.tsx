@@ -47,19 +47,19 @@ export default function AdminLogin() {
       <div className="max-w-md w-full bg-white/[0.02] backdrop-blur-3xl rounded-[2.5rem] shadow-[0_50px_100px_rgba(0,0,0,0.5)] overflow-hidden border border-white/5 relative z-10">
         <div className="bg-white/[0.02] p-10 text-gold text-center relative overflow-hidden border-b border-white/5">
           <div className="absolute top-0 right-0 p-4 opacity-10">
-            <svg className="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
+            <svg className="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z" /></svg>
           </div>
           <h1 className="text-4xl font-serif font-bold tracking-tight mb-2">Admin <span className="text-cream italic">Vault</span></h1>
           <p className="text-gold/50 text-xs font-bold uppercase tracking-[0.2em]">Authorized Access Only</p>
         </div>
-        
+
         <form onSubmit={handleLogin} className="p-10 space-y-8">
           {error && (
             <div className="p-4 bg-red-950/20 border border-red-500/20 text-red-400 text-xs font-bold rounded-2xl animate-in fade-in slide-in-from-top-1">
               ⚠️ {error}
             </div>
           )}
-          
+
           <div className="space-y-3">
             <label className="block text-[10px] font-black text-gold/40 uppercase tracking-[0.2em] ml-1">Master Identity</label>
             <input
