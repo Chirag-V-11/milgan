@@ -150,17 +150,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 2. PILLARS (INGREDIENTS) */}
+      {/* 2. CORE BENEFITS */}
       <section className="py-20 relative z-10 bg-gradient-to-b from-[#FCE38A] to-[#FCFCFC]">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
             {[
-              { title: 'Elachi', image: '/image/elachi.png' },
-              { title: 'Pepper', image: '/image/pepper.png' },
-              { title: 'Methi', image: '/image/methi.png' },
-              { title: 'Clove', image: '/image/clove.png' },
-              { title: 'Beetel Leaf', image: '/image/beetel.png' },
-              { title: 'Turmeric', image: '/image/turmeric.png' }
+              { title: 'Immunity', image: '/image/immunity.png' },
+              { title: 'Bilona Churned', image: '/image/bilona.png' },
+              { title: 'Easy Digestion', image: '/image/digestion.png' },
+              { title: 'Rich Nutrition', image: '/image/nutrition.png' },
+              { title: 'Delicious Taste', image: '/image/delicious.png' }
             ].map((p, i) => (
               <div key={i} className="p-8 md:p-12 bg-white/20 backdrop-blur-md rounded-[2.5rem] md:rounded-[3rem] border border-white/30 flex flex-col items-center justify-center space-y-6 md:space-y-8 group hover:bg-white/40 transition-all duration-700 hover:-translate-y-2">
                 <div className="w-20 h-20 md:w-28 md:h-28 relative overflow-hidden group-hover:scale-110 transition-all duration-700 inline-block animate-float" style={{ animationDelay: `${i * 0.3}s` }}>
