@@ -71,25 +71,25 @@ Total Price: ₹${Math.round(finalPrice)}`;
   };
 
   const modalBody = (
-    <div className="fixed inset-0 w-screen h-screen z-[9999] grid place-items-center p-4 sm:p-6 bg-forest/90 backdrop-blur-xl transition-all duration-500 overflow-y-auto">
+    <div className="fixed inset-0 w-screen h-screen z-[9999] grid place-items-center p-4 sm:p-6 bg-[#23212e]/90 backdrop-blur-xl transition-all duration-500 overflow-y-auto font-sans">
       {/* Click outside to close */}
       <div className="fixed inset-0 cursor-pointer" onClick={onClose} />
 
       {/* Main Container */}
-      <div className="relative bg-[#FCFAF7] w-full max-w-5xl rounded-[2.5rem] sm:rounded-[3.5rem] shadow-[0_50px_100px_rgba(0,0,0,0.6),0_0_80px_rgba(253,195,51,0.15)] overflow-hidden transition-all duration-700 border border-white/10 animate-in zoom-in-95 duration-500 flex flex-col lg:flex-row max-h-[90vh] lg:max-h-none">
+      <div className="relative bg-[#23212e] w-full max-w-5xl rounded-[2.5rem] sm:rounded-[3.5rem] shadow-[0_50px_100px_rgba(0,0,0,0.6),0_0_80px_rgba(252,196,51,0.1)] overflow-hidden transition-all duration-700 border border-white/10 animate-in zoom-in-95 duration-500 flex flex-col lg:flex-row max-h-[90vh] lg:max-h-none">
 
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-6 right-6 z-50 w-10 h-10 rounded-full bg-forest text-white flex items-center justify-center text-xl font-bold hover:bg-cream hover:text-forest hover:scale-105 active:scale-95 transition-all shadow-lg"
+          className="absolute top-6 right-6 z-50 w-10 h-10 rounded-full bg-white/10 text-white border border-white/10 flex items-center justify-center text-xl font-bold hover:bg-gold hover:text-[#23212e] hover:scale-105 active:scale-95 transition-all shadow-lg"
           title="Close Modal"
         >
           ×
         </button>
 
         {/* ── LEFT: Image Gallery ── */}
-        <div className="lg:w-1/2 p-6 sm:p-10 flex flex-col justify-center bg-forest/[0.02] border-b lg:border-b-0 lg:border-r border-forest/5 overflow-y-auto max-h-[40vh] lg:max-h-[80vh] shrink-0">
-          <div className="relative aspect-square rounded-[2rem] overflow-hidden bg-cream/10 shadow-[0_20px_50px_rgba(27,67,50,0.1)] group">
+        <div className="lg:w-1/2 p-6 sm:p-10 flex flex-col justify-center bg-white/[0.01] border-b lg:border-b-0 lg:border-r border-white/5 overflow-y-auto max-h-[40vh] lg:max-h-[80vh] shrink-0">
+          <div className="relative aspect-square rounded-[2rem] overflow-hidden bg-white/[0.03] shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/5 group">
             <img
               src={allImages[activeImage]}
               alt={product.name}
@@ -97,7 +97,7 @@ Total Price: ₹${Math.round(finalPrice)}`;
               onError={(e) => { e.currentTarget.src = "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=1000"; }}
             />
             {selectedSize?.discountPercentage > 0 && (
-              <div className="absolute top-6 left-6 bg-forest text-white text-[9px] font-black uppercase tracking-widest px-4 py-2 rounded-full shadow-xl">
+              <div className="absolute top-6 left-6 bg-gold text-[#23212e] text-[9px] font-black uppercase tracking-widest px-4 py-2 rounded-full shadow-xl">
                 {selectedSize.discountPercentage}% OFF
               </div>
             )}
@@ -110,7 +110,7 @@ Total Price: ₹${Math.round(finalPrice)}`;
                 <button
                   key={idx}
                   onClick={() => setActiveImage(idx)}
-                  className={`flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-all duration-300 ${activeImage === idx ? 'border-forest scale-105 shadow-md' : 'border-transparent opacity-50 hover:opacity-80'}`}
+                  className={`flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-all duration-300 ${activeImage === idx ? 'border-gold scale-105 shadow-md' : 'border-transparent opacity-50 hover:opacity-80'}`}
                 >
                   <img src={url} alt={`${product.name} ${idx + 1}`} className="w-full h-full object-cover" />
                 </button>
@@ -126,12 +126,12 @@ Total Price: ₹${Math.round(finalPrice)}`;
             <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <span className="text-[9px] font-black text-gold uppercase tracking-[0.5em]">Artisanal Collection</span>
-                <div className="h-px flex-1 bg-gold/20" />
+                <div className="h-px flex-1 bg-white/10" />
               </div>
-              <h2 className="text-3xl sm:text-4xl font-serif font-bold text-forest tracking-tighter leading-tight">
+              <h2 className="text-3xl sm:text-4xl font-serif font-bold text-foreground tracking-tighter leading-tight">
                 {product.name}
               </h2>
-              <p className="text-forest/60 font-serif italic text-sm leading-relaxed">
+              <p className="text-foreground/60 font-serif italic text-sm leading-relaxed">
                 {product.description}
               </p>
             </div>
@@ -143,13 +143,13 @@ Total Price: ₹${Math.round(finalPrice)}`;
               product.name.toLowerCase().includes('evning') ||
               product.description.toLowerCase().includes('ghee') ||
               product.description.toLowerCase().includes('butter')) && (
-                <div className="space-y-3 pt-5 border-t border-forest/5">
+                <div className="space-y-3 pt-5 border-t border-white/10">
                   <div className="flex items-center gap-2">
-                    <span className="text-[9px] font-black text-forest/40 uppercase tracking-[0.3em]">The Alchemy of Infusion</span>
-                    <div className="h-px flex-1 bg-forest/5" />
+                    <span className="text-[9px] font-black text-gold uppercase tracking-[0.3em]">The Alchemy of Infusion</span>
+                    <div className="h-px flex-1 bg-white/10" />
                   </div>
-                  <p className="text-forest/70 text-[11px] leading-relaxed font-serif italic">
-                    Clarified using pure A2 Cow Butter, infused with traditional elements during slow wood-fire cooking to enrich aroma, shelf-life, and wellness:
+                  <p className="text-foreground/70 text-[11px] leading-relaxed font-serif italic">
+                    Clarified using pure Cow Butter, infused with traditional elements during slow wood-fire cooking to enrich aroma, shelf-life, and wellness:
                   </p>
                   <div className="grid grid-cols-2 gap-2">
                     {[
@@ -160,11 +160,11 @@ Total Price: ₹${Math.round(finalPrice)}`;
                       { name: 'Beetel Leaf', icon: '🍃', detail: 'Natural Clarifier' },
                       { name: 'Turmeric', icon: '💛', detail: 'Golden Healing' }
                     ].map((ing, idx) => (
-                      <div key={idx} className="bg-forest/[0.02] border border-forest/5 p-2 rounded-xl flex items-center gap-2 hover:bg-forest/5 transition-all duration-300">
+                      <div key={idx} className="bg-white/[0.03] border border-white/10 p-2 rounded-xl flex items-center gap-2 hover:bg-white/[0.08] hover:border-gold/30 transition-all duration-300">
                         <span className="text-lg">{ing.icon}</span>
                         <div className="flex flex-col min-w-0">
-                          <span className="text-[9px] font-black text-forest uppercase tracking-widest truncate">{ing.name}</span>
-                          <span className="text-[7px] text-forest/50 font-serif italic truncate">{ing.detail}</span>
+                          <span className="text-[9px] font-black text-gold uppercase tracking-widest truncate">{ing.name}</span>
+                          <span className="text-[7px] text-foreground/50 font-serif italic truncate">{ing.detail}</span>
                         </div>
                       </div>
                     ))}
@@ -173,21 +173,21 @@ Total Price: ₹${Math.round(finalPrice)}`;
               )}
 
             {/* Price */}
-            <div className="flex items-end gap-3 py-5 border-y border-forest/5">
-              <span className="text-4xl font-serif font-bold text-forest">₹{finalPrice}</span>
+            <div className="flex items-end gap-3 py-5 border-y border-white/10">
+              <span className="text-4xl font-serif font-bold text-gold">₹{finalPrice}</span>
               {selectedSize?.discountPercentage > 0 && (
                 <div className="space-y-0.5">
-                  <div className="text-xs text-forest/30 line-through font-medium">₹{selectedSize.baseCost}</div>
+                  <div className="text-xs text-foreground/40 line-through font-medium">₹{selectedSize.baseCost}</div>
                   <div className="text-[8px] font-black text-red-500 uppercase tracking-widest">You save ₹{selectedSize.baseCost - finalPrice}</div>
                 </div>
               )}
-              <span className="ml-auto text-[8px] font-black text-forest/30 uppercase tracking-widest">Free Delivery</span>
+              <span className="ml-auto text-[8px] font-black text-foreground/40 uppercase tracking-widest">Free Delivery</span>
             </div>
 
             {/* Size Selector */}
             {product.quantity_options?.length > 0 && (
               <div className="space-y-3">
-                <h3 className="text-[9px] font-black text-forest/40 uppercase tracking-[0.3em]">Select Volume</h3>
+                <h3 className="text-[9px] font-black text-foreground/40 uppercase tracking-[0.3em]">Select Volume</h3>
                 <div className="flex flex-wrap gap-2">
                   {product.quantity_options.map((opt: any) => {
                     const optFinal = Math.round(opt.baseCost * (1 - (opt.discountPercentage || 0) / 100));
@@ -197,11 +197,11 @@ Total Price: ₹${Math.round(finalPrice)}`;
                         key={opt.size}
                         onClick={() => setSelectedSize(opt)}
                         className={`relative px-4 py-3 rounded-xl border transition-all duration-300 text-left ${isSelected
-                          ? 'border-forest bg-forest text-white shadow-lg shadow-forest/15'
-                          : 'border-forest/10 text-forest hover:border-forest/30 bg-white'}`}
+                          ? 'border-gold bg-gold text-[#23212e] shadow-lg shadow-gold/15'
+                          : 'border-white/10 text-foreground hover:border-gold/50 bg-white/[0.03]'}`}
                       >
-                        <div className={`text-[10px] font-black uppercase tracking-widest ${isSelected ? 'text-white' : 'text-forest'}`}>{opt.size}</div>
-                        <div className={`text-[10px] font-medium mt-0.5 ${isSelected ? 'text-white/70' : 'text-forest/40'}`}>₹{optFinal}</div>
+                        <div className={`text-[10px] font-black uppercase tracking-widest ${isSelected ? 'text-[#23212e]' : 'text-foreground'}`}>{opt.size}</div>
+                        <div className={`text-[10px] font-medium mt-0.5 ${isSelected ? 'text-[#23212e]/70' : 'text-foreground/40'}`}>₹{optFinal}</div>
                         {opt.discountPercentage > 0 && (
                           <div className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[7px] font-black px-1.5 py-0.5 rounded-full">
                             -{opt.discountPercentage}%
@@ -216,7 +216,7 @@ Total Price: ₹${Math.round(finalPrice)}`;
           </div>
 
           {/* CTA Actions */}
-          <div className="space-y-3 pt-6 border-t border-forest/5">
+          <div className="space-y-3 pt-6 border-t border-white/10">
             <button
               onClick={handleWhatsAppOrder}
               className={`w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-[0.3em] shadow-xl transition-all duration-500 flex items-center justify-center gap-2.5 active:scale-[0.98] ${addedToCart ? 'bg-green-600 text-white' : 'bg-[#25D366] text-white hover:bg-green-600 hover:shadow-green-500/20'}`}
@@ -229,7 +229,7 @@ Total Price: ₹${Math.round(finalPrice)}`;
                 onClick={() => product.amazon_url && window.open(product.amazon_url, '_blank')}
                 className={`py-3 rounded-xl font-bold text-[9px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-1.5 ${product.amazon_url
                   ? 'bg-[#FF9900] text-white hover:bg-[#e68900] shadow-md shadow-orange-500/10'
-                  : 'bg-forest/5 text-forest/20 cursor-not-allowed'}`}
+                  : 'bg-white/[0.03] text-foreground/20 cursor-not-allowed'}`}
               >
                 <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Amazon_icon.svg" className={`w-3.5 h-3.5 ${product.amazon_url ? 'brightness-0 invert' : 'opacity-20'}`} alt="Amazon" />
                 {product.amazon_url ? 'Amazon' : 'Amazon (Soon)'}
@@ -238,7 +238,7 @@ Total Price: ₹${Math.round(finalPrice)}`;
                 onClick={() => product.blinkit_url && window.open(product.blinkit_url, '_blank')}
                 className={`py-3 rounded-xl font-bold text-[9px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-1.5 ${product.blinkit_url
                   ? 'bg-[#2874F0] text-white hover:bg-blue-600 shadow-md shadow-blue-500/10'
-                  : 'bg-forest/5 text-forest/20 cursor-not-allowed'}`}
+                  : 'bg-white/[0.03] text-foreground/20 cursor-not-allowed'}`}
               >
                 <span className={`font-black italic ${!product.blinkit_url && 'opacity-20'}`}>Flipkart</span>
                 {!product.blinkit_url && '(Soon)'}

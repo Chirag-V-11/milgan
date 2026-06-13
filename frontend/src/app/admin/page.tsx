@@ -224,10 +224,10 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-forest via-[#0A2637] to-[#041017] p-4 sm:p-8 md:p-16 font-sans selection:bg-cream/30 relative overflow-hidden text-gold">
+    <div className="min-h-screen bg-gradient-to-b from-[#23212e] via-[#0A2637] to-[#041017] p-4 sm:p-8 md:p-16 font-sans selection:bg-cream/30 relative overflow-hidden text-gold">
       {/* Premium Dark Amber Glowing Orbs */}
       <div className="absolute top-0 left-0 w-96 h-96 bg-cream/[0.03] rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-forest/[0.03] rounded-full blur-3xl translate-x-1/3 translate-y-1/3 pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-white/[0.03] rounded-full blur-3xl translate-x-1/3 translate-y-1/3 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
 
@@ -244,8 +244,8 @@ export default function AdminDashboard() {
             <p className="text-gold/40 text-xs sm:text-sm font-serif italic font-light">Manage your golden legacy and curated organic treasures</p>
           </div>
           <div className="flex flex-wrap gap-2 sm:gap-4 items-center bg-white/[0.02] backdrop-blur-2xl p-2 sm:p-3 border border-white/10 rounded-2xl sm:rounded-[2rem] shadow-2xl w-full lg:w-auto justify-center lg:justify-start">
-            <Link href="/admin/users" className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] border border-white/10 px-4 sm:px-7 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-gold hover:bg-gold hover:text-forest transition-all flex-1 sm:flex-initial text-center">Users</Link>
-            <Link href="/" className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] border border-white/10 px-4 sm:px-7 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-gold hover:bg-gold hover:text-forest transition-all flex-1 sm:flex-initial text-center">Visit Website</Link>
+            <Link href="/admin/users" className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] border border-white/10 px-4 sm:px-7 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-gold hover:bg-gold hover:text-[#23212e] transition-all flex-1 sm:flex-initial text-center">Users</Link>
+            <Link href="/" className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] border border-white/10 px-4 sm:px-7 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-gold hover:bg-gold hover:text-[#23212e] transition-all flex-1 sm:flex-initial text-center">Visit Website</Link>
             <button onClick={handleLogout} className="bg-red-950/20 hover:bg-red-900/40 border border-red-500/20 text-red-300 px-4 sm:px-7 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-[8px] sm:text-[9px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] transition-all flex-1 sm:flex-initial text-center">Logout</button>
           </div>
         </header>
@@ -255,7 +255,7 @@ export default function AdminDashboard() {
           {/* Form Section */}
           <div className="xl:col-span-7 space-y-8">
             <div className="bg-white/[0.02] backdrop-blur-3xl rounded-[2rem] sm:rounded-[3rem] shadow-[0_50px_100px_rgba(0,0,0,0.5)] border border-white/5 overflow-hidden">
-              <div className="bg-gradient-to-r from-forest/40 to-forest/10 p-5 sm:p-10 text-gold flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 relative overflow-hidden border-b border-white/5 backdrop-blur-md">
+              <div className="bg-gradient-to-r from-[#244b82]/40 to-[#244b82]/10 p-5 sm:p-10 text-gold flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 relative overflow-hidden border-b border-white/5 backdrop-blur-md">
                 <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1582233228805-72861066532d?auto=format&fit=crop&q=80&w=1000')] bg-cover opacity-[0.02] pointer-events-none" />
                 <div className="space-y-1 relative z-10">
                   <h2 className="text-2xl sm:text-3xl font-serif font-bold tracking-tight">
@@ -274,7 +274,7 @@ export default function AdminDashboard() {
                   <div className="space-y-3">
                     <label className="text-[10px] font-black text-white/40 uppercase tracking-widest ml-1">Masterpiece Title</label>
                     <input
-                      type="text" required placeholder="e.g. Traditional A2 Cow Ghee"
+                      type="text" required placeholder="e.g. Traditional Cow Ghee"
                       className="w-full px-4 sm:px-6 py-3.5 sm:py-4.5 rounded-2xl bg-black/40 border border-white/10 focus:bg-[#061C2C] focus:border-gold focus:ring-4 focus:ring-gold/5 outline-none transition-all font-medium text-white text-sm placeholder:text-white/20 shadow-inner"
                       value={product.name} onChange={(e) => setProduct({ ...product, name: e.target.value })}
                     />
@@ -335,7 +335,7 @@ export default function AdminDashboard() {
                   <div className="space-y-6 bg-white/[0.01] p-4 sm:p-8 rounded-[1.5rem] sm:rounded-[2.5rem] border border-white/5">
                     <div className="flex justify-between items-center gap-2">
                       <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-white/60">Variants & Pricing</h3>
-                      <button type="button" onClick={handleAddOption} className="bg-forest text-white px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl text-[9px] font-black uppercase tracking-wider hover:bg-gold transition-all shadow-md shadow-forest/10 hover:shadow-gold/25">+ Add Size</button>
+                      <button type="button" onClick={handleAddOption} className="bg-gold text-[#23212e] px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl text-[9px] font-black uppercase tracking-wider hover:bg-white transition-all shadow-md shadow-gold/10 hover:shadow-white/25">+ Add Size</button>
                     </div>
                     <div className="space-y-4">
                       {(product.quantity_options || []).map((opt, idx) => (
@@ -358,7 +358,7 @@ export default function AdminDashboard() {
                   )}
                   <button
                     type="submit" disabled={loading}
-                    className="w-full bg-cream text-forest py-5 sm:py-6 rounded-2xl sm:rounded-3xl font-black uppercase tracking-[0.3em] sm:tracking-[0.4em] text-[10px] sm:text-xs shadow-2xl shadow-cream/20 hover:bg-gold hover:text-forest border border-cream hover:border-cream transition-all duration-500 transform active:scale-[0.99] disabled:opacity-50"
+                    className="w-full bg-[#fcc433] text-[#23212e] py-5 sm:py-6 rounded-2xl sm:rounded-3xl font-black uppercase tracking-[0.3em] sm:tracking-[0.4em] text-[10px] sm:text-xs shadow-2xl shadow-gold/20 hover:bg-white hover:text-[#23212e] border border-transparent hover:border-transparent transition-all duration-500 transform active:scale-[0.99] disabled:opacity-50"
                   >
                     {loading ? 'Processing...' : (editingId ? 'Refine & Republish' : 'Publish to Catalog')}
                   </button>

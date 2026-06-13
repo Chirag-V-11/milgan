@@ -44,10 +44,10 @@ export default function AdminUsersPage() {
   }, [router]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-forest via-[#0A2637] to-[#041017] p-4 md:p-12 font-sans selection:bg-cream/30 text-gold relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-[#23212e] via-[#0A2637] to-[#041017] p-4 md:p-12 font-sans selection:bg-cream/30 text-gold relative overflow-hidden">
       {/* Premium Dark Amber Glowing Orbs */}
       <div className="absolute top-0 left-0 w-96 h-96 bg-cream/[0.03] rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-forest/[0.03] rounded-full blur-3xl translate-x-1/3 translate-y-1/3 pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-white/[0.03] rounded-full blur-3xl translate-x-1/3 translate-y-1/3 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-6">
@@ -67,7 +67,7 @@ export default function AdminUsersPage() {
             <p className="text-gold/40 font-medium uppercase tracking-[0.2em] text-[10px] font-black">Managing your golden community</p>
           </div>
           <div className="flex gap-4">
-            <Link href="/admin" className="text-[10px] font-black uppercase tracking-widest border border-gold/10 px-8 py-3 rounded-full hover:bg-gold hover:text-forest transition-all text-gold">Back to Vault</Link>
+            <Link href="/admin" className="text-[10px] font-black uppercase tracking-widest border border-gold/10 px-8 py-3 rounded-full hover:bg-gold hover:text-[#23212e] transition-all text-gold">Back to Vault</Link>
           </div>
         </header>
 
@@ -75,7 +75,7 @@ export default function AdminUsersPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-forest/30 border-b border-cream/10 text-cream">
+                <tr className="bg-[#244b82]/30 border-b border-cream/10 text-cream">
                   <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest">Name</th>
                   <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest">Contact Details</th>
                   <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest">Delivery Sanctuary</th>
@@ -93,7 +93,7 @@ export default function AdminUsersPage() {
                   </tr>
                 ) : (
                   users.map((user) => (
-                    <tr key={user.id} className="hover:bg-forest/20 transition-colors group">
+                    <tr key={user.id} className="hover:bg-[#244b82]/20 transition-colors group">
                       <td className="px-8 py-8">
                         <div className="text-gold font-serif font-bold text-lg">{user.name}</div>
                         <div className="text-[9px] font-black uppercase tracking-widest text-cream opacity-0 group-hover:opacity-100 transition-opacity">Member since 2024</div>

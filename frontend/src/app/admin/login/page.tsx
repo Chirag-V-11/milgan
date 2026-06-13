@@ -39,10 +39,10 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-forest via-[#0A2637] to-[#041017] flex items-center justify-center p-4 font-sans selection:bg-cream/30 relative overflow-hidden text-gold">
+    <div className="min-h-screen bg-gradient-to-b from-[#23212e] via-[#0A2637] to-[#041017] flex items-center justify-center p-4 font-sans selection:bg-cream/30 relative overflow-hidden text-gold">
       {/* Premium Dark Amber Glowing Orbs */}
       <div className="absolute top-0 left-0 w-96 h-96 bg-cream/[0.03] rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-forest/[0.03] rounded-full blur-3xl translate-x-1/3 translate-y-1/3 pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-white/[0.03] rounded-full blur-3xl translate-x-1/3 translate-y-1/3 pointer-events-none" />
 
       <div className="max-w-md w-full bg-white/[0.02] backdrop-blur-3xl rounded-[2.5rem] shadow-[0_50px_100px_rgba(0,0,0,0.5)] overflow-hidden border border-white/5 relative z-10">
         <div className="bg-white/[0.02] p-10 text-gold text-center relative overflow-hidden border-b border-white/5">
@@ -87,7 +87,7 @@ export default function AdminLogin() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-cream hover:bg-gold text-forest py-5 rounded-2xl font-black uppercase tracking-[0.3em] text-xs shadow-2xl shadow-cream/25 transition-all transform active:scale-[0.98] disabled:opacity-50"
+            className="w-full bg-[#fcc433] hover:bg-[#e68900] text-[#23212e] py-5 rounded-2xl font-black uppercase tracking-[0.3em] text-xs shadow-2xl transition-all transform active:scale-[0.98] disabled:opacity-50"
           >
             {loading ? 'Decrypting...' : 'Enter Dashboard'}
           </button>

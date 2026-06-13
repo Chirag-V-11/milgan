@@ -2,81 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import ProductCard from "@/components/ProductCard";
 import Link from 'next/link';
+import SixPillarsScroll from "@/components/SixPillarsScroll";
 
-const INGREDIENT_BENEFITS = [
-  {
-    name: 'Elachi',
-    botanical: 'Elettaria cardamomum',
-    role: 'Aroma & Digestion',
-    image: '/image/elachi.png',
-    action: 'Tridoshic (Balances Vata, Pitta, & Kapha)',
-    benefits: [
-      'Ignites the digestive fire (Agni) without causing acidity.',
-      'Acts as a natural carminative to reduce bloating and gas.',
-      'Provides a sweet, soothing aroma that relaxes the nervous system.'
-    ]
-  },
-  {
-    name: 'Pepper',
-    botanical: 'Piper nigrum',
-    role: 'Vital Warmth & Bioavailability',
-    image: '/image/pepper.png',
-    action: 'Deeply Warming (Pitta-stimulating in moderation)',
-    benefits: [
-      'Contains Piperine, which increases the bioavailability of other herbs.',
-      'Stimulates gastric juices for complete nutrient absorption.',
-      'Helps clear congestion and supports respiratory wellness.'
-    ]
-  },
-  {
-    name: 'Methi',
-    botanical: 'Trigonella foenum-graecum',
-    role: 'Gut Balance & Metabolism',
-    image: '/image/methi.png',
-    action: 'Pacifies Vata & Kapha',
-    benefits: [
-      'Nourishes the stomach lining and reduces acid reflux.',
-      'Supports natural blood sugar regulation and metabolic rate.',
-      'Rich in soluble fiber which aids in lubricating the digestive tract.'
-    ]
-  },
-  {
-    name: 'Clove',
-    botanical: 'Syzygium aromaticum',
-    role: 'Antioxidant & Protection',
-    image: '/image/clove.png',
-    action: 'Heating & Clarifying',
-    benefits: [
-      'Loaded with Eugenol, a potent antioxidant for cellular health.',
-      'Helps naturally preserve the ghee and maintain freshness.',
-      'Supports oral hygiene and boosts overall immunity.'
-    ]
-  },
-  {
-    name: 'Beetel Leaf',
-    botanical: 'Piper betle',
-    role: 'Detoxification & Clarification',
-    image: '/image/beetel.png',
-    action: 'Highly Alkaline & Cleansing',
-    benefits: [
-      'Historically used to clarify ghee, removing impurities perfectly.',
-      'Stimulates saliva and digestive enzymes for immediate gut activation.',
-      'Provides antioxidant support and acts as a natural cleanser.'
-    ]
-  },
-  {
-    name: 'Turmeric',
-    botanical: 'Curcuma longa',
-    role: 'Golden Healing & Immunity',
-    image: '/image/turmeric.png',
-    action: 'Anti-inflammatory & Blood Purifier',
-    benefits: [
-      'Provides Curcumin, a world-renowned anti-inflammatory compound.',
-      'Builds robust immunity and speeds up internal tissue repair.',
-      'Nourishes skin from within, promoting a healthy radiant glow.'
-    ]
-  }
-];
 
 export default function Home() {
   const [products, setProducts] = useState([]);
@@ -84,6 +11,9 @@ export default function Home() {
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [scrollY, setScrollY] = useState(0);
+  const [isRevealed, setIsRevealed] = useState(false);
+  const [isCenterHovered, setIsCenterHovered] = useState(false);
+  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -119,75 +49,69 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-transparent font-sans selection:bg-forest/30 overflow-x-hidden scroll-smooth relative">
+    <div className="min-h-screen bg-transparent font-sans selection:bg-gold/30 overflow-x-clip scroll-smooth relative">
 
-      {/* Glistening Atmosphere over Gold */}
+      {/* Glistening Atmosphere over Dark Gradient */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[60%] bg-white/20 rounded-full blur-[120px] animate-pulse duration-[10s]" />
-        <div className="absolute bottom-[-5%] right-[-5%] w-[40%] h-[50%] bg-forest/10 rounded-full blur-[100px] animate-pulse duration-[8s] delay-1000" />
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[60%] bg-white/5 rounded-full blur-[120px] animate-pulse duration-[10s]" />
+        <div className="absolute bottom-[-5%] right-[-5%] w-[40%] h-[50%] bg-gold/5 rounded-full blur-[100px] animate-pulse duration-[8s] delay-1000" />
       </div>
 
-      {/* Scroll Progress Bar (Inverted for Gold) */}
-      <div className="fixed top-0 left-0 h-1 bg-forest z-[100] transition-all duration-300" style={{ width: `${scrollProgress}%` }} />
+      {/* Scroll Progress Bar */}
+      <div className="fixed top-0 left-0 h-1 bg-gold z-[100] transition-all duration-300" style={{ width: `${scrollProgress}%` }} />
 
       {/* 1. MINIMALIST TYPOGRAPHIC HERO */}
-      <section className="relative h-[100vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-[#FDC333] via-[#FDE17A] to-[#FCE38A]">
+      <section className="relative h-[100vh] flex items-center justify-center overflow-hidden bg-transparent">
         <div className="absolute inset-0 z-0 bg-transparent" />
 
         <div className="relative z-10 text-center space-y-12 md:space-y-16 px-6 max-w-7xl translate-y-8 md:translate-y-12">
-          <div className="space-y-4 md:space-y-6">
-            <h1 className="text-[18vw] md:text-[15vw] font-serif font-black text-forest tracking-tighter leading-[0.7] select-none">MILGAN</h1>
-            <div className="flex items-center justify-center gap-2 md:gap-6">
-              <div className="h-px w-6 sm:w-12 md:w-20 bg-forest" />
-              <p className="text-forest text-[8px] sm:text-[10px] md:text-sm font-black uppercase tracking-[0.3em] md:tracking-[0.8em] whitespace-nowrap">Fresh | Pure | Delicious</p>
-              <div className="h-px w-6 sm:w-12 md:w-20 bg-forest" />
+          <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12">
+            {/* Left Column: Kannada Logo */}
+            <div className="flex-shrink-0">
+              <img
+                src="/image/milgan logo-0.png"
+                alt="Milgan Kannada Logo"
+                className="w-full max-w-[16rem] sm:max-w-[20rem] object-contain select-none"
+              />
+            </div>
+
+            {/* Right Column: Main Logo and Tagline stacked */}
+            <div className="flex flex-col items-center gap-4">
+              <img
+                src="/image/milgan side logo-2.png"
+                alt="MILGAN - Fresh | Pure | Delicious"
+                className="w-full max-w-[28rem] sm:max-w-[32rem] object-contain select-none"
+              />
+              <img
+                src="/image/Milgan tagline.png"
+                alt="Milgan Tagline"
+                className="w-full max-w-[28rem] sm:max-w-[32rem] object-contain select-none"
+              />
             </div>
           </div>
-          <button onClick={() => document.getElementById('boutique')?.scrollIntoView({ behavior: 'smooth' })} className="group relative px-12 md:px-16 py-5 md:py-7 bg-forest text-white rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-2xl">
-            <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
-            <span className="relative z-10 text-[9px] md:text-[10px] font-black uppercase tracking-[0.5em] group-hover:text-forest transition-colors">Enter Sanctuary</span>
+          <button onClick={() => document.getElementById('boutique')?.scrollIntoView({ behavior: 'smooth' })} className="group relative px-12 md:px-16 py-5 md:py-7 bg-gold text-[#23212e] rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-2xl font-black uppercase tracking-[0.5em] text-[9px] md:text-[10px]">
+            <div className="absolute inset-0 bg-[#e1ddde] translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+            <span className="relative z-10 group-hover:text-[#23212e] transition-colors">Enter Sanctuary</span>
           </button>
         </div>
       </section>
 
-      {/* 2. CORE BENEFITS */}
-      <section className="py-20 relative z-10 bg-gradient-to-b from-[#FCE38A] to-[#FCFCFC]">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
-            {[
-              { title: 'Immunity', image: '/image/immunity.png' },
-              { title: 'Bilona Churned', image: '/image/bilona.png' },
-              { title: 'Easy Digestion', image: '/image/digestion.png' },
-              { title: 'Rich Nutrition', image: '/image/nutrition.png' },
-              { title: 'Delicious Taste', image: '/image/delicious.png' }
-            ].map((p, i) => (
-              <div key={i} className="p-8 md:p-12 bg-white/20 backdrop-blur-md rounded-[2.5rem] md:rounded-[3rem] border border-white/30 flex flex-col items-center justify-center space-y-6 md:space-y-8 group hover:bg-white/40 transition-all duration-700 hover:-translate-y-2">
-                <div className="w-20 h-20 md:w-28 md:h-28 relative overflow-hidden group-hover:scale-110 transition-all duration-700 inline-block animate-float" style={{ animationDelay: `${i * 0.3}s` }}>
-                  <img src={p.image} className="w-full h-full object-contain" alt={p.title} />
-                </div>
-                <h3 className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em] text-forest group-hover:text-forest transition-colors text-center">{p.title}</h3>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* 3. STAGGERED BOUTIQUE GALLERY */}
-      <section id="boutique" className="py-24 md:py-48 relative border-y border-forest/10 scroll-mt-24 overflow-hidden bg-gradient-to-b from-[#FCFCFC] via-[#FDFBF7] to-[#FCE38A]">
-        <div className="absolute top-1/2 left-0 -translate-y-1/2 text-[20vw] font-serif font-black text-forest/[0.05] select-none pointer-events-none whitespace-nowrap tracking-tighter">
+      <section id="boutique" className="pt-18 pb-24 md:pt-18 md:pb-18 relative border-y border-white/5 scroll-mt-24 overflow-hidden bg-transparent">
+        <div className="absolute top-1/2 left-0 -translate-y-1/2 text-[20vw] font-serif font-black text-white/[0.02] select-none pointer-events-none whitespace-nowrap tracking-tighter">
           COLLECTION COLLECTION COLLECTION
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-24 md:space-y-32 relative z-10">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-24 md:space-y-10 relative z-10">
           <div className="flex flex-col items-center text-center space-y-6 max-w-2xl mx-auto">
-            <span className="text-forest text-[10px] font-black uppercase tracking-[0.8em]">Artisanal Selection</span>
-            <h2 className="text-4xl md:text-8xl font-serif font-bold text-forest tracking-tighter leading-tight italic">Liquid Gold, <br /><span className="text-[#D49800] not-italic">Captured.</span></h2>
+            <span className="text-gold text-[10px] font-black uppercase tracking-[0.8em]">Artisanal Selection</span>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground tracking-tighter leading-tight italic">Liquid Gold,<span className="text-gold not-italic">Captured.</span></h2>
           </div>
 
           {loading ? (
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-12 pb-4">
               {[1, 2, 3].map(i => (
-                <div key={i} className={`aspect-[4/5] rounded-[2.5rem] md:rounded-[3rem] bg-forest/5 animate-pulse ${i === 3 ? 'col-span-2 md:col-span-1' : ''}`} />
+                <div key={i} className={`aspect-[4/5] rounded-[2.5rem] md:rounded-[3rem] bg-white/[0.05] animate-pulse ${i === 3 ? 'col-span-2 md:col-span-1' : ''}`} />
               ))}
             </div>
           ) : (
@@ -209,17 +133,17 @@ export default function Home() {
                     `}
                   >
                     <div
-                      className="block relative aspect-[4/5] rounded-[2.5rem] md:rounded-[3rem] overflow-hidden bg-white/10 backdrop-blur-sm border border-white/20 shadow-sm group-hover:shadow-2xl transition-all duration-700 w-full"
+                      className="block relative aspect-[4/5] rounded-[2.5rem] md:rounded-[3rem] overflow-hidden bg-white/[0.03] backdrop-blur-sm border border-white/10 shadow-sm group-hover:shadow-2xl transition-all duration-700 w-full"
                     >
                       <img
                         src={product.image_url || product.image || "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=1000"}
                         className="w-full h-full object-cover transition-transform duration-[2000ms] group-hover:scale-110"
                         alt={product.name}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-forest/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#23212e]/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
                       <div className="absolute top-3 left-3 md:top-8 md:left-8">
-                        <span className="px-3 py-1 md:px-5 md:py-2 bg-white/95 backdrop-blur-md rounded-full text-[7px] md:text-[9px] font-black uppercase tracking-wider md:tracking-widest text-forest border border-forest/5 whitespace-nowrap shadow-sm">
+                        <span className="px-3 py-1 md:px-5 md:py-2 bg-black/40 backdrop-blur-md rounded-full text-[7px] md:text-[9px] font-black uppercase tracking-wider md:tracking-widest text-gold border border-white/10 whitespace-nowrap shadow-sm">
                           {product.category || 'Limited Stock'}
                         </span>
                       </div>
@@ -239,19 +163,19 @@ export default function Home() {
 
                     <div className="mt-6 space-y-2">
                       <div className="flex items-center justify-between gap-4">
-                        <h3 className="text-lg font-serif font-bold text-forest group-hover:text-[#D49800] transition-colors">{product.name}</h3>
+                        <h3 className="text-lg font-serif font-bold text-foreground group-hover:text-gold transition-colors">{product.name}</h3>
                         <div className="flex items-center gap-1.5 flex-shrink-0">
-                          <div className="w-1.5 h-1.5 bg-forest rounded-full animate-pulse" />
-                          <span className="text-[9px] font-black uppercase tracking-widest text-forest/70">Limited Batch</span>
+                          <div className="w-1.5 h-1.5 bg-gold rounded-full animate-pulse" />
+                          <span className="text-[9px] font-black uppercase tracking-widest text-foreground/70">Limited Batch</span>
                         </div>
                       </div>
                       <div className="flex justify-between items-baseline">
-                        <span className="text-lg font-serif font-bold text-forest">₹{finalPrice}</span>
+                        <span className="text-lg font-serif font-bold text-gold">₹{finalPrice}</span>
                         {discount > 0 && (
-                          <span className="text-xs text-forest/40 line-through">₹{baseCost}</span>
+                          <span className="text-xs text-foreground/40 line-through">₹{baseCost}</span>
                         )}
                       </div>
-                      <div className="h-px w-full bg-forest/15" />
+                      <div className="h-px w-full bg-white/10" />
                     </div>
                   </Link>
                 );
@@ -262,45 +186,128 @@ export default function Home() {
       </section>
 
       {/* 2.5 ABOUT US (THE HERITAGE) */}
-      <section className="py-24 md:py-40 relative z-10 bg-gradient-to-b from-[#FCE38A] to-[#FCFCFC]">
+      <section className="py-18 md:py-18 relative z-10 bg-transparent">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 items-center">
-            <div className="relative aspect-square md:aspect-[4/5] rounded-[3rem] overflow-hidden border border-white/30 shadow-2xl group">
-              <img
-                src="image/image.png"
-                className="w-full h-full object-cover transition-transform duration-[3000ms] group-hover:scale-105"
-                alt="Vedic Churning Process"
-              />
-              <div className="absolute inset-0 bg-forest/10 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-              <div className="absolute bottom-8 left-8 right-8 p-6 bg-white/20 backdrop-blur-xl border border-white/30 rounded-3xl">
-                <p className="text-white font-serif italic text-sm md:text-base leading-relaxed shadow-sm">
-                  "Every jar is a testament to patience. We don't just make ghee; we preserve a 5,000-year-old ritual."
-                </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 items-start">
+            <div className="flex flex-col items-center gap-12 lg:gap-16">
+              <div className="w-full relative aspect-square md:aspect-[4/5] rounded-[3rem] overflow-hidden border border-white/10 shadow-2xl group">
+                <img
+                  src="image/image.png"
+                  className="w-full h-full object-cover transition-transform duration-[3000ms] group-hover:scale-105"
+                  alt="Vedic Churning Process"
+                />
+                <div className="absolute inset-0 bg-[#23212e]/25 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                <div className="absolute bottom-8 left-8 right-8 p-6 bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl">
+                  <p className="text-white font-serif italic text-sm md:text-base leading-relaxed shadow-sm">
+                    "Every jar is a testament to patience. We don't just make ghee; we preserve a 5,000-year-old ritual."
+                  </p>
+                </div>
+              </div>
+
+              {/* Holistic Purity section */}
+              <div className="w-full flex flex-col items-center justify-center py-6 md:py-0">
+
+                {/* Circular Layout Container */}
+                <div
+                  className="relative benefits-container w-[340px] h-[240px] md:w-[600px] md:h-[420px] lg:w-[460px] lg:h-[340px] xl:w-[600px] xl:h-[420px] transition-all duration-700"
+                  onMouseEnter={() => setIsRevealed(true)}
+                  onMouseLeave={() => {
+                    setIsRevealed(false);
+                    setIsCenterHovered(false);
+                    setHoveredIdx(null);
+                  }}
+                >
+                  {/* Center Circle Element */}
+                  <div
+                    className={`absolute z-20 w-28 h-28 md:w-48 md:h-48 lg:w-36 lg:h-36 xl:w-48 xl:h-48 rounded-full border border-gold/40 bg-[#23212e]/90 backdrop-blur-xl flex flex-col items-center justify-center cursor-pointer transition-all duration-700 shadow-xl left-1/2 top-[80px] md:top-[130px] lg:top-[100px] xl:top-[130px] ${isCenterHovered
+                      ? 'shadow-[0_0_40px_rgba(252,196,51,0.4)] border-gold'
+                      : 'hover:border-gold/80 hover:shadow-[0_0_20px_rgba(252,196,51,0.2)]'
+                      }`}
+                    style={{
+                      transform: `translate(-50%, -50%) ${isCenterHovered ? 'scale(1.1)' : 'scale(1)'}`,
+                    }}
+                    onMouseEnter={() => {
+                      setIsCenterHovered(true);
+                      setIsRevealed(true);
+                    }}
+                    onMouseLeave={() => setIsCenterHovered(false)}
+                  >
+                    <div className="text-center space-y-1 select-none px-4">
+                      <span className="block text-xs md:text-sm font-black uppercase tracking-[0.3em] text-gold">
+                        Benefits
+                      </span>
+                      <span className="block text-[8px] md:text-[9px] font-serif italic text-white/50 tracking-normal">
+                        {isRevealed ? 'Revealed' : 'Hover to view'}
+                      </span>
+                    </div>
+
+                    {/* Outer decorative ring */}
+                    <div className="absolute inset-[-6px] rounded-full border border-gold/20 animate-spin-slow pointer-events-none" />
+                  </div>
+
+                  {/* Around this: the benefit items */}
+                  {[
+                    { title: 'Immunity', image: '/image/immunity.png' },
+                    { title: 'Bilona Churned', image: '/image/bilona.png' },
+                    { title: 'Easy Digestion', image: '/image/digestion.png' },
+                    { title: 'Rich Nutrition', image: '/image/nutrition.png' },
+                    { title: 'Delicious Taste', image: '/image/delicious.png' }
+                  ].map((p, i) => {
+                    const angle = 180 - i * 45; // Semicircle layout below the center (180 to 0 degrees)
+                    return (
+                      <div
+                        key={i}
+                        className={`absolute left-1/2 top-[80px] md:top-[130px] lg:top-[100px] xl:top-[130px] w-20 h-20 md:w-36 md:h-36 lg:w-28 lg:h-28 xl:w-36 xl:h-36 rounded-full z-10 flex flex-col items-center justify-center p-2 md:p-6 lg:p-4 xl:p-6 bg-[#23212e]/70 backdrop-blur-md border border-white/10 transition-all duration-700 group cursor-pointer hover:border-gold/50 hover:bg-[#23212e]/95 ${isRevealed
+                          ? 'opacity-100 blur-none shadow-[0_0_25px_rgba(252,196,51,0.15)] border-gold/30'
+                          : 'opacity-10 blur-[1px]'
+                          }`}
+                        onMouseEnter={() => setHoveredIdx(i)}
+                        onMouseLeave={() => setHoveredIdx(null)}
+                        style={{
+                          transform: `translate(-50%, -50%) rotate(${angle}deg) translate(${isRevealed ? 'var(--radius)' : '0px'
+                            }) rotate(${-angle}deg) scale(${hoveredIdx === i ? 1.1 : isRevealed ? 1 : 0.5
+                            })`,
+                        }}
+                      >
+                        <div className="w-8 h-8 md:w-16 md:h-16 lg:w-10 lg:h-10 xl:w-16 xl:h-16 relative overflow-hidden group-hover:scale-110 transition-transform duration-700 flex items-center justify-center">
+                          <img src={p.image} className="w-full h-full object-contain filter brightness-110 contrast-110" alt={p.title} />
+                        </div>
+                        <h3 className="hidden md:block text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-white/90 group-hover:text-gold transition-colors text-center mt-2 max-w-[100px] leading-tight">
+                          {p.title}
+                        </h3>
+                        {/* Tooltip on hover/mobile */}
+                        <div className="absolute bottom-[-28px] md:hidden bg-[#23212e]/95 text-gold text-[8px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full border border-gold/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap shadow-md">
+                          {p.title}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
             <div className="space-y-10 md:space-y-12">
               <div className="space-y-4">
-                <span className="text-white text-[10px] md:text-xs font-black uppercase tracking-[0.8em]">Our Legacy</span>
-                <h2 className="text-5xl md:text-7xl font-serif font-bold text-forest tracking-tighter leading-[1.1]">The Return to <br /><span className="italic font-light">Purity.</span></h2>
+                <span className="text-gold text-[10px] md:text-xs font-black uppercase tracking-[0.8em]">Our Legacy</span>
+                <h2 className="text-5xl md:text-7xl font-serif font-bold text-foreground tracking-tighter leading-[1.1]">The Return to <br /><span className="italic font-light text-gold">Purity.</span></h2>
               </div>
-              <div className="space-y-6 text-forest/80 text-lg md:text-xl font-serif leading-relaxed">
+              <div className="space-y-6 text-foreground/80 text-lg md:text-xl font-serif leading-relaxed">
                 <p>
                   Milgan was born out of a longing for the truth. In a world of mass production and forgotten roots, we chose the harder, slower path.
                 </p>
                 <p>
-                  We partner exclusively with indigenous farms where purebred A2 cows graze freely in sunlit pastures. We follow the sacred Bilona method—curding the milk, churning it in two directions before dawn, and slow-cooking the makhan over a gentle wood fire.
+                  We partner exclusively with indigenous farms where purebred cows graze freely in sunlit pastures. We follow the sacred Bilona method—curding the milk, churning it in two directions before dawn, and slow-cooking the makhan over a gentle wood fire.
                 </p>
                 <p>
                   During the slow clarification process, the ghee is infused with traditional elements—<strong>Elachi, pepper, methi, clove, beetel leaf, and turmeric</strong>—honoring ancient recipes to enhance its aroma, preservation, and healing power.
                 </p>
-                <p className="font-bold text-forest">
+                <p className="font-bold text-gold">
                   The result is not merely an ingredient, but liquid life force. This is our promise. This is Milgan.
                 </p>
               </div>
 
               {/* Traditional Ingredients Grid */}
-              <div className="pt-8 border-t border-forest/10 space-y-4">
-                <span className="text-forest text-[10px] font-black uppercase tracking-[0.4em]">The Alchemical Infusion</span>
+              <div className="pt-8 border-t border-white/10 space-y-4">
+                <span className="text-gold text-[10px] font-black uppercase tracking-[0.4em]">The Alchemical Infusion</span>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                   {[
                     { name: 'Elachi', image: '/image/elachi.png', detail: 'Digestion & Aroma' },
@@ -310,169 +317,79 @@ export default function Home() {
                     { name: 'Beetel Leaf', image: '/image/beetel.png', detail: 'Natural Clarifier' },
                     { name: 'Turmeric', image: '/image/turmeric.png', detail: 'Golden Healing' }
                   ].map((ing, idx) => (
-                    <div key={idx} className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl flex flex-col items-center text-center space-y-1.5 hover:bg-white/30 transition-all duration-300">
+                    <div key={idx} className="bg-white/[0.03] backdrop-blur-md border border-white/10 p-4 rounded-2xl flex flex-col items-center text-center space-y-1.5 hover:bg-white/[0.08] hover:border-gold/30 transition-all duration-300">
                       <div className="w-12 h-12 relative overflow-hidden">
                         <img src={ing.image} className="w-full h-full object-contain" alt={ing.name} />
                       </div>
-                      <span className="text-xs font-black text-forest uppercase tracking-widest">{ing.name}</span>
-                      <span className="text-[9px] text-forest/60 font-serif italic">{ing.detail}</span>
+                      <span className="text-xs font-black text-foreground uppercase tracking-widest">{ing.name}</span>
+                      <span className="text-[9px] text-foreground/60 font-serif italic">{ing.detail}</span>
                     </div>
                   ))}
                 </div>
               </div>
               <div className="pt-4 flex items-center gap-8">
-                <div className="text-forest text-4xl">🌿</div>
-                <div className="h-px flex-1 bg-white/30" />
-                <div className="text-[10px] font-black uppercase tracking-[0.4em] text-forest">Since Time Immemorial</div>
+                <div className="text-gold text-4xl">🌿</div>
+                <div className="h-px flex-1 bg-white/10" />
+                <div className="text-[10px] font-black uppercase tracking-[0.4em] text-gold">Since Time Immemorial</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 3.5 THE ALCHEMY OF THE SIX PILLARS (BENTO GRID STYLE) */}
-      <section className="py-24 md:py-40 relative z-10 bg-gradient-to-b from-[#FCFCFC] via-[#FDFBF7] to-[#FCFCFC] overflow-hidden">
-        {/* Decorative background vectors/glows */}
-        <div className="absolute top-1/3 left-0 w-[40%] h-[40%] bg-forest/[0.03] rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-1/3 right-0 w-[40%] h-[40%] bg-[#FDC333]/5 rounded-full blur-[120px] pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="text-center space-y-6 max-w-3xl mx-auto mb-20">
-            <span className="text-forest text-[10px] md:text-xs font-black uppercase tracking-[0.8em]">Synergistic Wellness</span>
-            <h2 className="text-5xl md:text-7xl font-serif font-bold text-forest tracking-tighter">The Alchemy of <br /><span className="italic font-light text-[#D49800]">Six Pillars.</span></h2>
-            <p className="text-forest/70 text-lg font-serif italic max-w-2xl mx-auto">
-              Our A2 Bilona Ghee is slowly cooked with six traditional botanical ingredients. Here is how each pillar enhances your vitality and health.
-            </p>
-          </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 md:gap-8">
-            {INGREDIENT_BENEFITS.map((ing, idx) => (
-              <div
-                key={idx}
-                className="group relative bg-white/40 backdrop-blur-md border border-forest/15 rounded-[1.5rem] sm:rounded-[2.5rem] p-4 sm:p-8 md:p-10 flex flex-col justify-between transition-all duration-700 hover:-translate-y-2 hover:bg-white/80 hover:shadow-2xl hover:border-forest/40 overflow-hidden"
-              >
-                {/* Subtle internal glowing orb on hover */}
-                <div className="absolute -top-24 -right-24 w-48 h-48 bg-forest/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+      {/* 3.5 THE ALCHEMY OF THE SIX PILLARS (SCROLLING EFFECT) */}
+      <SixPillarsScroll />
 
-                <div className="space-y-4 sm:space-y-6 relative z-10">
-                  {/* Top Row: Tag & Floating image */}
-                  <div className="flex flex-col sm:flex-row justify-between items-start gap-3 sm:gap-4">
-                    <span className="px-2.5 py-0.5 sm:px-3 sm:py-1 bg-forest/5 text-forest border border-forest/10 rounded-full text-[7px] sm:text-[8px] md:text-[9px] font-black uppercase tracking-wider">
-                      {ing.role}
-                    </span>
-                    <div className="w-10 h-10 sm:w-16 sm:h-16 md:w-20 md:h-20 bg-white/65 rounded-xl sm:rounded-2xl p-1.5 sm:p-2 border border-white/45 shadow-sm flex items-center justify-center flex-shrink-0 animate-float group-hover:scale-110 transition-transform duration-700" style={{ animationDelay: `${idx * 0.4}s` }}>
-                      <img src={ing.image} alt={ing.name} className="w-full h-full object-contain" />
-                    </div>
-                  </div>
 
-                  {/* Identification */}
-                  <div>
-                    <h3 className="text-lg sm:text-2xl md:text-3xl font-serif font-bold text-forest group-hover:text-[#D49800] transition-colors duration-500">
-                      {ing.name}
-                    </h3>
-                    <p className="text-[8px] sm:text-[10px] italic font-serif text-forest/40 mt-1">
-                      {ing.botanical}
-                    </p>
-                  </div>
-
-                  {/* Divider */}
-                  <div className="h-px w-full bg-forest/10" />
-
-                  {/* Ayurvedic Profile */}
-                  <div className="space-y-1">
-                    <span className="text-[7px] sm:text-[8px] font-black uppercase tracking-wider text-forest/50">Ayurvedic Action</span>
-                    <p className="text-xs sm:text-sm font-serif italic text-forest font-semibold">{ing.action}</p>
-                  </div>
-
-                  {/* Benefits checklist */}
-                  <div className="space-y-2 sm:space-y-3 pt-1 sm:pt-2">
-                    <span className="text-[7px] sm:text-[8px] font-black uppercase tracking-wider text-forest/50">Medicinal Virtues</span>
-                    <ul className="space-y-2">
-                      {ing.benefits.map((b, bIdx) => (
-                        <li key={bIdx} className="flex items-start gap-1.5 sm:gap-2.5">
-                          <span className="text-[#D49800] text-[10px] sm:text-xs mt-0.5 flex-shrink-0">✦</span>
-                          <span className="text-forest/80 font-serif text-[10px] sm:text-xs md:text-sm leading-relaxed">{b}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="mt-6 sm:mt-8 pt-3 sm:pt-4 border-t border-forest/5 flex items-center justify-between text-[7px] sm:text-[8px] font-black uppercase tracking-widest text-forest/40">
-                  <span>Bilona Infusion</span>
-                  <span>Pure Organic</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 4. MEDICINAL GOLD */}
-      <section className="py-24 md:py-40 relative overflow-hidden bg-gradient-to-b from-[#FCFCFC] via-[#FDC333] to-[#E59500]">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 items-center">
-          <div className="space-y-12 md:space-y-16 relative z-10">
-            <h2 className="text-5xl md:text-9xl font-serif font-bold text-forest tracking-tighter leading-tight text-center lg:text-left">Liquid <br /><span className="text-white italic font-light">Wisdom.</span></h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-8">
-              {[{ t: 'Immunity', d: 'Natural defense booster' }, { t: 'Brain Fuel', d: 'Rich in healthy acids' }, { t: 'Digestion', d: 'Vedic gut healing' }, { t: 'Skin Radiance', d: 'Inner & outer glow' }].map((b, i) => (
-                <div key={i} className="p-8 bg-white/20 backdrop-blur-xl border border-white/30 rounded-[2rem] md:rounded-[2.5rem] space-y-4 hover:bg-white/40 transition-all duration-500 hover:shadow-2xl">
-                  <div className="text-forest animate-bounce-slow">✦</div>
-                  <h4 className="font-bold text-forest uppercase tracking-widest text-[9px] md:text-[10px]">{b.t}</h4>
-                  <p className="text-[10px] md:text-[11px] text-forest font-medium">{b.d}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="hidden lg:flex justify-center relative"><div className="text-[20rem] animate-float duration-[6s] text-forest">🏺</div></div>
-        </div>
-      </section>
 
       {/* 5. ARTISAN WALL OF TRUST */}
-      <section className="py-40 relative overflow-hidden border-t border-forest/10 bg-gradient-to-b from-[#E59500] via-[#FCE38A] to-[#FCFCFC]">
-        <div className="max-w-7xl mx-auto px-6 space-y-24">
+      <section className="py-18 relative overflow-hidden border-t border-white/5 bg-transparent">
+        <div className="max-w-7xl mx-auto px-6 space-y-18">
           <div className="text-center space-y-6 max-w-3xl mx-auto">
-            <h2 className="text-5xl md:text-7xl font-serif font-bold text-forest tracking-tighter">What seekers say about Milgan</h2>
-            <p className="text-forest/60 text-lg font-serif italic">Busy families, holistic healers, and tastemakers — everyone loves the life-force of our pure A2 Vedic Ghee.</p>
+            <h2 className="text-5xl md:text-7xl font-serif font-bold text-foreground tracking-tighter">What seekers say about Milgan</h2>
+            <p className="text-foreground/60 text-lg font-serif italic">Busy families, holistic healers, and tastemakers — everyone loves the life-force of our pure Vedic Ghee.</p>
           </div>
           <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
-            <div className="break-inside-avoid p-10 bg-forest rounded-[2.5rem] space-y-8 text-center group hover:bg-white transition-all duration-700">
-              <div className="text-white group-hover:text-forest transition-colors text-[10px] font-black uppercase tracking-[0.4em]">Heritage Awards</div>
-              <div className="text-3xl font-serif font-bold text-white group-hover:text-forest tracking-tight transition-colors">Most Innovative <br /> Artisanal Brand</div>
+            <div className="break-inside-avoid p-10 bg-gold rounded-[2.5rem] space-y-8 text-center group hover:bg-[#e1ddde] transition-all duration-700">
+              <div className="text-[#23212e] text-[10px] font-black uppercase tracking-[0.4em]">Heritage Awards</div>
+              <div className="text-3xl font-serif font-bold text-[#23212e] tracking-tight">Most Innovative <br /> Artisanal Brand</div>
               <div className="text-5xl">🏆</div>
             </div>
-            <div className="break-inside-avoid relative aspect-[4/5] rounded-[2.5rem] overflow-hidden group border border-white/20 shadow-xl">
+            <div className="break-inside-avoid relative aspect-[4/5] rounded-[2.5rem] overflow-hidden group border border-white/10 shadow-xl">
               <img src="/image/nature.webp" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt="Customer" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#23212e] via-transparent to-transparent opacity-85" />
               <div className="absolute bottom-10 left-10 right-10 space-y-4">
-                <div className="text-white text-[9px] font-black uppercase tracking-widest opacity-60">Seeker Story</div>
+                <div className="text-gold text-[9px] font-black uppercase tracking-widest opacity-80">Seeker Story</div>
                 <h3 className="text-2xl font-serif font-bold text-white">The Sharma Family</h3>
                 <p className="text-white/80 text-sm italic">"Milgan has become the heart of our kitchen. Every meal feels like a blessing."</p>
               </div>
             </div>
-            <div className="break-inside-avoid p-12 bg-white/20 backdrop-blur-md border border-white/30 rounded-[2.5rem] text-center space-y-6 hover:bg-white/40 transition-all">
-              <div className="text-6xl font-serif font-bold text-forest tracking-tighter leading-none">4.92</div>
-              <div className="text-forest text-lg">★★★★★</div>
-              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-forest">Trusted in thousands of modern kitchens</p>
+            <div className="break-inside-avoid p-12 bg-white/[0.03] backdrop-blur-md border border-white/10 rounded-[2.5rem] text-center space-y-6 hover:bg-white/[0.07] transition-all">
+              <div className="text-6xl font-serif font-bold text-gold tracking-tighter leading-none">4.92</div>
+              <div className="text-gold text-lg">★★★★★</div>
+              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-foreground/80">Trusted in thousands of modern kitchens</p>
             </div>
-            <div className="break-inside-avoid p-10 bg-white/20 border border-white/30 rounded-[2.5rem] space-y-6 hover:bg-white/40 transition-all">
-              <div className="text-forest text-2xl font-serif italic">“</div>
-              <p className="text-forest font-serif italic leading-relaxed text-xl">"This is not just ghee; it's a sensory journey. The aroma takes me back to my grandmother's kitchen."</p>
-              <div className="flex items-center gap-4 pt-4 border-t border-forest/10">
-                <div className="w-10 h-10 bg-forest rounded-full flex items-center justify-center text-white text-[10px] font-black">RV</div>
+            <div className="break-inside-avoid p-10 bg-white/[0.03] border border-white/10 rounded-[2.5rem] space-y-6 hover:bg-white/[0.07] transition-all">
+              <div className="text-gold text-2xl font-serif italic">“</div>
+              <p className="text-foreground/90 font-serif italic leading-relaxed text-xl">"This is not just ghee; it's a sensory journey. The aroma takes me back to my grandmother's kitchen."</p>
+              <div className="flex items-center gap-4 pt-4 border-t border-white/10">
+                <div className="w-10 h-10 bg-gold rounded-full flex items-center justify-center text-[#23212e] text-[10px] font-black">RV</div>
                 <div className="space-y-1">
-                  <div className="text-xs font-bold text-forest">Rahul Varma</div>
-                  <div className="text-[9px] font-black uppercase tracking-widest text-forest/60">Verified Seeker</div>
+                  <div className="text-xs font-bold text-foreground animate-pulse">Rahul Varma</div>
+                  <div className="text-[9px] font-black uppercase tracking-widest text-foreground/60">Verified Seeker</div>
                 </div>
               </div>
             </div>
-            <div className="break-inside-avoid p-10 bg-forest/10 rounded-[2.5rem] space-y-8 hover:bg-forest transition-all duration-700 group">
-              <p className="text-forest group-hover:text-white transition-colors text-xl font-serif italic leading-relaxed font-medium">"It's like farm to table, but sacred to table. Milgan solves the search for real A2 purity."</p>
+            <div className="break-inside-avoid p-10 bg-gold/10 rounded-[2.5rem] space-y-8 hover:bg-gold transition-all duration-700 group">
+              <p className="text-foreground group-hover:text-[#23212e] transition-colors text-xl font-serif italic leading-relaxed font-medium">"It's like farm to table, but sacred to table. Milgan solves the search for real purity."</p>
               <div className="space-y-1">
-                <div className="text-sm font-bold text-forest group-hover:text-white transition-colors">Sneha Kapur</div>
-                <div className="text-[9px] font-black uppercase tracking-widest text-forest group-hover:text-white transition-colors">Wellness Editor</div>
+                <div className="text-sm font-bold text-foreground group-hover:text-[#23212e] transition-colors">Sneha Kapur</div>
+                <div className="text-[9px] font-black uppercase tracking-widest text-foreground/60 group-hover:text-[#23212e]/60 transition-colors">Wellness Editor</div>
               </div>
             </div>
-            <div className="break-inside-avoid relative aspect-square rounded-[2.5rem] overflow-hidden border border-white/20">
+            <div className="break-inside-avoid relative aspect-square rounded-[2.5rem] overflow-hidden border border-white/10">
               <img src="/image/place_the_ghee_jar_2K_202605141500.jpeg" className="w-full h-full object-cover" alt="Process" />
             </div>
           </div>
@@ -480,47 +397,47 @@ export default function Home() {
       </section>
 
       {/* 5.5 FOUNDER'S MESSAGE */}
-      <section className="py-24 md:py-40 relative z-10 bg-gradient-to-b from-[#FCFCFC] via-[#FDFBF7] to-[#FCFCFC] border-t border-forest/5">
+      <section className="py-18 md:py-18 relative z-10 bg-transparent border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 items-center">
             {/* Founder Image Card */}
-            <div className="relative aspect-square md:aspect-[4/5] rounded-[3rem] overflow-hidden border border-white/40 shadow-2xl group order-last lg:order-first bg-white">
+            <div className="relative aspect-square md:aspect-[4/5] rounded-[3rem] overflow-hidden border border-white/10 shadow-2xl group order-last lg:order-first bg-white/[0.03]">
               <img
                 src="/image/founder.png"
                 className="w-full h-full object-contain object-top transition-transform duration-[3000ms] group-hover:scale-105"
                 alt="Anand, Founder of Milgan"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-forest/35 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-1000" />
-              <div className="absolute bottom-8 left-8 right-8 p-6 bg-gradient-to-r from-[#FDC333]/90 to-[#FCE38A]/90 backdrop-blur-xl border border-white/30 rounded-3xl text-center">
-                <span className="text-[10px] font-black text-forest uppercase tracking-[0.4em]">Anand</span>
-                <p className="text-forest/80 font-serif italic text-xs mt-1">Founder, Milgan Foods</p>
+              <div className="absolute inset-0 bg-[#23212e]/30 opacity-0 group-hover:opacity-100 transition-all duration-1000" />
+              <div className="absolute bottom-8 left-8 right-8 p-6 bg-gold/90 backdrop-blur-xl border border-white/10 rounded-3xl text-center">
+                <span className="text-[10px] font-black text-[#23212e] uppercase tracking-[0.4em]">Anand</span>
+                <p className="text-[#23212e]/80 font-serif italic text-xs mt-1">Founder, Milgan Foods</p>
               </div>
             </div>
 
             {/* Message Narrative */}
             <div className="space-y-8 text-left">
               <div className="space-y-4">
-                <span className="text-forest text-[10px] md:text-xs font-black uppercase tracking-[0.8em]">The Vision</span>
-                <h2 className="text-4xl md:text-7xl font-serif font-bold text-forest tracking-tighter leading-[1.1]">A Message of <br /><span className="italic font-light">Truth.</span></h2>
+                <span className="text-gold text-[10px] md:text-xs font-black uppercase tracking-[0.8em]">The Vision</span>
+                <h2 className="text-4xl md:text-7xl font-serif font-bold text-foreground tracking-tighter leading-[1.1]">A Message of <br /><span className="italic font-light text-gold">Truth.</span></h2>
               </div>
-              <div className="space-y-6 text-forest/80 text-base md:text-lg font-serif leading-relaxed text-justify">
+              <div className="space-y-6 text-foreground/80 text-base md:text-lg font-serif leading-relaxed text-justify">
                 <p>
                   "When we set out to create Milgan, our goal wasn't to build a business, but to restore a sacred ritual. In a world chasing speed and volume, real purity has become a forgotten whisper."
                 </p>
                 <p>
-                  "Every batch of our ghee carries the warmth of the gentle wood fire, the patience of the Bilona double-direction churn, and the purity of grass-fed A2 cows. We believe that food is not just sustenance—it is a vessel of life-force, or <em>Prana</em>."
+                  "Every batch of our ghee carries the warmth of the gentle wood fire, the patience of the Bilona double-direction churn, and the purity of grass-fed cows. We believe that food is not just sustenance—it is a vessel of life-force, or <em>Prana</em>."
                 </p>
                 <p>
                   "Thank you for welcoming Milgan into your kitchen and trusting us with your health. We promise to never compromise on the slow, honest methods that make our ghee liquid gold."
                 </p>
               </div>
 
-              <div className="pt-6 border-t border-forest/10 flex items-center justify-between gap-6">
+              <div className="pt-6 border-t border-white/10 flex items-center justify-between gap-6">
                 <div>
-                  <p className="font-bold text-forest text-lg font-serif">Anand</p>
-                  <p className="text-[9px] font-black uppercase tracking-widest text-forest/50">Founder & Custodian</p>
+                  <p className="font-bold text-foreground text-lg font-serif">Anand</p>
+                  <p className="text-[9px] font-black uppercase tracking-widest text-foreground/50">Founder & Custodian</p>
                 </div>
-                <div className="text-3xl text-forest/30 font-serif italic font-light select-none">
+                <div className="text-3xl text-gold/30 font-serif italic font-light select-none">
                   Anand
                 </div>
               </div>
@@ -529,19 +446,38 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 4. MEDICINAL GOLD (LIQUID WISDOM) */}
+      <section className="py-18 md:py-18 relative overflow-hidden bg-transparent">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 items-center">
+          <div className="space-y-12 md:space-y-16 relative z-10">
+            <h2 className="text-5xl md:text-9xl font-serif font-bold text-foreground tracking-tighter leading-tight text-center lg:text-left">Liquid <br /><span className="text-gold italic font-light">Wisdom.</span></h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-8">
+              {[{ t: 'Immunity', d: 'Natural defense booster' }, { t: 'Brain Fuel', d: 'Rich in healthy acids' }, { t: 'Digestion', d: 'Vedic gut healing' }, { t: 'Skin Radiance', d: 'Inner & outer glow' }].map((b, i) => (
+                <div key={i} className="p-8 bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-[2rem] md:rounded-[2.5rem] space-y-4 hover:bg-white/[0.07] hover:border-gold/20 transition-all duration-500 hover:shadow-2xl">
+                  <div className="text-gold animate-bounce-slow">✦</div>
+                  <h4 className="font-bold text-gold uppercase tracking-widest text-[9px] md:text-[10px]">{b.t}</h4>
+                  <p className="text-[10px] md:text-[11px] text-foreground/80 font-medium">{b.d}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="hidden lg:flex justify-center relative"><div className="text-[20rem] animate-float duration-[6s] text-gold/20">🏺</div></div>
+        </div>
+      </section>
+
       {/* 6. FAQ */}
-      <section className="py-40 border-y border-forest/10 bg-[#FCFCFC]">
-        <div className="max-w-4xl mx-auto px-6 space-y-24 text-center">
-          <span className="text-forest text-[10px] font-black uppercase tracking-[0.8em]">Seeker's Guide</span>
-          <h2 className="text-4xl md:text-6xl font-serif font-bold text-forest tracking-tighter">Wisdom Shared.</h2>
+      <section className="py-18 border-y border-white/5 bg-transparent">
+        <div className="max-w-4xl mx-auto px-6 space-y-18 text-center">
+          <span className="text-gold text-[10px] font-black uppercase tracking-[0.8em]">Seeker's Guide</span>
+          <h2 className="text-4xl md:text-6xl font-serif font-bold text-foreground tracking-tighter">Wisdom Shared.</h2>
           <div className="space-y-6 text-left">
-            {[{ q: "Why Milgan?", a: "Because we honor the silence, the slow cooking, and the ancient Bilona rhythm that modern industries ignore." }, { q: "A2 Purity?", a: "Every drop comes from purebred A2 cows, grass-fed and nurtured in traditional sanctuaries." }, { q: "Preservation?", a: "Pure ghee needs no refrigeration. Store in a cool, dark place to preserve its life force." }].map((faq, i) => (
-              <div key={i} className="group border-b border-forest/10 transition-all">
+            {[{ q: "Why Milgan?", a: "Because we honor the silence, the slow cooking, and the ancient Bilona rhythm that modern industries ignore." }, { q: "Purity?", a: "Every drop comes from purebred cows, grass-fed and nurtured in traditional sanctuaries." }, { q: "Preservation?", a: "Pure ghee needs no refrigeration. Store in a cool, dark place to preserve its life force." }].map((faq, i) => (
+              <div key={i} className="group border-b border-white/10 transition-all">
                 <button onClick={() => setActiveFaq(activeFaq === i ? null : i)} className="w-full py-12 flex justify-between items-center bg-transparent">
-                  <span className="text-2xl md:text-3xl font-serif font-bold text-forest group-hover:text-[#D49800] transition-colors">{faq.q}</span>
-                  <span className="text-3xl text-forest group-hover:text-[#D49800] transition-colors">{activeFaq === i ? '−' : '+'}</span>
+                  <span className="text-2xl md:text-3xl font-serif font-bold text-foreground group-hover:text-gold transition-colors">{faq.q}</span>
+                  <span className="text-3xl text-foreground group-hover:text-gold transition-colors">{activeFaq === i ? '−' : '+'}</span>
                 </button>
-                {activeFaq === i && <div className="pb-12 text-forest/70 font-serif italic text-xl leading-relaxed animate-in fade-in slide-in-from-bottom-2 duration-500">{faq.a}</div>}
+                {activeFaq === i && <div className="pb-12 text-foreground/70 font-serif italic text-xl leading-relaxed animate-in fade-in slide-in-from-bottom-2 duration-500">{faq.a}</div>}
               </div>
             ))}
           </div>
@@ -549,32 +485,32 @@ export default function Home() {
       </section>
 
       {/* 7. MODERN EDITORIAL FOOTER */}
-      <footer className="pt-24 pb-20 relative overflow-hidden border-t border-forest/10 bg-gradient-to-b from-[#FCFCFC] to-[#FCE38A]">
+      <footer className="pt-24 pb-20 relative overflow-hidden border-t border-white/5 bg-transparent">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-24 md:gap-12">
             <div className="md:col-span-2 space-y-12 text-center md:text-left">
               <div className="flex items-center justify-center md:justify-start gap-4">
-                <img src="/logo.png" alt="Milgan logo" className="w-12 h-12 object-contain" />
-                <h2 className="text-4xl font-serif font-bold text-forest tracking-tighter">Milgan.</h2>
+                <img src="/image/milgan logo-0.png" alt="Milgan logo" className="w-12 h-12 object-contain" />
+                <h2 className="text-4xl font-serif font-bold text-gold tracking-tighter">Milgan.</h2>
               </div>
-              <p className="text-forest/70 text-xl font-serif italic max-w-sm mx-auto md:mx-0 leading-relaxed">"Honoring the ancient Vedic rhythms of preparation to deliver the purest organic ghee in the world."</p>
+              <p className="text-foreground/70 text-xl font-serif italic max-w-sm mx-auto md:mx-0 leading-relaxed">"Honoring the ancient Vedic rhythms of preparation to deliver the purest organic ghee in the world."</p>
             </div>
             <div className="space-y-10 text-center md:text-left">
-              <h4 className="text-[11px] font-black uppercase tracking-[0.5em] text-forest/60">The Vault</h4>
-              <ul className="space-y-4">{['Collection', 'Legacy', 'Purity', 'Wisdom'].map(item => <li key={item}><Link href="/" className="text-sm font-bold text-forest hover:text-[#D49800] transition-colors">{item}</Link></li>)}</ul>
+              <h4 className="text-[11px] font-black uppercase tracking-[0.5em] text-foreground/60">The Vault</h4>
+              <ul className="space-y-4">{['Collection', 'Legacy', 'Purity', 'Wisdom'].map(item => <li key={item}><Link href="/" className="text-sm font-bold text-foreground hover:text-gold transition-colors">{item}</Link></li>)}</ul>
             </div>
             <div className="space-y-10 text-center md:text-left">
-              <h4 className="text-[11px] font-black uppercase tracking-[0.5em] text-forest/60">Control</h4>
-              <ul className="space-y-4"><li><Link href="/admin" className="text-sm font-bold text-forest hover:text-[#D49800] transition-colors">Artisan Portal</Link></li><li><Link href="/admin" className="text-sm font-bold text-forest hover:text-[#D49800] transition-colors">Curation Room</Link></li></ul>
+              <h4 className="text-[11px] font-black uppercase tracking-[0.5em] text-foreground/60">Control</h4>
+              <ul className="space-y-4"><li><Link href="/admin" className="text-sm font-bold text-foreground hover:text-gold transition-colors">Artisan Portal</Link></li><li><Link href="/admin" className="text-sm font-bold text-foreground hover:text-gold transition-colors">Curation Room</Link></li></ul>
             </div>
           </div>
-          <div className="mt-40 pt-12 border-t border-forest/10 flex flex-col md:flex-row justify-between items-center gap-8">
-            <div className="text-[10px] font-black text-forest uppercase tracking-[0.5em]">Crafted with Purity in India</div>
-            <div className="text-[10px] font-black text-forest/60 uppercase tracking-[0.4em] text-center md:text-left">© {new Date().getFullYear()} Milgan Organic Alchemy. All rights reserved.</div>
-            <div className="flex items-center gap-4"><div className="w-2 h-2 bg-forest rounded-full animate-pulse" /><span className="text-[9px] font-black text-forest uppercase tracking-[0.3em]">Authenticity Verified</span></div>
+          <div className="mt-20 pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-8">
+            <div className="text-[10px] font-black text-foreground uppercase tracking-[0.5em]">Crafted with Purity in India</div>
+            <div className="text-[10px] font-black text-foreground/60 uppercase tracking-[0.4em] text-center md:text-left">© {new Date().getFullYear()} Milgan Organic Alchemy. All rights reserved.</div>
+            <div className="flex items-center gap-4"><div className="w-2 h-2 bg-gold rounded-full animate-pulse" /><span className="text-[9px] font-black text-foreground uppercase tracking-[0.3em]">Authenticity Verified</span></div>
           </div>
         </div>
       </footer>
-    </main>
+    </div>
   );
 }
