@@ -133,9 +133,9 @@ html {
 
 /* Liquid Morph reveal on the logo container */
 .preloader-logo-morph {
-  animation: preloaderReveal 2s cubic-bezier(0.25, 1, 0.3, 1) forwards,
+  animation: preloaderReveal 1s cubic-bezier(0.25, 1, 0.3, 1) forwards,
              preloaderGlowPulse 2.2s ease-in-out infinite alternate;
-  animation-delay: 0s, 1.8s;
+  animation-delay: 0s, 0.8s;
   will-change: transform, filter, opacity;
 }
 
@@ -173,8 +173,8 @@ html {
 
 /* Rotating SVG Circle Ring */
 .preloader-loading-svg {
-  animation: preloaderSpin 4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  animation-delay: 0.8s;
+  animation: preloaderSpin 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: 0.3s;
   transform-origin: center;
 }
 
@@ -215,8 +215,8 @@ html {
     transparent 100%
   );
   transform: skewX(-20deg);
-  animation: preloaderSweep 0.9s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-  animation-delay: 3.2s; /* Triggers at 100% progress */
+  animation: preloaderSweep 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation-delay: 1.3s; /* Triggers at 100% progress */
 }
 
 @keyframes preloaderSweep {

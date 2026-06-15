@@ -29,8 +29,8 @@ export default function Preloader() {
       const endAngle = startAngle + 180 + Math.random() * 360;
       const orbitRadius = 65 + Math.random() * 75; // Orbit radius on desktop/tablet
       const size = 1.5 + Math.random() * 3.5;
-      const delay = Math.random() * 1.2; // Emerge within first 1.2s
-      const duration = 1.2 + Math.random() * 1.8;
+      const delay = Math.random() * 0.4; // Emerge within first 0.4s
+      const duration = 0.6 + Math.random() * 0.9;
 
       return {
         id: i,
@@ -49,8 +49,8 @@ export default function Preloader() {
 
     // Progress counter animation (0.8s to 3.2s)
     const startTime = Date.now();
-    const delayDuration = 800; // start loading ring after 0.8s
-    const loadingDuration = 2400; // count up for 2.4s (ends at 3.2s)
+    const delayDuration = 300; // start loading ring after 0.3s
+    const loadingDuration = 1000; // count up for 1.0s (ends at 1.3s)
 
     let frameId: number;
     const animateProgress = () => {
@@ -79,12 +79,12 @@ export default function Preloader() {
       setIsFinished(true);
       // Remove scroll lock class from body once done
       document.body.classList.remove('antigravity-scroll-lock');
-    }, 4000);
+    }, 1500);
 
-    // At 4.6s, remove the preloader completely from DOM
+    // At 2.1s, remove the preloader completely from DOM
     const removeTimer = setTimeout(() => {
       setIsVisible(false);
-    }, 4600);
+    }, 2100);
 
     return () => {
       cancelAnimationFrame(frameId);
@@ -105,7 +105,7 @@ export default function Preloader() {
   return (
     <div
       ref={containerRef}
-      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black transition-opacity duration-600 ease-in-out select-none pointer-events-auto ${isFinished ? 'opacity-0 pointer-events-none' : 'opacity-100'
+      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#23212e] transition-opacity duration-600 ease-in-out select-none pointer-events-auto ${isFinished ? 'opacity-0 pointer-events-none' : 'opacity-100'
         }`}
     >
       <div className="relative w-80 h-80 flex items-center justify-center">

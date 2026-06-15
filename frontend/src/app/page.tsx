@@ -312,6 +312,7 @@ export default function Home() {
                     setIsCenterHovered(false);
                     setHoveredIdx(null);
                   }}
+                  onClick={() => setIsRevealed(true)}
                 >
                   {/* Center Circle Element */}
                   <div
@@ -327,25 +328,42 @@ export default function Home() {
                       setIsRevealed(true);
                     }}
                     onMouseLeave={() => setIsCenterHovered(false)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (window.innerWidth < 768) {
+                        setIsRevealed(!isRevealed);
+                        setHoveredIdx(null);
+                      }
+                    }}
                   >
                     <div className="text-center space-y-0.5 select-none px-2.5">
                       <span className="block text-[9px] md:text-sm font-black uppercase tracking-[0.2em] text-gold leading-tight">
-                        {hoveredIdx !== null
-                          ? [
-                            'Immunity',
-                            'Bilona Churned',
-                            'Easy Digestion',
-                            'Rich Nutrition',
-                            'Delicious Taste'
-                          ][hoveredIdx]
-                          : 'Benefits'}
+                        <span className="hidden md:inline">
+                          {hoveredIdx !== null
+                            ? [
+                              'Immunity',
+                              'Bilona Churned',
+                              'Easy Digestion',
+                              'Rich Nutrition',
+                              'Delicious Taste'
+                            ][hoveredIdx]
+                            : 'Benefits'}
+                        </span>
+                        <span className="inline md:hidden">
+                          Benefits
+                        </span>
                       </span>
                       <span className="block text-[7px] md:text-[9px] font-serif italic text-white/50 tracking-normal leading-none">
-                        {hoveredIdx !== null
-                          ? 'Vedic Benefit'
-                          : isRevealed
-                            ? 'Revealed'
-                            : 'Hover to view'}
+                        <span className="hidden md:inline">
+                          {hoveredIdx !== null
+                            ? 'Vedic Benefit'
+                            : isRevealed
+                              ? 'Revealed'
+                              : 'Hover to view'}
+                        </span>
+                        <span className="inline md:hidden">
+                          {isRevealed ? 'Revealed' : 'Tap to view'}
+                        </span>
                       </span>
                     </div>
 
@@ -371,6 +389,12 @@ export default function Home() {
                           }`}
                         onMouseEnter={() => setHoveredIdx(i)}
                         onMouseLeave={() => setHoveredIdx(null)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (window.innerWidth < 768) {
+                            setHoveredIdx(hoveredIdx === i ? null : i);
+                          }
+                        }}
                         style={{
                           transform: `translate(-50%, -50%) rotate(${angle}deg) translate(${isRevealed ? 'var(--radius)' : '0px'
                             }) rotate(${-angle}deg) scale(${hoveredIdx === i ? 1.1 : isRevealed ? 1 : 0.5
@@ -385,6 +409,12 @@ export default function Home() {
                         </h3>
                         {/* Tooltip on desktop only */}
                         <div className="absolute bottom-[-28px] hidden md:group-hover:block bg-[#23212e]/95 text-gold text-[8px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full border border-gold/30 pointer-events-none whitespace-nowrap shadow-md">
+                          {p.title}
+                        </div>
+                        {/* Selected benefit label on mobile only, placed directly below the option circle */}
+                        <div
+                          className={`absolute top-full left-1/2 -translate-x-1/2 mt-1.5 md:hidden bg-[#23212e]/95 border border-gold/30 text-gold text-[7px] font-black uppercase tracking-widest px-2 py-0.5 rounded shadow-lg pointer-events-none whitespace-nowrap transition-all duration-300 z-30 ${hoveredIdx === i && isRevealed ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 -translate-y-1 scale-95'}`}
+                        >
                           {p.title}
                         </div>
                       </div>
