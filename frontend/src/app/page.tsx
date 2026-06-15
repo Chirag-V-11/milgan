@@ -5,9 +5,42 @@ import Link from 'next/link';
 import SixPillarsScroll from "@/components/SixPillarsScroll";
 
 
+const galleryItems = [
+  {
+    id: 1,
+    title: "The Sacred Churn",
+    category: "Vedic Bilona",
+    description: "Our milk is cultured overnight and hand-churned in two directions before dawn using traditional wooden churning rods (bilona) to preserve the rich, fragile fatty acids.",
+    image: "/image/image.webp"
+  },
+  {
+    id: 2,
+    title: "Liquid Life Force",
+    category: "Sacred Cooking",
+    description: "Butter is slow-cooked over a gentle wood fire. As it clarifies, the golden liquid is infused with cardamoms, pepper, methi, cloves, betel leaf, and turmeric.",
+    image: "/image/place_the_ghee_jar_2K_202605141500.webp"
+  },
+  {
+    id: 3,
+    title: "Nurtured by Nature",
+    category: "Ethical Sourcing",
+    description: "Sourced directly from indigenous farms where grass-fed Gir and Sahiwal cows graze freely under open skies, loved and respected as family.",
+    image: "/image/nature.webp"
+  }
+];
+
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedGalleryItem, setSelectedGalleryItem] = useState<any | null>(null);
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSelectedGalleryItem(null);
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, []);
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [scrollY, setScrollY] = useState(0);
@@ -182,6 +215,69 @@ export default function Home() {
               })}
             </div>
           )}
+
+          {/* Sanctuary Gallery */}
+          <div className="pt-20 border-t border-white/5 space-y-16">
+            <div className="flex flex-col items-center text-center space-y-6 max-w-2xl mx-auto">
+              <span className="text-gold text-[10px] font-black uppercase tracking-[0.8em]">Frames of Devotion</span>
+              <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground tracking-tighter leading-tight italic">Sanctuary <span className="text-gold not-italic">Gallery.</span></h2>
+              <p className="text-foreground/60 text-sm font-serif italic max-w-md">Take a visual journey through our slow, sacred churning process and the pristine environments where we craft our liquid gold.</p>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-12 pb-4 max-w-6xl mx-auto">
+              {galleryItems.map((item, i) => (
+                <div
+                  key={item.id}
+                  onClick={() => setSelectedGalleryItem(item)}
+                  className={`
+                    group transition-all duration-700 cursor-pointer flex flex-col justify-between w-full
+                    ${i === 2 ? 'col-span-2 justify-self-center max-w-[calc(50%-0.5rem)] md:col-span-1 md:justify-self-auto md:max-w-none' : ''}
+                  `}
+                >
+                  <div className="block relative aspect-[4/5] rounded-[2.5rem] md:rounded-[3rem] overflow-hidden bg-white/[0.03] backdrop-blur-sm border border-white/10 shadow-sm group-hover:shadow-2xl transition-all duration-700 w-full">
+                    <img
+                      src={item.image}
+                      className="w-full h-full object-cover transition-transform duration-[2000ms] group-hover:scale-110"
+                      alt={item.title}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#23212e]/90 via-[#23212e]/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
+                    <div className="absolute top-3 left-3 md:top-8 md:left-8">
+                      <span className="px-3 py-1 md:px-5 md:py-2 bg-black/40 backdrop-blur-md rounded-full text-[7px] md:text-[9px] font-black uppercase tracking-wider md:tracking-widest text-gold border border-white/10 whitespace-nowrap shadow-sm">
+                        {item.category}
+                      </span>
+                    </div>
+
+                    <div className="absolute bottom-10 left-10 right-10 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 space-y-6">
+                      <div className="space-y-2">
+                        <h3 className="text-2xl md:text-3xl font-serif font-bold text-white tracking-tight">{item.title}</h3>
+                        <p className="text-white/60 text-xs italic line-clamp-3">{item.description}</p>
+                      </div>
+                      <div className="pt-4 border-t border-white/20">
+                        <span className="text-[10px] font-black uppercase tracking-widest text-white/80 group-hover:text-white transition-colors">
+                          Reveal Wisdom ➔
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 space-y-2">
+                    <div className="flex items-center justify-between gap-4">
+                      <h3 className="text-lg font-serif font-bold text-foreground group-hover:text-gold transition-colors">{item.title}</h3>
+                      <div className="flex items-center gap-1.5 flex-shrink-0">
+                        <div className="w-1.5 h-1.5 bg-gold rounded-full animate-pulse" />
+                        <span className="text-[9px] font-black uppercase tracking-widest text-foreground/70">{item.category}</span>
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-baseline">
+                      <span className="text-xs text-foreground/60 font-serif italic line-clamp-1">{item.description}</span>
+                    </div>
+                    <div className="h-px w-full bg-white/10" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -232,12 +328,24 @@ export default function Home() {
                     }}
                     onMouseLeave={() => setIsCenterHovered(false)}
                   >
-                    <div className="text-center space-y-1 select-none px-4">
-                      <span className="block text-xs md:text-sm font-black uppercase tracking-[0.3em] text-gold">
-                        Benefits
+                    <div className="text-center space-y-0.5 select-none px-2.5">
+                      <span className="block text-[9px] md:text-sm font-black uppercase tracking-[0.2em] text-gold leading-tight">
+                        {hoveredIdx !== null
+                          ? [
+                            'Immunity',
+                            'Bilona Churned',
+                            'Easy Digestion',
+                            'Rich Nutrition',
+                            'Delicious Taste'
+                          ][hoveredIdx]
+                          : 'Benefits'}
                       </span>
-                      <span className="block text-[8px] md:text-[9px] font-serif italic text-white/50 tracking-normal">
-                        {isRevealed ? 'Revealed' : 'Hover to view'}
+                      <span className="block text-[7px] md:text-[9px] font-serif italic text-white/50 tracking-normal leading-none">
+                        {hoveredIdx !== null
+                          ? 'Vedic Benefit'
+                          : isRevealed
+                            ? 'Revealed'
+                            : 'Hover to view'}
                       </span>
                     </div>
 
@@ -257,7 +365,7 @@ export default function Home() {
                     return (
                       <div
                         key={i}
-                        className={`absolute left-1/2 top-[80px] md:top-[130px] lg:top-[100px] xl:top-[130px] w-20 h-20 md:w-36 md:h-36 lg:w-28 lg:h-28 xl:w-36 xl:h-36 rounded-full z-10 flex flex-col items-center justify-center p-2 md:p-6 lg:p-4 xl:p-6 bg-[#23212e]/70 backdrop-blur-md border border-white/10 transition-all duration-700 group cursor-pointer hover:border-gold/50 hover:bg-[#23212e]/95 ${isRevealed
+                        className={`absolute left-1/2 top-[80px] md:top-[130px] lg:top-[100px] xl:top-[130px] w-14 h-14 md:w-36 md:h-36 lg:w-28 lg:h-28 xl:w-36 xl:h-36 rounded-full z-10 flex flex-col items-center justify-center p-1 md:p-6 lg:p-4 xl:p-6 bg-[#23212e]/70 backdrop-blur-md border border-white/10 transition-all duration-700 group cursor-pointer hover:border-gold/50 hover:bg-[#23212e]/95 ${isRevealed
                           ? 'opacity-100 blur-none shadow-[0_0_25px_rgba(252,196,51,0.15)] border-gold/30'
                           : 'opacity-10 blur-[1px]'
                           }`}
@@ -269,14 +377,14 @@ export default function Home() {
                             })`,
                         }}
                       >
-                        <div className="w-8 h-8 md:w-16 md:h-16 lg:w-10 lg:h-10 xl:w-16 xl:h-16 relative overflow-hidden group-hover:scale-110 transition-transform duration-700 flex items-center justify-center">
+                        <div className="w-6 h-6 md:w-16 md:h-16 lg:w-10 lg:h-10 xl:w-16 xl:h-16 relative overflow-hidden group-hover:scale-110 transition-transform duration-700 flex items-center justify-center">
                           <img src={p.image} className="w-full h-full object-contain filter brightness-110 contrast-110" alt={p.title} />
                         </div>
                         <h3 className="hidden md:block text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-white/90 group-hover:text-gold transition-colors text-center mt-2 max-w-[100px] leading-tight">
                           {p.title}
                         </h3>
-                        {/* Tooltip on hover/mobile */}
-                        <div className="absolute bottom-[-28px] md:hidden bg-[#23212e]/95 text-gold text-[8px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full border border-gold/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap shadow-md">
+                        {/* Tooltip on desktop only */}
+                        <div className="absolute bottom-[-28px] hidden md:group-hover:block bg-[#23212e]/95 text-gold text-[8px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full border border-gold/30 pointer-events-none whitespace-nowrap shadow-md">
                           {p.title}
                         </div>
                       </div>
@@ -511,6 +619,60 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* Gallery Lightbox Modal */}
+      {selectedGalleryItem && (
+        <div className="fixed inset-0 w-screen h-screen z-[9999] grid place-items-center p-4 sm:p-6 bg-[#23212e]/95 backdrop-blur-xl transition-all duration-500 overflow-y-auto font-sans">
+          {/* Click outside to close */}
+          <div className="fixed inset-0 cursor-pointer" onClick={() => setSelectedGalleryItem(null)} />
+
+          {/* Main Container */}
+          <div className="relative bg-[#23212e] w-full max-w-4xl rounded-[2.5rem] sm:rounded-[3.5rem] shadow-[0_50px_100px_rgba(0,0,0,0.6),0_0_80px_rgba(252,196,51,0.1)] overflow-hidden transition-all duration-700 border border-white/10 animate-in zoom-in-95 duration-500 flex flex-col lg:flex-row max-h-[90vh] lg:max-h-none">
+
+            {/* Close Button */}
+            <button
+              onClick={() => setSelectedGalleryItem(null)}
+              className="absolute top-6 right-6 z-50 w-10 h-10 rounded-full bg-white/10 text-white border border-white/10 flex items-center justify-center text-xl font-bold hover:bg-gold hover:text-[#23212e] hover:scale-105 active:scale-95 transition-all shadow-lg"
+              title="Close Modal"
+            >
+              ×
+            </button>
+
+            {/* Left: Image */}
+            <div className="lg:w-1/2 p-6 sm:p-10 flex flex-col justify-center bg-white/[0.01] border-b lg:border-b-0 lg:border-r border-white/5 overflow-hidden shrink-0">
+              <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden bg-white/[0.03] shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/5">
+                <img
+                  src={selectedGalleryItem.image}
+                  alt={selectedGalleryItem.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+
+            {/* Right: Details */}
+            <div className="lg:w-1/2 p-6 sm:p-10 lg:p-12 overflow-y-auto space-y-6 flex flex-col justify-center">
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <span className="text-[9px] font-black text-gold uppercase tracking-[0.5em]">{selectedGalleryItem.category}</span>
+                  <div className="h-px flex-1 bg-white/10" />
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-serif font-bold text-foreground tracking-tighter leading-tight">
+                  {selectedGalleryItem.title}
+                </h2>
+                <p className="text-foreground/80 font-serif italic text-base sm:text-lg leading-relaxed pt-2">
+                  {selectedGalleryItem.description}
+                </p>
+              </div>
+
+              <div className="pt-6 border-t border-white/10 flex items-center gap-4">
+                <div className="text-gold text-2xl">🌿</div>
+                <div className="h-px flex-1 bg-white/10" />
+                <div className="text-[8px] font-black uppercase tracking-[0.3em] text-gold">Pure Vedic Tradition</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
