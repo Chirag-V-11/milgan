@@ -67,30 +67,30 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen py-20 px-8 md:px-24 bg-transparent font-sans selection:bg-gold/20 relative overflow-hidden">
+    <div className="min-h-screen py-24 px-6 md:px-12 lg:px-24 bg-transparent font-sans selection:bg-[#124B70]/10 relative overflow-hidden">
       {/* Background Glow */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-0 w-96 h-96 bg-[#124B70]/5 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center relative z-10">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center relative z-10">
         {/* Story Section */}
         <div className="space-y-12">
           <div className="space-y-6">
-            <span className="text-gold font-bold text-[10px] uppercase tracking-[0.4em] block">Inquire with Purity</span>
-            <h1 className="text-6xl md:text-8xl font-serif font-bold text-foreground leading-[0.9] tracking-tighter">
-              Get in <span className="text-gold italic">Touch</span>
+            <span className="text-[#124B70]/70 font-black text-[10px] uppercase tracking-[0.4em] block">Inquire with Purity</span>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-[#124B70] leading-[0.95] tracking-tighter">
+              Get in <span className="text-[#124B70]/80 italic font-light">Touch</span>
             </h1>
-            <p className="text-foreground/80 text-lg md:text-xl font-medium leading-relaxed max-w-lg">
+            <p className="text-[#124B70]/80 text-base md:text-lg font-serif italic leading-relaxed max-w-lg">
               Whether you are looking for the finest Bilona Ghee or seeking a bespoke collaboration, our concierge is here to assist you in your journey towards purity.
             </p>
           </div>
 
-          <div className="space-y-8 pt-8 border-t border-white/10">
+          <div className="space-y-8 pt-8 border-t border-[#124B70]/10">
             <div>
-              <h3 className="text-[10px] font-black text-foreground/40 uppercase tracking-[0.2em] mb-2">Our Sanctuaries</h3>
+              <h3 className="text-[10px] font-black text-[#124B70]/40 uppercase tracking-[0.2em] mb-3">Our Sanctuaries</h3>
               <div className="space-y-4">
                 <div>
-                  <p className="text-gold font-bold text-[9px] uppercase tracking-widest mb-1">Southern Sanctuary</p>
-                  <p className="text-foreground font-serif text-lg italic leading-relaxed">
+                  <p className="text-[#124B70]/70 font-black text-[9px] uppercase tracking-widest mb-1.5">Southern Sanctuary</p>
+                  <p className="text-[#124B70]/90 font-serif text-base md:text-lg italic leading-relaxed">
                     NO-5, RAMANNA LAYOUT, GANGASANDRA MAIN ROAD,<br />
                     MARALUR, TUMKUR TALUK,<br />
                     Tumkur, Karnataka - 572105
@@ -99,54 +99,54 @@ export default function ContactPage() {
               </div>
             </div>
             <div>
-              <h3 className="text-[10px] font-black text-foreground/40 uppercase tracking-[0.2em] mb-2">Direct Liaison</h3>
-              <p className="text-foreground font-serif text-xl italic">+91 86600 13411</p>
-              <p className="text-foreground font-serif text-xl italic">info@milganfoods.com</p>
+              <h3 className="text-[10px] font-black text-[#124B70]/40 uppercase tracking-[0.2em] mb-2">Direct Liaison</h3>
+              <p className="text-[#124B70] font-serif text-xl italic font-semibold">+91 86600 13411</p>
+              <p className="text-[#124B70] font-serif text-xl italic font-semibold">info@milganfoods.com</p>
             </div>
           </div>
         </div>
 
         {/* Form Section */}
         <div className="relative">
-          <div className="absolute inset-0 bg-gold/5 blur-3xl rounded-full animate-pulse duration-[8s]" />
-          <div className="relative bg-white/[0.03] backdrop-blur-xl p-12 rounded-[3rem] shadow-[0_50px_100px_rgba(0,0,0,0.5)] border border-white/10">
-            <form onSubmit={handleSubmit} className="space-y-8">
-              <div className="space-y-3">
-                <label className="text-[10px] font-black text-gold uppercase tracking-widest ml-1">Your Full Name</label>
+          <div className="absolute inset-0 bg-[#124B70]/5 blur-3xl rounded-full animate-pulse duration-[8s]" />
+          <div className="relative bg-white/70 backdrop-blur-xl p-8 md:p-12 rounded-[2.5rem] shadow-[0_20px_50px_rgba(18,75,112,0.06)] border border-[#124B70]/10">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="space-y-2">
+                <label className="text-[9px] font-black text-[#124B70]/70 uppercase tracking-widest ml-1">Your Full Name</label>
                 <input
                   type="text"
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Mr. Chirag V"
-                  className="w-full bg-white/[0.03] px-6 py-4 rounded-2xl border border-white/10 focus:bg-white/[0.07] focus:border-gold/50 outline-none transition-all text-foreground placeholder:text-foreground/20"
+                  className="w-full bg-white/80 px-5 py-3.5 rounded-2xl border border-[#124B70]/15 focus:bg-white focus:border-[#124B70]/40 outline-none transition-all text-[#124B70] placeholder:text-[#124B70]/30 shadow-sm"
                 />
               </div>
-              <div className="space-y-3">
-                <label className="text-[10px] font-black text-gold uppercase tracking-widest ml-1">Communication Channel (Email/Phone)</label>
+              <div className="space-y-2">
+                <label className="text-[9px] font-black text-[#124B70]/70 uppercase tracking-widest ml-1">Communication Channel (Email/Phone)</label>
                 <input
                   type="text"
                   required
                   value={contact}
                   onChange={(e) => setContact(e.target.value)}
-                  placeholder="how shall we reach you?"
-                  className="w-full bg-white/[0.03] px-6 py-4 rounded-2xl border border-white/10 focus:bg-white/[0.07] focus:border-gold/50 outline-none transition-all text-foreground placeholder:text-foreground/20"
+                  placeholder="How shall we reach you?"
+                  className="w-full bg-white/80 px-5 py-3.5 rounded-2xl border border-[#124B70]/15 focus:bg-white focus:border-[#124B70]/40 outline-none transition-all text-[#124B70] placeholder:text-[#124B70]/30 shadow-sm"
                 />
               </div>
-              <div className="space-y-3">
-                <label className="text-[10px] font-black text-gold uppercase tracking-widest ml-1">Your Inquiry</label>
+              <div className="space-y-2">
+                <label className="text-[9px] font-black text-[#124B70]/70 uppercase tracking-widest ml-1">Your Inquiry</label>
                 <textarea
                   rows={4}
                   required
                   value={inquiry}
                   onChange={(e) => setInquiry(e.target.value)}
                   placeholder="Tell us about your requirements..."
-                  className="w-full bg-white/[0.03] px-6 py-4 rounded-2xl border border-white/10 focus:bg-white/[0.07] focus:border-gold/50 outline-none transition-all resize-none text-foreground placeholder:text-foreground/20"
+                  className="w-full bg-white/80 px-5 py-3.5 rounded-2xl border border-[#124B70]/15 focus:bg-white focus:border-[#124B70]/40 outline-none transition-all resize-none text-[#124B70] placeholder:text-[#124B70]/30 shadow-sm"
                 />
               </div>
               <button
                 type="submit"
-                className={`w-full py-5 rounded-2xl font-bold uppercase tracking-[0.2em] text-[12px] transition-all shadow-xl active:scale-95 ${sent ? 'bg-white text-[#23212e]' : 'bg-gold text-[#23212e] hover:bg-[#e1ddde]'}`}
+                className={`w-full py-4.5 rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] transition-all active:scale-95 ${sent ? 'bg-[#124B70]/50 text-white cursor-wait' : 'bg-[#124B70] text-[#FDFDFD] hover:bg-[#124B70]/90 hover:shadow-lg hover:shadow-[#124B70]/10'}`}
               >
                 {sent ? '✓ Sending...' : 'Send Inquiry'}
               </button>

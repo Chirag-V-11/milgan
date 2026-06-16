@@ -105,20 +105,20 @@ export default function Preloader() {
   return (
     <div
       ref={containerRef}
-      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#23212e] transition-opacity duration-600 ease-in-out select-none pointer-events-auto ${isFinished ? 'opacity-0 pointer-events-none' : 'opacity-100'
+      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-gradient-to-b from-[#fdc437] to-[#fce389] transition-opacity duration-600 ease-in-out select-none pointer-events-auto ${isFinished ? 'opacity-0 pointer-events-none' : 'opacity-100'
         }`}
     >
       <div className="relative w-80 h-80 flex items-center justify-center">
 
         {/* Glow backdrop behind logo */}
-        <div className="absolute w-40 h-40 bg-white/5 rounded-full blur-2xl animate-pulse duration-[3s]" />
+        <div className="absolute w-40 h-40 bg-[#124B70]/5 rounded-full blur-2xl animate-pulse duration-[3s]" />
 
         {/* Swirling Liquid Particles */}
         <div className="absolute inset-0 pointer-events-none preloader-gooey-filter">
           {particles.map((p) => (
             <div
               key={p.id}
-              className="absolute left-1/2 top-1/2 rounded-full bg-white/90 preloader-swirl-particle"
+              className="absolute left-1/2 top-1/2 rounded-full bg-[#124B70]/90 preloader-swirl-particle"
               style={p.style}
             />
           ))}
@@ -131,9 +131,9 @@ export default function Preloader() {
         >
           <defs>
             <linearGradient id="silverGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="rgba(255, 255, 255, 0.05)" />
-              <stop offset="50%" stopColor="rgba(255, 255, 255, 0.4)" />
-              <stop offset="100%" stopColor="#ffffff" />
+              <stop offset="0%" stopColor="rgba(18, 75, 112, 0.05)" />
+              <stop offset="50%" stopColor="rgba(18, 75, 112, 0.4)" />
+              <stop offset="100%" stopColor="#124B70" />
             </linearGradient>
           </defs>
 
@@ -143,7 +143,7 @@ export default function Preloader() {
             cy="100"
             r="85"
             fill="none"
-            stroke="rgba(255, 255, 255, 0.03)"
+            stroke="rgba(18, 75, 112, 0.05)"
             strokeWidth="1.5"
           />
 
@@ -169,7 +169,8 @@ export default function Preloader() {
           <img
             src="/image/milgan logo-0.png"
             alt="Milgan Logo"
-            className="w-full h-full object-contain filter brightness-0 invert"
+            className="w-full h-full object-contain"
+            style={{ filter: "brightness(0) saturate(100%) invert(20%) sepia(51%) saturate(2159%) hue-rotate(185deg) brightness(94%) contrast(92%)" }}
           />
         </div>
 

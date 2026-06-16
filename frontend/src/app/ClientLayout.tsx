@@ -1,5 +1,7 @@
 "use client";
+import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 import Navbar from '../components/Navbar';
 import FloatingSocials from '../components/FloatingSocials';
 import Preloader from '../components/Preloader';
@@ -9,6 +11,22 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   const isAdminPage = pathname?.startsWith('/admin');
   const isProductPage = pathname?.startsWith('/product');
   const isHomePage = pathname === '/';
+  const [isPreloading, setIsPreloading] = useState(true);
+
+  useEffect(() => {
+    if (!isAdminPage) {
+      document.body.classList.add('client-body');
+    } else {
+      document.body.classList.remove('client-body');
+    }
+  }, [isAdminPage]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsPreloading(false);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Apply pt-24 top padding to non-admin, non-home pages to push their content below the fixed navbar.
   // Home page starts at y=0 so the full-screen hero section gradient extends behind the floating navbar.
@@ -19,19 +37,49 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   return (
     <>
       <Preloader />
-      {!isAdminPage && <Navbar />}
+      {!isAdminPage && !isPreloading && <Navbar />}
       {!isAdminPage && <FloatingSocials />}
       <main className={`${mainClassName || ""} relative z-10`}>
         {children}
       </main>
       {!isAdminPage && (
-        <div className="fixed bottom-0 left-0 right-0 flex justify-center pointer-events-none z-50">
-          <img
-            src="/image/Milgan bottom.png"
-            alt="Milgan Sanctuary Signature"
-            className="w-full max-w-[40rem] sm:max-w-[60rem] md:max-w-[75rem] h-auto object-contain select-none opacity-100"
-          />
-        </div>
+        <>
+          {/* 7. MODERN EDITORIAL FOOTER */}
+          <footer className="pt-24 pb-20 relative overflow-hidden bg-transparent">
+            <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-24 md:gap-12">
+                <div className="md:col-span-2 space-y-12 text-center md:text-left">
+                  <div className="flex items-center justify-center md:justify-start gap-4">
+                    <img src="/image/milgan logo-0.png" alt="Milgan logo" className="w-12 h-12 object-contain" style={{ filter: "brightness(0) saturate(100%) invert(20%) sepia(51%) saturate(2159%) hue-rotate(185deg) brightness(94%) contrast(92%)" }} />
+                    <h2 className="text-4xl font-serif font-bold text-[#124B70] tracking-tighter">Milgan.</h2>
+                  </div>
+                  <p className="text-[#124B70]/70 text-xl font-serif italic max-w-sm mx-auto md:mx-0 leading-relaxed">"Honoring the ancient Vedic rhythms of preparation to deliver the purest organic ghee in the world."</p>
+                </div>
+                <div className="space-y-10 text-center md:text-left">
+                  <h4 className="text-[11px] font-black uppercase tracking-[0.5em] text-[#124B70]/70">The Vault</h4>
+                  <ul className="space-y-4">{['Collection', 'Legacy', 'Purity', 'Wisdom'].map(item => <li key={item}><Link href="/" className="text-sm font-bold text-[#124B70] hover:text-[#124B70]/70 transition-colors">{item}</Link></li>)}</ul>
+                </div>
+                <div className="space-y-10 text-center md:text-left">
+                  <h4 className="text-[11px] font-black uppercase tracking-[0.5em] text-[#124B70]/70">Control</h4>
+                  <ul className="space-y-4"><li><Link href="/admin" className="text-sm font-bold text-[#124B70] hover:text-[#124B70]/70 transition-colors">Artisan Portal</Link></li><li><Link href="/admin" className="text-sm font-bold text-[#124B70] hover:text-[#124B70]/70 transition-colors">Curation Room</Link></li></ul>
+                </div>
+              </div>
+              <div className="mt-20 pt-12 border-t border-[#124B70]/10 flex flex-col md:flex-row justify-between items-center gap-8">
+                <div className="text-[10px] font-black text-[#124B70] uppercase tracking-[0.5em]">Crafted with Purity in India</div>
+                <div className="text-[10px] font-black text-[#124B70]/60 uppercase tracking-[0.4em] text-center md:text-left">© {new Date().getFullYear()} Milgan Organic Alchemy. All rights reserved.</div>
+                <div className="flex items-center gap-4"><div className="w-2 h-2 bg-[#124B70] rounded-full animate-pulse" /><span className="text-[9px] font-black text-[#124B70] uppercase tracking-[0.3em]">Authenticity Verified</span></div>
+              </div>
+            </div>
+          </footer>
+          <div className="fixed bottom-0 left-0 right-0 flex justify-center pointer-events-none z-50">
+            <img
+              src="/image/Milgan bottom.png"
+              alt="Milgan Sanctuary Signature"
+              className="w-full max-w-[40rem] sm:max-w-[60rem] md:max-w-[75rem] h-auto object-contain select-none opacity-100"
+              style={{ filter: "brightness(0) saturate(100%) invert(20%) sepia(51%) saturate(2159%) hue-rotate(185deg) brightness(94%) contrast(92%)" }}
+            />
+          </div>
+        </>
       )}
     </>
   );

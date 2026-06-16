@@ -118,13 +118,16 @@ html {
     transform: translate(-50%, -50%) rotate(var(--start-angle)) translate(0px) scale(0);
     opacity: 0;
   }
+
   15% {
     opacity: 1;
     box-shadow: 0 0 4px #fff, 0 0 10px rgba(255, 255, 255, 0.4);
   }
+
   75% {
     opacity: 0.6;
   }
+
   100% {
     transform: translate(-50%, -50%) rotate(var(--end-angle)) translate(var(--orbit-radius)) scale(0);
     opacity: 0;
@@ -134,7 +137,7 @@ html {
 /* Liquid Morph reveal on the logo container */
 .preloader-logo-morph {
   animation: preloaderReveal 1s cubic-bezier(0.25, 1, 0.3, 1) forwards,
-             preloaderGlowPulse 2.2s ease-in-out infinite alternate;
+    preloaderGlowPulse 2.2s ease-in-out infinite alternate;
   animation-delay: 0s, 0.8s;
   will-change: transform, filter, opacity;
 }
@@ -145,17 +148,21 @@ html {
     transform: scale(0.65) rotate(-3deg);
     opacity: 0;
   }
+
   35% {
     filter: blur(8px) contrast(15) brightness(0.7);
     transform: scale(1.02) rotate(1deg);
     opacity: 0.8;
   }
+
   65% {
     filter: blur(3px) contrast(10) brightness(1.05);
     transform: scale(0.98);
     opacity: 0.95;
   }
-  85%, 100% {
+
+  85%,
+  100% {
     filter: blur(0px) contrast(1) brightness(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.25));
     transform: scale(1) rotate(0deg);
     opacity: 1;
@@ -163,9 +170,12 @@ html {
 }
 
 @keyframes preloaderGlowPulse {
-  0%, 100% {
+
+  0%,
+  100% {
     filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2)) drop-shadow(0 0 15px rgba(255, 255, 255, 0.1));
   }
+
   50% {
     filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.55)) drop-shadow(0 0 25px rgba(255, 255, 255, 0.25));
   }
@@ -182,12 +192,15 @@ html {
   0% {
     transform: rotate(-90deg);
   }
+
   30% {
     transform: rotate(90deg);
   }
+
   70% {
     transform: rotate(270deg);
   }
+
   100% {
     transform: rotate(450deg);
   }
@@ -206,23 +219,23 @@ html {
   left: -150%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0) 25%,
-    rgba(255, 255, 255, 0.95) 50%,
-    rgba(255, 255, 255, 0) 75%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0) 25%,
+      rgba(255, 255, 255, 0.95) 50%,
+      rgba(255, 255, 255, 0) 75%,
+      transparent 100%);
   transform: skewX(-20deg);
   animation: preloaderSweep 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-  animation-delay: 1.3s; /* Triggers at 100% progress */
+  animation-delay: 1.3s;
+  /* Triggers at 100% progress */
 }
 
 @keyframes preloaderSweep {
   0% {
     left: -150%;
   }
+
   100% {
     left: 200%;
   }
@@ -232,8 +245,43 @@ html {
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
+
 /* Hide scrollbar for IE, Edge and Firefox */
 .scrollbar-none {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+/* Client Theme Override for Navy Blue/Yellow Gradient */
+body.client-body {
+  background: linear-gradient(to bottom, #fdc437 0%, #fce389 50%, #f1f5f7 100%) no-repeat fixed;
+  color: #124B70;
+  --foreground: #124B70;
+  --gold: #124B70;
+  --cream: #124B70;
+}
+
+body.client-body .bg-gold {
+  color: #FDFDFD !important;
+}
+
+body.client-body .hover\:bg-gold:hover {
+  color: #FDFDFD !important;
+}
+
+/* Restore original variables inside dark modal cards */
+body.client-body [class*="bg-[#23212e]"] {
+  --gold: #fcc433;
+  --foreground: #e1ddde;
+  --cream: #fcc433;
+}
+
+body.client-body [class*="bg-[#23212e]"] .bg-gold {
+  color: #23212e !important;
+}
+
+body.client-body [class*="bg-[#23212e]"] .hover\:bg-gold:hover {
+  color: #23212e !important;
 }

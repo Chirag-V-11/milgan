@@ -94,10 +94,10 @@ Total Price: ₹${Math.round(finalPrice)}`;
   };
 
   return (
-    <div className="min-h-screen bg-transparent font-sans selection:bg-gold/20 relative overflow-hidden">
+    <div className="min-h-screen bg-transparent font-sans selection:bg-[#124B70]/10 relative overflow-hidden">
       {/* Radiant Background Atmospheric Orbs */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl translate-x-1/3 translate-y-1/3 pointer-events-none" />
+      <div className="absolute top-0 left-0 w-96 h-96 bg-[#124B70]/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#124B70]/5 rounded-full blur-3xl translate-x-1/3 translate-y-1/3 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 md:px-12 py-12 lg:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
@@ -105,7 +105,7 @@ Total Price: ₹${Math.round(finalPrice)}`;
           {/* ── LEFT: Image Gallery ── */}
           <div className="space-y-4 lg:sticky lg:top-28">
             {/* Main Image */}
-            <div className="relative aspect-square rounded-[2.5rem] overflow-hidden bg-white/[0.03] shadow-[0_30px_80px_rgba(0,0,0,0.4)] border border-white/5 group">
+            <div className="relative aspect-square rounded-[2.5rem] overflow-hidden bg-white/80 shadow-[0_20px_50px_rgba(18,75,112,0.06)] border border-[#124B70]/10 group">
               <img
                 key={activeImage}
                 src={allImages[activeImage]}
@@ -115,13 +115,13 @@ Total Price: ₹${Math.round(finalPrice)}`;
               />
               {/* Discount badge */}
               {selectedSize?.discountPercentage > 0 && (
-                <div className="absolute top-6 left-6 bg-gold text-[#23212e] text-[9px] font-black uppercase tracking-widest px-4 py-2 rounded-full shadow-xl">
+                <div className="absolute top-6 left-6 bg-[#124B70] text-[#FDFDFD] text-[9px] font-black uppercase tracking-widest px-4 py-2 rounded-full shadow-md">
                   {selectedSize.discountPercentage}% OFF
                 </div>
               )}
               {/* Image counter */}
               {allImages.length > 1 && (
-                <div className="absolute bottom-6 right-6 bg-black/50 backdrop-blur-md px-4 py-2 rounded-full text-[9px] font-black text-gold uppercase tracking-widest">
+                <div className="absolute bottom-6 right-6 bg-white/80 backdrop-blur-md px-4 py-2 rounded-full text-[9px] font-black text-[#124B70] uppercase tracking-widest shadow-sm">
                   {activeImage + 1} / {allImages.length}
                 </div>
               )}
@@ -134,7 +134,7 @@ Total Price: ₹${Math.round(finalPrice)}`;
                   <button
                     key={idx}
                     onClick={() => setActiveImage(idx)}
-                    className={`flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 transition-all duration-300 ${activeImage === idx ? 'border-gold scale-105 shadow-lg' : 'border-transparent opacity-50 hover:opacity-80'}`}
+                    className={`flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 transition-all duration-300 ${activeImage === idx ? 'border-[#124B70] scale-105 shadow-md' : 'border-transparent opacity-60 hover:opacity-95'}`}
                   >
                     <img src={url} alt={`${product.name} ${idx + 1}`} className="w-full h-full object-cover" />
                   </button>
@@ -149,13 +149,13 @@ Total Price: ₹${Math.round(finalPrice)}`;
             {/* Header */}
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <span className="text-[9px] font-black text-gold uppercase tracking-[0.5em]">Artisanal Collection</span>
-                <div className="h-px flex-1 bg-white/10" />
+                <span className="text-[9px] font-black text-[#124B70]/70 uppercase tracking-[0.5em]">Artisanal Collection</span>
+                <div className="h-px flex-1 bg-[#124B70]/10" />
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-foreground tracking-tighter leading-[1.05]">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-[#124B70] tracking-tighter leading-[1.05]">
                 {product.name}
               </h1>
-              <p className="text-foreground/70 font-serif italic text-lg leading-relaxed">
+              <p className="text-[#124B70]/80 font-serif italic text-lg leading-relaxed">
                 {product.description}
               </p>
             </div>
@@ -167,12 +167,12 @@ Total Price: ₹${Math.round(finalPrice)}`;
               product.name.toLowerCase().includes('evning') || // fallback for user test products
               product.description.toLowerCase().includes('ghee') ||
               product.description.toLowerCase().includes('butter')) && (
-              <div className="space-y-4 pt-6 border-t border-white/10">
+              <div className="space-y-4 pt-6 border-t border-[#124B70]/10">
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-black text-gold uppercase tracking-[0.3em]">The Alchemy of Infusion</span>
-                  <div className="h-px flex-1 bg-white/10" />
+                  <span className="text-[10px] font-black text-[#124B70]/70 uppercase tracking-[0.3em]">The Alchemy of Infusion</span>
+                  <div className="h-px flex-1 bg-[#124B70]/10" />
                 </div>
-                <p className="text-foreground/70 text-xs leading-relaxed font-serif italic">
+                <p className="text-[#124B70]/80 text-xs leading-relaxed font-serif italic">
                   Clarified using pure Cow Butter, infused with traditional elements during slow wood-fire cooking to enrich aroma, shelf-life, and wellness:
                 </p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -184,11 +184,11 @@ Total Price: ₹${Math.round(finalPrice)}`;
                     { name: 'Beetel Leaf', icon: '🍃', detail: 'Natural Clarifier' },
                     { name: 'Turmeric', icon: '💛', detail: 'Golden Healing' }
                   ].map((ing, idx) => (
-                    <div key={idx} className="bg-white/[0.03] border border-white/10 p-3 rounded-2xl flex items-center gap-2.5 hover:bg-white/[0.08] hover:border-gold/30 transition-all duration-300">
+                    <div key={idx} className="bg-white/50 border border-[#124B70]/10 p-3 rounded-2xl flex items-center gap-2.5 hover:bg-white/80 hover:border-[#124B70]/30 transition-all duration-300">
                       <span className="text-xl">{ing.icon}</span>
                       <div className="flex flex-col min-w-0">
-                        <span className="text-[10px] font-black text-gold uppercase tracking-widest truncate">{ing.name}</span>
-                        <span className="text-[8px] text-foreground/50 font-serif italic truncate">{ing.detail}</span>
+                        <span className="text-[10px] font-black text-[#124B70] uppercase tracking-widest truncate">{ing.name}</span>
+                        <span className="text-[8px] text-[#124B70]/60 font-serif italic truncate">{ing.detail}</span>
                       </div>
                     </div>
                   ))}
@@ -197,22 +197,22 @@ Total Price: ₹${Math.round(finalPrice)}`;
             )}
 
             {/* Price */}
-            <div className="flex items-end gap-4 py-6 border-y border-white/10">
-              <span className="text-5xl font-serif font-bold text-gold">₹{finalPrice}</span>
+            <div className="flex items-end gap-4 py-6 border-y border-[#124B70]/10">
+              <span className="text-5xl font-serif font-bold text-[#124B70]">₹{finalPrice}</span>
               {selectedSize?.discountPercentage > 0 && (
                 <div className="mb-1 space-y-0.5">
-                  <div className="text-sm text-foreground/40 line-through font-medium">₹{selectedSize.baseCost}</div>
+                  <div className="text-sm text-[#124B70]/50 line-through font-medium">₹{selectedSize.baseCost}</div>
                   <div className="text-[9px] font-black text-red-500 uppercase tracking-widest">You save ₹{selectedSize.baseCost - finalPrice}</div>
                 </div>
               )}
-              <span className="ml-auto text-[9px] font-black text-foreground/40 uppercase tracking-widest">Free Delivery</span>
+              <span className="ml-auto text-[9px] font-black text-[#124B70]/50 uppercase tracking-widest">Free Delivery</span>
             </div>
 
             {/* Size Selector */}
             {product.quantity_options?.length > 0 && (
               <div className="space-y-4">
-                <h3 className="text-[10px] font-black text-foreground/40 uppercase tracking-[0.3em]">Select Volume</h3>
-                <div className="flex flex-wrap gap-3">
+                <h3 className="text-[10px] font-black text-[#124B70]/50 uppercase tracking-[0.3em]">Select Volume</h3>
+                <div className="grid grid-cols-2 gap-3 sm:flex sm:flex-wrap">
                   {product.quantity_options.map((opt: any) => {
                     const optFinal = Math.round(opt.baseCost * (1 - (opt.discountPercentage || 0) / 100));
                     const isSelected = selectedSize?.size === opt.size;
@@ -221,11 +221,11 @@ Total Price: ₹${Math.round(finalPrice)}`;
                         key={opt.size}
                         onClick={() => setSelectedSize(opt)}
                         className={`relative px-6 py-4 rounded-2xl border-2 transition-all duration-300 text-left group ${isSelected
-                          ? 'border-gold bg-gold text-[#23212e] shadow-xl shadow-gold/20'
-                          : 'border-white/10 text-foreground hover:border-gold/50 bg-white/[0.03]'}`}
+                          ? 'border-[#124B70] bg-[#124B70] text-[#FDFDFD] shadow-md shadow-[#124B70]/10'
+                          : 'border-[#124B70]/15 text-[#124B70] hover:border-[#124B70]/40 bg-white/40'}`}
                       >
-                        <div className={`text-xs font-black uppercase tracking-widest ${isSelected ? 'text-[#23212e]' : 'text-foreground'}`}>{opt.size}</div>
-                        <div className={`text-xs font-medium mt-0.5 ${isSelected ? 'text-[#23212e]/70' : 'text-foreground/40'}`}>₹{optFinal}</div>
+                        <div className={`text-xs font-black uppercase tracking-widest ${isSelected ? 'text-[#FDFDFD]' : 'text-[#124B70]'}`}>{opt.size}</div>
+                        <div className={`text-xs font-medium mt-0.5 ${isSelected ? 'text-[#FDFDFD]/80' : 'text-[#124B70]/60'}`}>₹{optFinal}</div>
                         {opt.discountPercentage > 0 && (
                           <div className="absolute -top-2 -right-2 bg-red-500 text-white text-[8px] font-black px-2 py-0.5 rounded-full">
                             -{opt.discountPercentage}%
@@ -259,7 +259,7 @@ Total Price: ₹${Math.round(finalPrice)}`;
                   onClick={() => product.amazon_url && window.open(product.amazon_url, '_blank')}
                   className={`py-4 rounded-2xl font-bold text-[10px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 ${product.amazon_url
                     ? 'bg-[#FF9900] text-white hover:bg-[#e68900] shadow-lg shadow-orange-500/15 hover:-translate-y-0.5'
-                    : 'bg-white/[0.03] text-foreground/20 cursor-not-allowed'}`}
+                    : 'bg-[#124B70]/5 border border-[#124B70]/10 text-[#124B70]/30 cursor-not-allowed'}`}
                 >
                   <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Amazon_icon.svg" className={`w-4 h-4 ${product.amazon_url ? 'brightness-0 invert' : 'opacity-20'}`} alt="Amazon" />
                   {product.amazon_url ? 'Buy on Amazon' : 'Amazon (Soon)'}
@@ -268,24 +268,24 @@ Total Price: ₹${Math.round(finalPrice)}`;
                   onClick={() => product.blinkit_url && window.open(product.blinkit_url, '_blank')}
                   className={`py-4 rounded-2xl font-bold text-[10px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 ${product.blinkit_url
                     ? 'bg-[#2874F0] text-white hover:bg-blue-600 shadow-lg shadow-blue-500/15 hover:-translate-y-0.5'
-                    : 'bg-white/[0.03] text-foreground/20 cursor-not-allowed'}`}
+                    : 'bg-[#124B70]/5 border border-[#124B70]/10 text-[#124B70]/30 cursor-not-allowed'}`}
                 >
-                  <span className={`font-black italic ${!product.blinkit_url && 'opacity-20'}`}>Flipkart</span>
+                  <span className={`font-black italic ${!product.blinkit_url && 'opacity-30'}`}>Flipkart</span>
                   {!product.blinkit_url && '(Soon)'}
                 </button>
               </div>
             </div>
 
             {/* Trust Badges */}
-            <div className="grid grid-cols-3 gap-3 py-6 border-y border-white/10">
+            <div className="grid grid-cols-3 gap-3 py-6 border-y border-[#124B70]/10">
               {[
                 { icon: '🚚', label: 'Free Delivery' },
                 { icon: '✅', label: 'Verified Pure' },
                 { icon: '↩️', label: 'Easy Returns' },
               ].map((b) => (
-                <div key={b.label} className="flex flex-col items-center gap-2 text-center p-3 rounded-2xl bg-white/[0.03] hover:bg-white/[0.07] hover:border-white/10 border border-transparent transition-all">
+                <div key={b.label} className="flex flex-col items-center gap-2 text-center p-3 rounded-2xl bg-white/50 border border-[#124B70]/10 hover:bg-white/80 transition-all">
                   <span className="text-xl">{b.icon}</span>
-                  <span className="text-[8px] font-black uppercase tracking-widest text-foreground/60">{b.label}</span>
+                  <span className="text-[8px] font-black uppercase tracking-widest text-[#124B70]/70">{b.label}</span>
                 </div>
               ))}
             </div>
