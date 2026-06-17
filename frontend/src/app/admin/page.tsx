@@ -241,7 +241,7 @@ export default function AdminDashboard() {
             <h1 className="text-3xl sm:text-5xl md:text-6xl font-serif font-bold text-gold tracking-tighter leading-tight">
               Admin <span className="text-cream italic font-light">Control</span>
             </h1>
-            <p className="text-gold/40 text-xs sm:text-sm font-serif italic font-light">Manage your golden legacy and curated organic treasures</p>
+            <p className="text-gold/40 text-xs sm:text-sm font-serif italic font-light">Manage your golden legacy and curated natural treasures</p>
           </div>
           <div className="flex flex-wrap gap-2 sm:gap-4 items-center bg-white/[0.02] backdrop-blur-2xl p-2 sm:p-3 border border-white/10 rounded-2xl sm:rounded-[2rem] shadow-2xl w-full lg:w-auto justify-center lg:justify-start">
             <Link href="/admin/users" className="text-[8px] sm:text-[9px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] border border-white/10 px-4 sm:px-7 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-gold hover:bg-gold hover:text-[#23212e] transition-all flex-1 sm:flex-initial text-center">Users</Link>

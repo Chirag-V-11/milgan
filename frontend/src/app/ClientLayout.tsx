@@ -53,7 +53,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
                     <img src="/image/milgan logo-0.png" alt="Milgan logo" className="w-12 h-12 object-contain" style={{ filter: "brightness(0) saturate(100%) invert(20%) sepia(51%) saturate(2159%) hue-rotate(185deg) brightness(94%) contrast(92%)" }} />
                     <h2 className="text-4xl font-serif font-bold text-[#124B70] tracking-tighter">Milgan.</h2>
                   </div>
-                  <p className="text-[#124B70]/70 text-xl font-serif italic max-w-sm mx-auto md:mx-0 leading-relaxed">"Honoring the ancient Vedic rhythms of preparation to deliver the purest organic ghee in the world."</p>
+                  <p className="text-[#124B70]/70 text-xl font-serif italic max-w-sm mx-auto md:mx-0 leading-relaxed">"Honoring the ancient Vedic rhythms of preparation to deliver the purest natural ghee in the world."</p>
                 </div>
                 <div className="space-y-10 text-center md:text-left">
                   <h4 className="text-[11px] font-black uppercase tracking-[0.5em] text-[#124B70]/70">The Vault</h4>
@@ -66,7 +66,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
               </div>
               <div className="mt-20 pt-12 border-t border-[#124B70]/10 flex flex-col md:flex-row justify-between items-center gap-8">
                 <div className="text-[10px] font-black text-[#124B70] uppercase tracking-[0.5em]">Crafted with Purity in India</div>
-                <div className="text-[10px] font-black text-[#124B70]/60 uppercase tracking-[0.4em] text-center md:text-left">© {new Date().getFullYear()} Milgan Organic Alchemy. All rights reserved.</div>
+                <div className="text-[10px] font-black text-[#124B70]/60 uppercase tracking-[0.4em] text-center md:text-left">© {new Date().getFullYear()} Milgan Natural Alchemy. All rights reserved.</div>
                 <div className="flex items-center gap-4"><div className="w-2 h-2 bg-[#124B70] rounded-full animate-pulse" /><span className="text-[9px] font-black text-[#124B70] uppercase tracking-[0.3em]">Authenticity Verified</span></div>
               </div>
             </div>

@@ -30,7 +30,7 @@ const Navbar = () => {
             <img src="/image/milgan logo-0.png" alt="Milgan" className="w-9 h-9 object-contain" style={{ filter: "brightness(0) saturate(100%) invert(20%) sepia(51%) saturate(2159%) hue-rotate(185deg) brightness(94%) contrast(92%)" }} />
             <div className="flex flex-col">
               <span className="text-lg font-serif font-bold text-[#124B70] tracking-tight leading-none drop-shadow-sm">Milgan</span>
-              <span className="text-[7px] font-black uppercase tracking-[0.3em] text-[#124B70]/60 mt-1 leading-none">Organic Alchemy</span>
+              <span className="text-[7px] font-black uppercase tracking-[0.3em] text-[#124B70]/60 mt-1 leading-none">Natural Alchemy</span>
             </div>
           </Link>
 

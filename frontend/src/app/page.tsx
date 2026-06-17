@@ -274,15 +274,20 @@ export default function Home() {
               <div className="text-3xl font-serif font-bold text-white tracking-tight">Most Innovative <br /> Artisanal Brand</div>
               <div className="text-5xl drop-shadow-sm">🏆</div>
             </div>
-            <div className="break-inside-avoid relative aspect-[4/5] rounded-[2.5rem] overflow-hidden group border border-[#124B70]/10 shadow-[0_8px_30px_rgba(18,75,112,0.05)]">
+            <a
+              href="https://youtu.be/OhfpbErg0l8?si=RuRqWAWHQQDfOduh"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block break-inside-avoid relative aspect-[4/5] rounded-[2.5rem] overflow-hidden group border border-[#124B70]/10 shadow-[0_8px_30px_rgba(18,75,112,0.05)] hover:scale-[1.01] transition-all duration-500"
+            >
               <img src="/image/nature.webp" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt="Customer" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#124B70] via-[#124B70]/60 to-transparent opacity-95" />
               <div className="absolute bottom-10 left-10 right-10 space-y-4">
                 <div className="text-[#FADE64] text-[9px] font-black uppercase tracking-widest opacity-90">Seeker Story</div>
-                <h3 className="text-2xl font-serif font-bold text-white">The Sharma Family</h3>
+                <h3 className="text-2xl font-serif font-bold text-white">The Milgan Family</h3>
                 <p className="text-white/80 text-sm italic">"Milgan has become the heart of our kitchen. Every meal feels like a blessing."</p>
               </div>
-            </div>
+            </a>
             <div className="break-inside-avoid p-12 bg-white/20 backdrop-blur-md border border-[#124B70]/10 rounded-[2.5rem] text-center space-y-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-500 shadow-[0_8px_30px_rgba(18,75,112,0.05)]">
               <div className="text-6xl font-serif font-bold text-[#124B70] tracking-tighter leading-none">4.92</div>
               <div className="text-[#124B70]/80 text-lg drop-shadow-sm">★★★★★</div>

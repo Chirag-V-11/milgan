@@ -256,7 +256,7 @@ html {
 
 /* Client Theme Override for Navy Blue/Yellow Gradient */
 body.client-body {
-  background: linear-gradient(to bottom, #fdc437 0%, #fce389 50%, #f1f5f7 100%) no-repeat fixed;
+  background: #fdc437;
   color: #124B70;
   --foreground: #124B70;
   --gold: #124B70;

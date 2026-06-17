@@ -13,3 +13,8 @@
   - `[x]` Correct Amazon/Flipkart buttons states
   - `[x]` Update trust badges layout and styles
 - `[x]` Verify pages render beautifully in desktop and mobile viewports
+- `[x]` Brand Term Alignment & Seeker Story Video Link Integration
+  - `[x]` Swap "Organic/organic" for "Natural/natural" globally in user-facing client codebase (Navbar, Footer, Admin)
+  - `[x]` Update Seeker Story title to "The Milgan Family"
+  - `[x]` Link the Seeker Story card to the specified YouTube video (`https://youtu.be/OhfpbErg0l8?si=RuRqWAWHQQDfOduh`)
+  - `[x]` Verify using browser subagent
