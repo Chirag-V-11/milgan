@@ -91,3 +91,17 @@ We updated the initial page preloader component to match the golden-yellow and n
 <!-- slide -->
 ![Preloader (Mobile View)](/C:/Users/chirag.v/.gemini/antigravity-ide/brain/2374aeb7-c718-4647-b8b8-35d0256cd443/preloader_mobile_1781596615194.png)
 ````
+
+---
+
+## 5. Custom Favicon Curation
+
+We replaced the default Next.js favicon with the custom brand logo `milgan logo-0.png`:
+* Removed `favicon.ico` from `src/app` to prevent layout overrides.
+* Copied the brand logo from `public/image/milgan logo-0.png` to `src/app/icon.png` to support Next.js file-based metadata icons.
+* Added explicit favicon config to the metadata object in [layout.tsx](file:///e:/We&You/gee/frontend/src/app/layout.tsx#L17-L21):
+  ```typescript
+  icons: {
+    icon: "/image/milgan logo-0.png",
+  }
+  ```

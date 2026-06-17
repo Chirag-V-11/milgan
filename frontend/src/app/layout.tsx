@@ -15,8 +15,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Milgan | Pure Vedic Ghee",
+  title: "Milgan Foods | Pure Vedic Ghee",
   description: "Experience the liquid gold of ancient heritage, traditionally churned and slow-cooked to perfection by Milgan.",
+  icons: {
+    icon: "/image/milgan logo-0.png",
+  },
 };
 
 export default function RootLayout({
