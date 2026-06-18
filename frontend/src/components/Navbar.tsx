@@ -23,7 +23,7 @@ const Navbar = () => {
           relative flex items-center justify-between px-6 md:px-8 py-4 rounded-full border transition-all duration-700
           ${isScrolled
             ? 'bg-white/90 backdrop-blur-2xl border-[#124B70]/20 shadow-[0_10px_40px_rgba(18,75,112,0.1)] py-3'
-            : 'bg-[#FCEFB4]/90 backdrop-blur-md border-[#124B70]/10 shadow-sm py-5'}
+            : 'bg-[#ffdb71]/90 backdrop-blur-md border-[#124B70]/10 shadow-sm py-5'}
         `}>
           {/* Logo Sanctuary */}
           <Link href="/" className="flex items-center gap-3">
@@ -57,7 +57,7 @@ const Navbar = () => {
                   <button onClick={logout} className="text-[9px] font-black uppercase tracking-[0.2em] text-[#124B70]/60 hover:text-red-500 transition-colors border border-[#124B70]/20 hover:border-red-500/30 px-4 py-2 rounded-xl">Logout</button>
                 </div>
               ) : (
-                <button onClick={() => setIsAuthModalOpen(true)} className="bg-gradient-to-r from-[#FDE047] to-[#FACC15] text-[#124B70] px-8 py-3.5 rounded-full text-[9px] font-black uppercase tracking-[0.3em] transition-all duration-500 shadow-md hover:shadow-[0_8px_30px_rgba(250,204,21,0.3)] hover:-translate-y-0.5 active:scale-[0.98] border border-white/50">Join Legacy</button>
+                <button onClick={() => setIsAuthModalOpen(true)} className="bg-gradient-to-r from-[#ffdb71] to-[#fdce47] text-[#124B70] px-8 py-3.5 rounded-full text-[9px] font-black uppercase tracking-[0.3em] transition-all duration-500 shadow-md hover:shadow-[0_8px_30px_rgba(253,206,71,0.3)] hover:-translate-y-0.5 active:scale-[0.98] border border-white/50">Join Legacy</button>
               )}
             </div>
 
@@ -97,7 +97,7 @@ const Navbar = () => {
                 <button onClick={logout} className="text-[10px] font-black uppercase tracking-widest text-red-500">Logout</button>
               </>
             ) : (
-              <button onClick={() => { setIsAuthModalOpen(true); setIsMobileMenuOpen(false); }} className="w-full bg-gradient-to-r from-[#FDE047] to-[#FACC15] text-[#124B70] py-5 rounded-full text-[10px] font-black uppercase tracking-[0.4em] hover:scale-105 transition-all shadow-md border border-white/50">Join Legacy</button>
+              <button onClick={() => { setIsAuthModalOpen(true); setIsMobileMenuOpen(false); }} className="w-full bg-gradient-to-r from-[#ffdb71] to-[#fdce47] text-[#124B70] py-5 rounded-full text-[10px] font-black uppercase tracking-[0.4em] hover:scale-105 transition-all shadow-md border border-white/50">Join Legacy</button>
             )}
           </div>
         </div>

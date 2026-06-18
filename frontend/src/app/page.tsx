@@ -81,14 +81,14 @@ export default function Home() {
       {/* Glistening Atmosphere (Subtle overlay for depth) */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
         <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[60%] bg-white/20 rounded-full blur-[120px] animate-pulse duration-[10s]" />
-        <div className="absolute bottom-[-5%] right-[-5%] w-[40%] h-[50%] bg-[#FCE672]/40 rounded-full blur-[100px] animate-pulse duration-[8s] delay-1000" />
+        <div className="absolute bottom-[-5%] right-[-5%] w-[40%] h-[50%] bg-[#ffdb71]/40 rounded-full blur-[100px] animate-pulse duration-[8s] delay-1000" />
       </div>
 
       {/* Scroll Progress Bar */}
       <div className="fixed top-0 left-0 h-1 bg-[#124B70] z-[100] transition-all duration-300" style={{ width: `${scrollProgress}%` }} />
 
       {/* 1. MINIMALIST TYPOGRAPHIC HERO */}
-      <section className="relative h-[100vh] flex items-center justify-center overflow-hidden bg-transparent">
+      <section className="relative h-[100vh] flex items-center justify-center overflow-hidden bg-[#fdce47]">
         <div className="absolute inset-0 z-0 bg-transparent" />
 
         <div className="relative z-10 text-center space-y-12 md:space-y-16 px-6 max-w-7xl translate-y-8 md:translate-y-12">
@@ -98,7 +98,7 @@ export default function Home() {
               <img
                 src="/image/milgan logo-1.png"
                 alt="Milgan Logo"
-                className="block sm:hidden w-92 object-contain select-none animate-in fade-in zoom-in duration-700"
+                className="block sm:hidden w-full max-w-[20rem] min-[375px]:max-w-[23rem] object-contain select-none animate-in fade-in zoom-in duration-700"
                 style={{ filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }}
               />
               {/* Desktop View Logo */}
@@ -111,9 +111,9 @@ export default function Home() {
             </div>
 
             {/* Tagline */}
-            <div className="flex items-center justify-center pl-0 md:pl-50 gap-3 md:gap-4 text-[#006639] animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300">
+            <div className="flex items-center justify-center gap-3 md:gap-4 text-[#006639] animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300">
               <div className="h-px w-4 md:w-6 bg-[#006639]" />
-              <span className="text-xs md:text-xl font-black uppercase tracking-[0.4em] whitespace-nowrap">
+              <span className="text-[10px] min-[375px]:text-xs md:text-xl font-black uppercase tracking-[0.25em] min-[375px]:tracking-[0.4em] whitespace-nowrap">
                 Fresh <span className="inline-block mx-1 md:mx-2 w-[2px] h-2.5 md:h-4.5 bg-[#006639] align-middle" /> Pure <span className="inline-block mx-1 md:mx-2 w-[2px] h-2.5 md:h-4.5 bg-[#006639] align-middle" /> Delicious
               </span>
               <div className="h-px w-4 md:w-6 bg-[#006639]" />
@@ -127,7 +127,7 @@ export default function Home() {
       </section>
 
       {/* 3. STAGGERED BOUTIQUE GALLERY */}
-      <section id="boutique" className="pt-18 pb-24 md:pt-18 md:pb-18 relative scroll-mt-24 overflow-hidden bg-transparent">
+      <section id="boutique" className="pt-18 pb-24 md:pt-18 md:pb-18 relative scroll-mt-24 overflow-hidden bg-gold-gradient">
         <div className="absolute top-1/2 left-0 -translate-y-1/2 text-[20vw] font-serif font-black text-[#124B70]/[0.03] select-none pointer-events-none whitespace-nowrap tracking-tighter">
           COLLECTION COLLECTION COLLECTION
         </div>
@@ -135,7 +135,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-24 md:space-y-10 relative z-10">
           <div className="flex flex-col items-center text-center space-y-6 max-w-2xl mx-auto">
             <span className="text-[#124B70]/70 text-[10px] font-black uppercase tracking-[0.8em]">Artisanal Selection</span>
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#124B70] tracking-tighter leading-tight italic">Liquid Gold, <span className="not-italic text-4xl md:text-5xl tracking-[0.5px]" style={{ WebkitTextStroke: "1px #fff0f0", WebkitTextFillColor: "#006639" }}>Captured.</span></h2>
+            <h2 className="text-3xl md:text-5xl font-serif font-bold text-[#124B70] tracking-tighter leading-tight italic">Liquid Gold, <span className="not-italic text-3xl md:text-5xl tracking-[0.5px] headline-stroke-green">Captured.</span></h2>
           </div>
 
           {loading ? (
@@ -166,21 +166,21 @@ export default function Home() {
                         className="w-full h-full object-cover transition-transform duration-[2000ms] group-hover:scale-110"
                         alt={product.name}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#124B70]/90 via-[#124B70]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#124B70]/90 via-[#124B70]/30 to-transparent opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
                       <div className="absolute top-3 left-3 md:top-8 md:left-8">
-                        <span className="px-3 py-1 md:px-5 md:py-2 bg-[#124B70] backdrop-blur-md rounded-full text-[7px] md:text-[9px] font-black uppercase tracking-wider md:tracking-widest text-[#FADE64] border border-[#124B70]/20 whitespace-nowrap shadow-sm">
+                        <span className="px-3 py-1 md:px-5 md:py-2 bg-[#124B70] backdrop-blur-md rounded-full text-[7px] md:text-[9px] font-black uppercase tracking-wider md:tracking-widest text-[#fdce47] border border-[#124B70]/20 whitespace-nowrap shadow-sm">
                           {product.category || 'Limited Stock'}
                         </span>
                       </div>
 
-                      <div className="absolute bottom-10 left-10 right-10 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 space-y-6">
+                      <div className="absolute bottom-6 left-6 right-6 md:bottom-10 md:left-10 md:right-10 translate-y-0 md:translate-y-10 opacity-100 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 transition-all duration-700 space-y-4 md:space-y-6">
                         <div className="space-y-2">
-                          <h3 className="text-3xl md:text-4xl font-serif font-bold text-white tracking-tight">{product.name}</h3>
-                          <p className="text-white/80 text-sm italic line-clamp-2">{product.description}</p>
+                          <h3 className="text-2xl md:text-4xl font-serif font-bold text-white tracking-tight">{product.name}</h3>
+                          <p className="text-white/80 text-xs md:text-sm italic line-clamp-2">{product.description}</p>
                         </div>
                         <div className="pt-4 border-t border-white/20">
-                          <span className="text-[10px] font-black uppercase tracking-widest text-[#FADE64] transition-colors">
+                          <span className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-[#fdce47] transition-colors">
                             Acquire Curation ➔
                           </span>
                         </div>
@@ -212,10 +212,10 @@ export default function Home() {
           )}
 
           {/* Sanctuary Gallery */}
-          <div className="pt-24 pb-20 px-8 md:px-16 bg-white/20 backdrop-blur-xl rounded-[3.5rem] border border-[#124B70]/10 shadow-[0_15px_45px_rgba(18,75,112,0.03)] space-y-16 mt-24">
+          <div className="pt-24 pb-20 px-8 md:px-16 bg-white/30 backdrop-blur-xl rounded-[3.5rem] border border-white/45 shadow-[0_15px_45px_rgba(18,75,112,0.03)] space-y-16 mt-24">
             <div className="flex flex-col items-center text-center space-y-6 max-w-2xl mx-auto">
               <span className="text-[#124B70]/70 text-[10px] font-black uppercase tracking-[0.8em]">Frames of Devotion</span>
-              <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#124B70] tracking-tighter leading-tight italic">Sanctuary <span className="not-italic text-4xl md:text-7xl tracking-[0.5px]" style={{ WebkitTextStroke: "2px #fff0f0", WebkitTextFillColor: "#fdc73e8c" }}>Gallery.</span></h2>
+              <h2 className="text-3xl md:text-5xl font-serif font-bold text-[#124B70] tracking-tighter leading-tight italic">Sanctuary <span className="not-italic text-3xl md:text-7xl tracking-[0.5px] headline-stroke-gold-gallery">Gallery.</span></h2>
               <p className="text-[#124B70]/70 text-sm font-serif italic max-w-md">Take a visual journey through our slow, sacred churning process and the pristine environments where we craft our liquid gold.</p>
             </div>
 
@@ -232,17 +232,17 @@ export default function Home() {
                       className="w-full h-full object-cover transition-transform duration-[2000ms] group-hover:scale-110"
                       alt={item.title}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#124B70]/80 via-[#124B70]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#124B70]/80 via-[#124B70]/20 to-transparent opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
                     <div className="absolute top-4 left-4">
-                      <span className="px-4 py-1.5 bg-[#124B70] backdrop-blur-md rounded-full text-[8px] font-black uppercase tracking-widest text-[#FADE64] border border-[#124B70]/20 whitespace-nowrap shadow-sm">
+                      <span className="px-4 py-1.5 bg-[#124B70] backdrop-blur-md rounded-full text-[8px] font-black uppercase tracking-widest text-[#fdce47] border border-[#124B70]/20 whitespace-nowrap shadow-sm">
                         {item.category}
                       </span>
                     </div>
 
-                    <div className="absolute bottom-6 left-6 right-6 translate-y-6 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 space-y-2">
-                      <h3 className="text-xl font-serif font-bold text-white tracking-tight">{item.title}</h3>
-                      <p className="text-white/80 text-xs italic line-clamp-2 leading-relaxed">{item.description}</p>
+                    <div className="absolute bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-6 translate-y-0 md:translate-y-6 opacity-100 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 transition-all duration-700 space-y-1 md:space-y-2">
+                      <h3 className="text-lg md:text-xl font-serif font-bold text-white tracking-tight">{item.title}</h3>
+                      <p className="text-white/80 text-[10px] md:text-xs italic line-clamp-2 leading-relaxed">{item.description}</p>
                     </div>
                   </div>
 
@@ -258,15 +258,15 @@ export default function Home() {
       </section>
 
       {/* 5. ARTISAN WALL OF TRUST */}
-      <section className="py-18 relative overflow-hidden bg-transparent">
+      <section className="py-18 relative overflow-hidden bg-gold-gradient">
         <div className="max-w-7xl mx-auto px-6 space-y-18">
           <div className="text-center space-y-6 max-w-3xl mx-auto">
-            <h2 className="text-5xl md:text-7xl font-serif font-bold text-[#124B70] tracking-tighter">What <span className="not-italic text-4xl md:text-7xl tracking-[0.5px]" style={{ WebkitTextStroke: "2px #124B70", WebkitTextFillColor: "rgba(18,75,112,0.15)" }}>seekers</span> say about Milgan</h2>
+            <h2 className="text-3xl md:text-7xl font-serif font-bold text-[#124B70] tracking-tighter leading-tight">What <span className="not-italic text-3xl md:text-7xl tracking-[0.5px] headline-stroke-navy-translucent">seekers</span> say about Milgan</h2>
             <p className="text-[#124B70]/70 text-lg font-serif italic">Busy families, holistic healers, and tastemakers — everyone loves the life-force of our pure Vedic Ghee.</p>
           </div>
           <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
             <div className="break-inside-avoid p-10 bg-[#124B70] rounded-[2.5rem] space-y-8 text-center group hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(18,75,112,0.3)] transition-all duration-500 shadow-[0_8px_30px_rgba(18,75,112,0.15)]">
-              <div className="text-[#FADE64]/80 text-[10px] font-black uppercase tracking-[0.4em]">Heritage Awards</div>
+              <div className="text-[#ffdb71]/80 text-[10px] font-black uppercase tracking-[0.4em]">Heritage Awards</div>
               <div className="text-3xl font-serif font-bold text-white tracking-tight">Most Innovative <br /> Artisanal Brand</div>
               <div className="text-5xl drop-shadow-sm">🏆</div>
             </div>
@@ -279,28 +279,28 @@ export default function Home() {
               <img src="/image/nature.webp" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt="Customer" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#124B70] via-[#124B70]/60 to-transparent opacity-95" />
               <div className="absolute bottom-10 left-10 right-10 space-y-4">
-                <div className="text-[#FADE64] text-[9px] font-black uppercase tracking-widest opacity-90">Seeker Story</div>
+                <div className="text-[#ffdb71] text-[9px] font-black uppercase tracking-widest opacity-90">Seeker Story</div>
                 <h3 className="text-2xl font-serif font-bold text-white">The Milgan Family</h3>
                 <p className="text-white/80 text-sm italic">"Milgan has become the heart of our kitchen. Every meal feels like a blessing."</p>
               </div>
             </a>
-            <div className="break-inside-avoid p-12 bg-white/20 backdrop-blur-md border border-[#124B70]/10 rounded-[2.5rem] text-center space-y-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-500 shadow-[0_8px_30px_rgba(18,75,112,0.05)]">
+            <div className="break-inside-avoid p-12 bg-white/30 backdrop-blur-md border border-[#124B70]/15 rounded-[2.5rem] text-center space-y-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-500 shadow-[0_8px_30px_rgba(18,75,112,0.05)]">
               <div className="text-6xl font-serif font-bold text-[#124B70] tracking-tighter leading-none">4.92</div>
               <div className="text-[#124B70]/80 text-lg drop-shadow-sm">★★★★★</div>
               <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#124B70]/60">Trusted in thousands of modern kitchens</p>
             </div>
-            <div className="break-inside-avoid p-10 bg-white/20 backdrop-blur-md border border-[#124B70]/10 rounded-[2.5rem] space-y-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-500 shadow-[0_8px_30px_rgba(18,75,112,0.05)]">
-              <div className="text-[#124B70] text-2xl font-serif italic drop-shadow-sm">“</div>
+            <div className="break-inside-avoid p-10 bg-white/30 backdrop-blur-md border border-[#124B70]/15 rounded-[2.5rem] space-y-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-500 shadow-[0_8px_30px_rgba(18,75,112,0.05)]">
+              <div className="text-6xl font-serif font-bold text-[#124B70] tracking-tighter leading-none">“</div>
               <p className="text-[#124B70] font-serif italic leading-relaxed text-xl">"This is not just ghee; it's a sensory journey. The aroma takes me back to my grandmother's kitchen."</p>
               <div className="flex items-center gap-4 pt-4 border-t border-[#124B70]/10">
-                <div className="w-10 h-10 bg-[#124B70] rounded-full flex items-center justify-center text-[#FADE64] text-[10px] font-black border border-[#124B70] shadow-sm">RV</div>
+                <div className="w-10 h-10 bg-[#124B70] rounded-full flex items-center justify-center text-[#ffdb71] text-[10px] font-black border border-[#124B70] shadow-sm">RV</div>
                 <div className="space-y-1">
                   <div className="text-xs font-bold text-[#124B70] animate-pulse">Rahul Varma</div>
                   <div className="text-[9px] font-black uppercase tracking-widest text-[#124B70]/60">Verified Seeker</div>
                 </div>
               </div>
             </div>
-            <div className="break-inside-avoid p-10 bg-white/10 backdrop-blur-md border border-[#124B70]/10 rounded-[2.5rem] space-y-8 hover:-translate-y-1 hover:shadow-xl transition-all duration-500 shadow-[0_8px_30px_rgba(18,75,112,0.05)] group">
+            <div className="break-inside-avoid p-10 bg-white/25 backdrop-blur-md border border-[#124B70]/15 rounded-[2.5rem] space-y-8 hover:-translate-y-1 hover:shadow-xl transition-all duration-500 shadow-[0_8px_30px_rgba(18,75,112,0.05)] group">
               <p className="text-[#124B70]/90 group-hover:text-[#124B70] transition-colors text-xl font-serif italic leading-relaxed font-medium">"It's like farm to table, but sacred to table. Milgan solves the search for real purity."</p>
               <div className="space-y-1">
                 <div className="text-sm font-bold text-[#124B70] transition-colors">Sneha Kapur</div>
@@ -315,7 +315,7 @@ export default function Home() {
       </section>
 
       {/* 5.5 FOUNDER'S MESSAGE */}
-      <section className="py-18 md:py-18 relative z-10 bg-transparent">
+      <section className="py-18 md:py-18 relative z-10 bg-gold-gradient">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 items-center">
             {/* Founder Image Card */}
@@ -327,7 +327,7 @@ export default function Home() {
               />
               <div className="absolute inset-0 bg-[#124B70]/5 opacity-0 group-hover:opacity-100 transition-all duration-1000" />
               <div className="absolute bottom-8 left-8 right-8 p-6 bg-[#124B70]/90 backdrop-blur-xl border border-[#124B70]/20 rounded-3xl text-center shadow-[0_8px_30px_rgba(18,75,112,0.15)]">
-                <span className="text-[10px] font-black text-[#FADE64] uppercase tracking-[0.4em]">Anand</span>
+                <span className="text-[10px] font-black text-[#ffdb71] uppercase tracking-[0.4em]">Anand</span>
                 <p className="text-white/80 font-serif italic text-xs mt-1">Founder, Milgan Foods</p>
               </div>
             </div>
@@ -336,9 +336,9 @@ export default function Home() {
             <div className="space-y-8 text-left">
               <div className="space-y-4">
                 <span className="text-[#124B70]/70 text-[10px] md:text-xs font-black uppercase tracking-[0.8em]">The Vision</span>
-                <h2 className="text-4xl md:text-7xl font-serif font-bold text-[#124B70] tracking-tighter leading-[1.1]">A Message of <br /><span className="not-italic text-4xl md:text-7xl tracking-[0.5px]" style={{ WebkitTextStroke: "2px #006639", WebkitTextFillColor: "transparent" }}>Truth.</span></h2>
+                <h2 className="text-3xl md:text-7xl font-serif font-bold text-[#124B70] tracking-tighter leading-[1.1]">A Message of <br className="hidden md:block" /><span className="not-italic text-3xl md:text-7xl tracking-[0.5px] headline-stroke-green-truth">Truth.</span></h2>
               </div>
-              <div className="space-y-6 text-[#124B70]/80 text-base md:text-lg font-serif leading-relaxed text-justify">
+              <div className="space-y-6 text-[#124B70]/80 text-base md:text-lg font-serif leading-relaxed text-left md:text-justify">
                 <p>
                   "When we set out to create Milgan, our goal wasn't to build a business, but to restore a sacred ritual. In a world chasing speed and volume, real purity has become a forgotten whisper."
                 </p>
@@ -365,13 +365,13 @@ export default function Home() {
       </section>
 
       {/* 4. MEDICINAL GOLD (LIQUID WISDOM) */}
-      <section className="py-18 md:py-18 relative overflow-hidden bg-transparent">
+      <section className="py-18 md:py-18 relative overflow-hidden bg-gold-gradient">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 items-center">
           <div className="space-y-12 md:space-y-16 relative z-10">
-            <h2 className="text-5xl md:text-9xl font-serif font-bold text-[#124B70] tracking-tighter leading-tight text-center lg:text-left">Liquid <br /><span className="not-italic text-5xl md:text-9xl tracking-[0.5px]" style={{ WebkitTextStroke: "2px #fdc73e", WebkitTextFillColor: "transparent" }}>Wisdom.</span></h2>
+            <h2 className="text-3xl md:text-9xl font-serif font-bold text-[#124B70] tracking-tighter leading-tight text-center lg:text-left">Liquid <br className="hidden lg:block" /><span className="not-italic text-3xl md:text-9xl tracking-[0.5px] headline-stroke-wisdom">Wisdom.</span></h2>
             <div className="grid grid-cols-2 gap-4 md:gap-8">
               {[{ t: 'Immunity', d: 'Natural defense booster' }, { t: 'Brain Fuel', d: 'Rich in healthy acids' }, { t: 'Digestion', d: 'Vedic gut healing' }, { t: 'Skin Radiance', d: 'Inner & outer glow' }].map((b, i) => (
-                <div key={i} className="p-5 sm:p-8 bg-white/20 backdrop-blur-md border border-[#124B70]/10 rounded-[2rem] md:rounded-[2.5rem] space-y-4 hover:-translate-y-1 hover:shadow-xl transition-all duration-500 shadow-[0_8px_30px_rgba(18,75,112,0.05)]">
+                <div key={i} className="p-5 sm:p-8 bg-white/30 backdrop-blur-md border border-[#124B70]/15 rounded-[2rem] md:rounded-[2.5rem] space-y-4 hover:-translate-y-1 hover:shadow-xl transition-all duration-500 shadow-[0_8px_30px_rgba(18,75,112,0.05)]">
                   <div className="text-[#124B70] animate-bounce-slow drop-shadow-sm">✦</div>
                   <h4 className="font-bold text-[#124B70] uppercase tracking-widest text-[9px] md:text-[10px]">{b.t}</h4>
                   <p className="text-[10px] md:text-[11px] text-[#124B70]/80 font-medium">{b.d}</p>
@@ -384,18 +384,18 @@ export default function Home() {
       </section>
 
       {/* 6. FAQ */}
-      <section className="py-18 bg-transparent">
-        <div className="max-w-4xl mx-auto px-6 space-y-18 text-center">
+      <section className="py-12 bg-gold-gradient">
+        <div className="max-w-4xl mx-auto px-6 space-y-8 text-center">
           <span className="text-[#124B70]/70 text-[10px] font-black uppercase tracking-[0.8em]">Seeker's Guide</span>
-          <h2 className="text-4xl md:text-6xl font-serif font-bold text-[#124B70] tracking-tighter">Wisdom <span className="not-italic text-4xl md:text-6xl tracking-[0.5px]" style={{ WebkitTextStroke: "2.5px #124B70", WebkitTextFillColor: "transparent" }}>Shared.</span></h2>
-          <div className="space-y-6 text-left">
+          <h2 className="text-3xl md:text-6xl font-serif font-bold text-[#124B70] tracking-tighter">Wisdom <span className="not-italic text-3xl md:text-6xl tracking-[0.5px] headline-stroke-faq">Shared.</span></h2>
+          <div className="space-y-1 text-left">
             {[{ q: "Why Milgan?", a: "Because we honor the silence, the slow cooking, and the ancient Bilona rhythm that modern industries ignore." }, { q: "Purity?", a: "Every drop comes from purebred cows, grass-fed and nurtured in traditional sanctuaries." }, { q: "Preservation?", a: "Pure ghee needs no refrigeration. Store in a cool, dark place to preserve its life force." }].map((faq, i) => (
               <div key={i} className="group border-b border-[#124B70]/10 transition-all">
-                <button onClick={() => setActiveFaq(activeFaq === i ? null : i)} className="w-full py-12 flex justify-between items-center bg-transparent">
-                  <span className="text-2xl md:text-3xl font-serif font-bold text-[#124B70] group-hover:text-[#124B70]/70 transition-colors">{faq.q}</span>
-                  <span className="text-3xl text-[#124B70] group-hover:text-[#124B70]/70 transition-colors">{activeFaq === i ? '−' : '+'}</span>
+                <button onClick={() => setActiveFaq(activeFaq === i ? null : i)} className="w-full py-5 flex justify-between items-center bg-transparent text-left">
+                  <span className="text-xl md:text-2xl font-serif font-bold text-[#124B70] group-hover:text-[#124B70]/70 transition-colors">{faq.q}</span>
+                  <span className="text-2xl text-[#124B70] group-hover:text-[#124B70]/70 transition-colors">{activeFaq === i ? '−' : '+'}</span>
                 </button>
-                {activeFaq === i && <div className="pb-12 text-[#124B70]/70 font-serif italic text-xl leading-relaxed animate-in fade-in slide-in-from-bottom-2 duration-500">{faq.a}</div>}
+                {activeFaq === i && <div className="pb-6 text-[#124B70]/70 font-serif italic text-lg leading-relaxed animate-in fade-in slide-in-from-bottom-2 duration-500">{faq.a}</div>}
               </div>
             ))}
           </div>
@@ -406,7 +406,7 @@ export default function Home() {
 
       {/* Gallery Lightbox Modal */}
       {selectedGalleryItem && (
-        <div className="fixed inset-0 w-screen h-screen z-[9999] grid place-items-center p-4 sm:p-6 bg-gradient-to-b from-[#fdc437]/95 via-[#fce389]/95 to-[#f1f5f7]/95 backdrop-blur-xl transition-all duration-500 overflow-y-auto font-sans">
+        <div className="fixed inset-0 w-screen h-screen z-[9999] grid place-items-center p-4 sm:p-6 bg-gradient-to-b from-[#fdce47]/95 via-[#ffdb71]/95 to-[#f1f5f7]/95 backdrop-blur-xl transition-all duration-500 overflow-y-auto font-sans">
           {/* Click outside to close */}
           <div className="fixed inset-0 cursor-pointer" onClick={() => setSelectedGalleryItem(null)} />
 

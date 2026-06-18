@@ -105,7 +105,7 @@ export default function Preloader() {
   return (
     <div
       ref={containerRef}
-      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-gradient-to-b from-[#fdc437] to-[#fce389] transition-opacity duration-600 ease-in-out select-none pointer-events-auto ${isFinished ? 'opacity-0 pointer-events-none' : 'opacity-100'
+      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-gradient-to-b from-[#fdce47] to-[#ffdb71] transition-opacity duration-600 ease-in-out select-none pointer-events-auto ${isFinished ? 'opacity-0 pointer-events-none' : 'opacity-100'
         }`}
     >
       <div className="relative w-80 h-80 flex items-center justify-center">
