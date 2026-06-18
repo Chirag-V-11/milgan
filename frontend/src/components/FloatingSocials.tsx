@@ -40,13 +40,13 @@ const FloatingSocials = () => {
   ];
 
   return (
-    <div className="fixed right-6 bottom-6 z-[100] flex flex-col items-center gap-4">
+    <div className="fixed right-6 bottom-6 z-[100] flex flex-col items-center">
       {/* Social Links Stack */}
       <div
-        className={`flex flex-col gap-3 transition-all duration-500 ease-out ${
+        className={`absolute bottom-[4.5rem] flex flex-col gap-3 transition-all duration-500 ease-out ${
           isOpen
             ? 'opacity-100 translate-y-0 pointer-events-auto'
-            : 'opacity-0 translate-y-8 pointer-events-none'
+            : 'opacity-0 translate-y-4 pointer-events-none'
         }`}
       >
         {socials.map((social, idx) => (

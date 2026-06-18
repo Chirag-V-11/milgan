@@ -112,12 +112,12 @@ export default function Home() {
             </div>
 
             {/* Tagline */}
-            <div className="flex items-center justify-center gap-3 md:gap-4 text-[#006639] opacity-85 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300">
-              <div className="h-px w-8 md:w-16 bg-[#006639]" />
-              <span className="text-[9px] md:text-xs font-black uppercase tracking-[0.4em] whitespace-nowrap">
-                Fresh <span className="inline-block mx-1 md:mx-2 w-[2px] h-[10px] bg-[#006639] align-middle" /> Pure <span className="inline-block mx-1 md:mx-2 w-[2px] h-[10px] bg-[#006639] align-middle" /> Delicious
+            <div className="flex items-center justify-center pl-0 md:pl-50 gap-3 md:gap-4 text-[#006639] animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300">
+              <div className="h-px w-4 md:w-6 bg-[#006639]" />
+              <span className="text-xs md:text-xl font-black uppercase tracking-[0.4em] whitespace-nowrap">
+                Fresh <span className="inline-block mx-1 md:mx-2 w-[2px] h-2.5 md:h-4.5 bg-[#006639] align-middle" /> Pure <span className="inline-block mx-1 md:mx-2 w-[2px] h-2.5 md:h-4.5 bg-[#006639] align-middle" /> Delicious
               </span>
-              <div className="h-px w-8 md:w-16 bg-[#006639]" />
+              <div className="h-px w-4 md:w-6 bg-[#006639]" />
             </div>
           </div>
           <button onClick={() => document.getElementById('boutique')?.scrollIntoView({ behavior: 'smooth' })} className="group relative px-12 md:px-16 py-5 md:py-7 bg-[#124B70] text-[#FDFDFD] rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-[0_8px_30px_rgba(18,75,112,0.4)] font-black uppercase tracking-[0.5em] text-[9px] md:text-[10px] border border-[#124B70]">
@@ -136,7 +136,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-24 md:space-y-10 relative z-10">
           <div className="flex flex-col items-center text-center space-y-6 max-w-2xl mx-auto">
             <span className="text-[#124B70]/70 text-[10px] font-black uppercase tracking-[0.8em]">Artisanal Selection</span>
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#124B70] tracking-tighter leading-tight italic">Liquid Gold, <span className="not-italic text-4xl md:text-7xl tracking-[0.5px]" style={{ WebkitTextStroke: "2px #fff0f0", WebkitTextFillColor: "#fdc73e03" }}>Captured.</span></h2>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#124B70] tracking-tighter leading-tight italic">Liquid Gold, <span className="not-italic text-4xl md:text-5xl tracking-[0.5px]" style={{ WebkitTextStroke: "1px #fff0f0", WebkitTextFillColor: "#006639" }}>Captured.</span></h2>
           </div>
 
           {loading ? (
@@ -262,7 +262,7 @@ export default function Home() {
       <section className="py-18 relative overflow-hidden bg-transparent">
         <div className="max-w-7xl mx-auto px-6 space-y-18">
           <div className="text-center space-y-6 max-w-3xl mx-auto">
-            <h2 className="text-5xl md:text-7xl font-serif font-bold text-[#124B70] tracking-tighter">What <span className="not-italic text-4xl md:text-7xl tracking-[0.5px]" style={{ WebkitTextStroke: "2px #fff0f0", WebkitTextFillColor: "#fdc73e8c" }}>seekers</span> say about Milgan</h2>
+            <h2 className="text-5xl md:text-7xl font-serif font-bold text-[#124B70] tracking-tighter">What <span className="not-italic text-4xl md:text-7xl tracking-[0.5px]" style={{ WebkitTextStroke: "2px #124B70", WebkitTextFillColor: "rgba(18,75,112,0.15)" }}>seekers</span> say about Milgan</h2>
             <p className="text-[#124B70]/70 text-lg font-serif italic">Busy families, holistic healers, and tastemakers — everyone loves the life-force of our pure Vedic Ghee.</p>
           </div>
           <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
@@ -337,7 +337,7 @@ export default function Home() {
             <div className="space-y-8 text-left">
               <div className="space-y-4">
                 <span className="text-[#124B70]/70 text-[10px] md:text-xs font-black uppercase tracking-[0.8em]">The Vision</span>
-                <h2 className="text-4xl md:text-7xl font-serif font-bold text-[#124B70] tracking-tighter leading-[1.1]">A Message of <br /><span className="italic font-light text-[#124B70]/80">Truth.</span></h2>
+                <h2 className="text-4xl md:text-7xl font-serif font-bold text-[#124B70] tracking-tighter leading-[1.1]">A Message of <br /><span className="not-italic text-4xl md:text-7xl tracking-[0.5px]" style={{ WebkitTextStroke: "2px #006639", WebkitTextFillColor: "transparent" }}>Truth.</span></h2>
               </div>
               <div className="space-y-6 text-[#124B70]/80 text-base md:text-lg font-serif leading-relaxed text-justify">
                 <p>
@@ -369,7 +369,7 @@ export default function Home() {
       <section className="py-18 md:py-18 relative overflow-hidden bg-transparent">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 items-center">
           <div className="space-y-12 md:space-y-16 relative z-10">
-            <h2 className="text-5xl md:text-9xl font-serif font-bold text-[#124B70] tracking-tighter leading-tight text-center lg:text-left">Liquid <br /><span className="text-[#124B70]/80 italic font-light">Wisdom.</span></h2>
+            <h2 className="text-5xl md:text-9xl font-serif font-bold text-[#124B70] tracking-tighter leading-tight text-center lg:text-left">Liquid <br /><span className="not-italic text-5xl md:text-9xl tracking-[0.5px]" style={{ WebkitTextStroke: "2px #fdc73e", WebkitTextFillColor: "transparent" }}>Wisdom.</span></h2>
             <div className="grid grid-cols-2 gap-4 md:gap-8">
               {[{ t: 'Immunity', d: 'Natural defense booster' }, { t: 'Brain Fuel', d: 'Rich in healthy acids' }, { t: 'Digestion', d: 'Vedic gut healing' }, { t: 'Skin Radiance', d: 'Inner & outer glow' }].map((b, i) => (
                 <div key={i} className="p-5 sm:p-8 bg-white/20 backdrop-blur-md border border-[#124B70]/10 rounded-[2rem] md:rounded-[2.5rem] space-y-4 hover:-translate-y-1 hover:shadow-xl transition-all duration-500 shadow-[0_8px_30px_rgba(18,75,112,0.05)]">
@@ -388,7 +388,7 @@ export default function Home() {
       <section className="py-18 bg-transparent">
         <div className="max-w-4xl mx-auto px-6 space-y-18 text-center">
           <span className="text-[#124B70]/70 text-[10px] font-black uppercase tracking-[0.8em]">Seeker's Guide</span>
-          <h2 className="text-4xl md:text-6xl font-serif font-bold text-[#124B70] tracking-tighter">Wisdom Shared.</h2>
+          <h2 className="text-4xl md:text-6xl font-serif font-bold text-[#124B70] tracking-tighter">Wisdom <span className="not-italic text-4xl md:text-6xl tracking-[0.5px]" style={{ WebkitTextStroke: "2.5px #124B70", WebkitTextFillColor: "transparent" }}>Shared.</span></h2>
           <div className="space-y-6 text-left">
             {[{ q: "Why Milgan?", a: "Because we honor the silence, the slow cooking, and the ancient Bilona rhythm that modern industries ignore." }, { q: "Purity?", a: "Every drop comes from purebred cows, grass-fed and nurtured in traditional sanctuaries." }, { q: "Preservation?", a: "Pure ghee needs no refrigeration. Store in a cool, dark place to preserve its life force." }].map((faq, i) => (
               <div key={i} className="group border-b border-[#124B70]/10 transition-all">
