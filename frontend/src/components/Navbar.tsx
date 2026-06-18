@@ -27,7 +27,7 @@ const Navbar = () => {
         `}>
           {/* Logo Sanctuary */}
           <Link href="/" className="flex items-center gap-3">
-            <img src="/image/milgan logo-0.png" alt="Milgan" className="w-9 h-9 object-contain" style={{ filter: "brightness(0) saturate(100%) invert(20%) sepia(51%) saturate(2159%) hue-rotate(185deg) brightness(94%) contrast(92%)" }} />
+            <img src="/image/milgan logo-0.png" alt="Milgan" className="w-9 h-9 object-contain" style={{ filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }} />
             <div className="flex flex-col">
               <span className="text-lg font-serif font-bold text-[#124B70] tracking-tight leading-none drop-shadow-sm">Milgan</span>
               <span className="text-[7px] font-black uppercase tracking-[0.3em] text-[#124B70]/60 mt-1 leading-none">Natural Alchemy</span>

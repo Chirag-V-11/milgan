@@ -170,7 +170,7 @@ export default function Preloader() {
             src="/image/milgan logo-0.png"
             alt="Milgan Logo"
             className="w-full h-full object-contain"
-            style={{ filter: "brightness(0) saturate(100%) invert(20%) sepia(51%) saturate(2159%) hue-rotate(185deg) brightness(94%) contrast(92%)" }}
+            style={{ filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }}
           />
         </div>
 

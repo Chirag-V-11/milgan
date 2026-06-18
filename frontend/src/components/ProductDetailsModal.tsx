@@ -16,12 +16,14 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
   const [activeImage, setActiveImage] = useState(0);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     if (product && product.quantity_options?.length > 0) {
       setSelectedSize(product.quantity_options[0]);
     }
     setActiveImage(0);
+    setQuantity(1);
   }, [product]);
 
   useEffect(() => {
@@ -46,6 +48,7 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
   const finalPrice = selectedSize
     ? Math.round(selectedSize.baseCost * (1 - (selectedSize.discountPercentage || 0) / 100))
     : 0;
+  const totalPrice = finalPrice * quantity;
 
   const handleWhatsAppOrder = () => {
     if (!user) {
@@ -62,7 +65,8 @@ Location: ${user.address}
 Product Details:
 Item: ${product.name}
 Size: ${selectedSize?.size}
-Total Price: ₹${Math.round(finalPrice)}`;
+Quantity: ${quantity}
+Total Price: ₹${Math.round(totalPrice)}`;
 
     const text = encodeURIComponent(message);
     window.open(`https://wa.me/918660013411?text=${text}`, '_blank');
@@ -174,11 +178,18 @@ Total Price: ₹${Math.round(finalPrice)}`;
 
             {/* Price */}
             <div className="flex items-end gap-3 py-5 border-y border-white/10">
-              <span className="text-4xl font-serif font-bold text-gold">₹{finalPrice}</span>
+              <div className="flex flex-col gap-0.5">
+                {quantity > 1 && (
+                  <span className="text-[8px] font-black text-foreground/40 uppercase tracking-widest">
+                    ₹{finalPrice} per item
+                  </span>
+                )}
+                <span className="text-4xl font-serif font-bold text-gold">₹{totalPrice}</span>
+              </div>
               {selectedSize?.discountPercentage > 0 && (
                 <div className="space-y-0.5">
-                  <div className="text-xs text-foreground/40 line-through font-medium">₹{selectedSize.baseCost}</div>
-                  <div className="text-[8px] font-black text-red-500 uppercase tracking-widest">You save ₹{selectedSize.baseCost - finalPrice}</div>
+                  <div className="text-xs text-foreground/40 line-through font-medium">₹{selectedSize.baseCost * quantity}</div>
+                  <div className="text-[8px] font-black text-red-500 uppercase tracking-widest">You save ₹{(selectedSize.baseCost - finalPrice) * quantity}</div>
                 </div>
               )}
               <span className="ml-auto text-[8px] font-black text-foreground/40 uppercase tracking-widest">Free Delivery</span>
@@ -213,6 +224,29 @@ Total Price: ₹${Math.round(finalPrice)}`;
                 </div>
               </div>
             )}
+
+            {/* Quantity Selector */}
+            <div className="space-y-3">
+              <h3 className="text-[9px] font-black text-foreground/40 uppercase tracking-[0.3em]">Select Quantity</h3>
+              <div className="flex items-center gap-3 bg-white/[0.03] border border-white/10 w-fit rounded-xl p-1 shadow-sm">
+                <button
+                  onClick={() => setQuantity(prev => Math.max(1, prev - 1))}
+                  className="w-8 h-8 rounded-lg bg-white/10 text-white border border-white/10 flex items-center justify-center font-bold text-md hover:bg-gold hover:text-[#23212e] active:scale-95 transition-all shadow-sm disabled:opacity-40 disabled:hover:bg-white/10 disabled:hover:text-white disabled:cursor-not-allowed"
+                  disabled={quantity <= 1}
+                >
+                  −
+                </button>
+                <span className="w-10 text-center text-sm font-black text-foreground select-none font-mono">
+                  {quantity}
+                </span>
+                <button
+                  onClick={() => setQuantity(prev => prev + 1)}
+                  className="w-8 h-8 rounded-lg bg-white/10 text-white border border-white/10 flex items-center justify-center font-bold text-md hover:bg-gold hover:text-[#23212e] active:scale-95 transition-all shadow-sm"
+                >
+                  +
+                </button>
+              </div>
+            </div>
           </div>
 
           {/* CTA Actions */}

@@ -15,6 +15,7 @@ export default function ProductDetails() {
   const [loading, setLoading] = useState(true);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     async function fetchProduct() {
@@ -69,6 +70,7 @@ export default function ProductDetails() {
   const finalPrice = selectedSize
     ? Math.round(selectedSize.baseCost * (1 - (selectedSize.discountPercentage || 0) / 100))
     : 0;
+  const totalPrice = finalPrice * quantity;
 
   const handleWhatsAppOrder = () => {
     if (!user) {
@@ -85,7 +87,8 @@ Location: ${user.address}
 Product Details:
 Item: ${product.name}
 Size: ${selectedSize?.size}
-Total Price: ₹${Math.round(finalPrice)}`;
+Quantity: ${quantity}
+Total Price: ₹${Math.round(totalPrice)}`;
 
     const text = encodeURIComponent(message);
     window.open(`https://wa.me/918660013411?text=${text}`, '_blank');
@@ -198,11 +201,18 @@ Total Price: ₹${Math.round(finalPrice)}`;
 
             {/* Price */}
             <div className="flex items-end gap-4 py-6 border-y border-[#124B70]/10">
-              <span className="text-5xl font-serif font-bold text-[#124B70]">₹{finalPrice}</span>
+              <div className="flex flex-col gap-1">
+                {quantity > 1 && (
+                  <span className="text-[10px] font-black text-[#124B70]/50 uppercase tracking-widest">
+                    ₹{finalPrice} per item
+                  </span>
+                )}
+                <span className="text-5xl font-serif font-bold text-[#124B70]">₹{totalPrice}</span>
+              </div>
               {selectedSize?.discountPercentage > 0 && (
                 <div className="mb-1 space-y-0.5">
-                  <div className="text-sm text-[#124B70]/50 line-through font-medium">₹{selectedSize.baseCost}</div>
-                  <div className="text-[9px] font-black text-red-500 uppercase tracking-widest">You save ₹{selectedSize.baseCost - finalPrice}</div>
+                  <div className="text-sm text-[#124B70]/50 line-through font-medium">₹{selectedSize.baseCost * quantity}</div>
+                  <div className="text-[9px] font-black text-red-500 uppercase tracking-widest">You save ₹{(selectedSize.baseCost - finalPrice) * quantity}</div>
                 </div>
               )}
               <span className="ml-auto text-[9px] font-black text-[#124B70]/50 uppercase tracking-widest">Free Delivery</span>
@@ -237,6 +247,29 @@ Total Price: ₹${Math.round(finalPrice)}`;
                 </div>
               </div>
             )}
+
+            {/* Quantity Selector */}
+            <div className="space-y-4">
+              <h3 className="text-[10px] font-black text-[#124B70]/50 uppercase tracking-[0.3em]">Select Quantity</h3>
+              <div className="flex items-center gap-4 bg-white/40 border border-[#124B70]/15 w-fit rounded-2xl p-1.5 shadow-sm">
+                <button
+                  onClick={() => setQuantity(prev => Math.max(1, prev - 1))}
+                  className="w-10 h-10 rounded-xl bg-white border border-[#124B70]/10 text-[#124B70] flex items-center justify-center font-bold text-lg hover:bg-[#124B70] hover:text-[#FDFDFD] active:scale-95 transition-all shadow-sm disabled:opacity-40 disabled:hover:bg-white disabled:hover:text-[#124B70] disabled:cursor-not-allowed"
+                  disabled={quantity <= 1}
+                >
+                  −
+                </button>
+                <span className="w-12 text-center text-base font-black text-[#124B70] select-none font-mono">
+                  {quantity}
+                </span>
+                <button
+                  onClick={() => setQuantity(prev => prev + 1)}
+                  className="w-10 h-10 rounded-xl bg-white border border-[#124B70]/10 text-[#124B70] flex items-center justify-center font-bold text-lg hover:bg-[#124B70] hover:text-[#FDFDFD] active:scale-95 transition-all shadow-sm"
+                >
+                  +
+                </button>
+              </div>
+            </div>
 
             {/* CTA Buttons */}
             <div className="space-y-4">

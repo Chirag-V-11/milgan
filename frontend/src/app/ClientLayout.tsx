@@ -50,7 +50,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
               <div className="grid grid-cols-1 md:grid-cols-4 gap-24 md:gap-12">
                 <div className="md:col-span-2 space-y-12 text-center md:text-left">
                   <div className="flex items-center justify-center md:justify-start gap-4">
-                    <img src="/image/milgan logo-0.png" alt="Milgan logo" className="w-12 h-12 object-contain" style={{ filter: "brightness(0) saturate(100%) invert(20%) sepia(51%) saturate(2159%) hue-rotate(185deg) brightness(94%) contrast(92%)" }} />
+                    <img src="/image/milgan logo-0.png" alt="Milgan logo" className="w-12 h-12 object-contain" style={{ filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }} />
                     <h2 className="text-4xl font-serif font-bold text-[#124B70] tracking-tighter">Milgan.</h2>
                   </div>
                   <p className="text-[#124B70]/70 text-xl font-serif italic max-w-sm mx-auto md:mx-0 leading-relaxed">"Honoring the ancient Vedic rhythms of preparation to deliver the purest natural ghee in the world."</p>
@@ -72,11 +72,19 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
             </div>
           </footer>
           <div className="fixed bottom-0 left-0 right-0 flex justify-center pointer-events-none z-50">
+            {/* Mobile View Signature */}
+            <img
+              src="/image/Milgan bottom mobile.png"
+              alt="Milgan Sanctuary Signature Mobile"
+              className="block sm:hidden w-full max-w-[60rem] h-auto object-contain select-none opacity-100"
+              style={{ filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }}
+            />
+            {/* Desktop View Signature */}
             <img
               src="/image/Milgan bottom.png"
               alt="Milgan Sanctuary Signature"
-              className="w-full max-w-[40rem] sm:max-w-[60rem] md:max-w-[75rem] h-auto object-contain select-none opacity-100"
-              style={{ filter: "brightness(0) saturate(100%) invert(20%) sepia(51%) saturate(2159%) hue-rotate(185deg) brightness(94%) contrast(92%)" }}
+              className="hidden sm:block w-full max-w-[60rem] sm:max-w-[60rem] md:max-w-[75rem] h-auto object-contain select-none opacity-100"
+              style={{ filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }}
             />
           </div>
         </>

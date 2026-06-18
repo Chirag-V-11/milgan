@@ -1,7 +1,9 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 
 const FloatingSocials = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   const socials = [
     {
       name: 'WhatsApp',
@@ -38,22 +40,68 @@ const FloatingSocials = () => {
   ];
 
   return (
-    <div className="fixed right-6 bottom-24 z-[100] flex flex-col gap-4">
-      {socials.map((social) => (
-        <a
-          key={social.name}
-          href={social.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`
-            relative w-12 h-12 rounded-full flex items-center justify-center
-            ${social.color} cursor-pointer active:scale-95 transition-transform duration-200
-          `}
-          aria-label={`Follow/Contact us on ${social.name}`}
-        >
-          {social.icon}
-        </a>
-      ))}
+    <div className="fixed right-6 bottom-6 z-[100] flex flex-col items-center gap-4">
+      {/* Social Links Stack */}
+      <div
+        className={`flex flex-col gap-3 transition-all duration-500 ease-out ${
+          isOpen
+            ? 'opacity-100 translate-y-0 pointer-events-auto'
+            : 'opacity-0 translate-y-8 pointer-events-none'
+        }`}
+      >
+        {socials.map((social, idx) => (
+          <a
+            key={social.name}
+            href={social.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`
+              w-12 h-12 rounded-full flex items-center justify-center
+              ${social.color} cursor-pointer active:scale-95 transition-all hover:scale-110 duration-300
+            `}
+            style={{
+              transitionDelay: isOpen ? `${idx * 75}ms` : '0ms'
+            }}
+            aria-label={`Follow/Contact us on ${social.name}`}
+          >
+            {social.icon}
+          </a>
+        ))}
+      </div>
+
+      {/* Main Trigger Button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-14 h-14 rounded-full flex items-center justify-center bg-[#124B70] text-[#FDFDFD] shadow-[0_10px_30px_rgba(18,75,112,0.35)] hover:shadow-[0_15px_35px_rgba(18,75,112,0.5)] cursor-pointer active:scale-95 hover:scale-105 transition-all duration-300 border border-white/10"
+        aria-label="Toggle Social Media Links"
+      >
+        {isOpen ? (
+          <svg
+            className="w-6 h-6 animate-in spin-in-90 duration-300"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            viewBox="0 0 24 24"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        ) : (
+          <svg
+            className="w-6 h-6 animate-in zoom-in-75 duration-300"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            viewBox="0 0 24 24"
+          >
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+        )}
+      </button>
     </div>
   );
 };
