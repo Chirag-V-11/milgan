@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import ProductCard from "@/components/ProductCard";
 import Link from 'next/link';
 
 const galleryItems = [
