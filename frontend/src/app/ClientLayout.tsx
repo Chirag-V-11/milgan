@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Navbar from '../components/Navbar';
-import FloatingSocials from '../components/FloatingSocials';
 import Preloader from '../components/Preloader';
 import CartDrawer from '../components/CartDrawer';
+import FloatingSocials from '../components/FloatingSocials';
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -39,8 +39,8 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     <>
       <Preloader />
       {!isAdminPage && !isPreloading && <Navbar />}
-      {!isAdminPage && <FloatingSocials />}
       {!isAdminPage && <CartDrawer />}
+      {!isAdminPage && <FloatingSocials />}
       <main className={`${mainClassName || ""} relative z-10`}>
         {children}
       </main>
