@@ -111,7 +111,7 @@ export default function Home() {
             </div>
 
             {/* Tagline */}
-            <div className="flex items-center justify-center gap-3 md:gap-4 text-[#006639] animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300">
+            <div className="flex items-center md:pl-50 justify-center gap-3 md:gap-4 text-[#006639] animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300">
               <div className="h-px w-4 md:w-6 bg-[#006639]" />
               <span className="text-[10px] min-[375px]:text-xs md:text-xl font-black uppercase tracking-[0.25em] min-[375px]:tracking-[0.4em] whitespace-nowrap">
                 Fresh <span className="inline-block mx-1 md:mx-2 w-[2px] h-2.5 md:h-4.5 bg-[#006639] align-middle" /> Pure <span className="inline-block mx-1 md:mx-2 w-[2px] h-2.5 md:h-4.5 bg-[#006639] align-middle" /> Delicious
