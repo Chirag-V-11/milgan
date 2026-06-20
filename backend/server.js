@@ -27,12 +27,14 @@ const productRoutes = require('./src/routes/products');
 const authRoutes = require('./src/routes/auth');
 const userRoutes = require('./src/routes/users');
 const inquiryRoutes = require('./src/routes/inquiry');
+const shippingRoutes = require('./src/routes/shipping');
 
 app.use('/api/whatsapp', whatsappRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/inquiry', inquiryRoutes);
+app.use('/api/shipping', shippingRoutes);
 
 app.get('/', (req, res) => {
   res.send('API is running...');

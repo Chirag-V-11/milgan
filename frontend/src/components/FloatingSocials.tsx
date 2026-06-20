@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 
 const FloatingSocials = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(true);
 
   const socials = [
     {
@@ -69,11 +70,28 @@ const FloatingSocials = () => {
         ))}
       </div>
 
+      {/* Tooltip Capsule for First Open */}
+      {showTooltip && !isOpen && (
+        <div className="absolute right-[4.5rem] bottom-2.5 bg-[#124B70] text-[#FDFDFD] px-4 py-2 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap shadow-[0_8px_25px_rgba(18,75,112,0.25)] border border-white/10 animate-in fade-in slide-in-from-right-4 duration-500 flex items-center gap-2 select-none">
+          <span>Contact Us</span>
+          <button 
+            onClick={(e) => { e.stopPropagation(); setShowTooltip(false); }}
+            className="text-white/60 hover:text-white ml-1 font-bold text-xs cursor-pointer"
+            title="Dismiss"
+          >
+            ×
+          </button>
+        </div>
+      )}
+
       {/* Main Trigger Button */}
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          setIsOpen(!isOpen);
+          setShowTooltip(false);
+        }}
         className="w-14 h-14 rounded-full flex items-center justify-center bg-[#124B70] text-[#FDFDFD] shadow-[0_10px_30px_rgba(18,75,112,0.35)] hover:shadow-[0_15px_35px_rgba(18,75,112,0.5)] cursor-pointer active:scale-95 hover:scale-105 transition-all duration-300 border border-white/10"
-        aria-label="Toggle Social Media Links"
+        aria-label="Contact Us"
       >
         {isOpen ? (
           <svg

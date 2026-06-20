@@ -2,10 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useUser } from '@/context/UserContext';
+import { useCart } from '@/context/CartContext';
 import UserAuthModal from './UserAuthModal';
 
 const Navbar = () => {
   const { user, logout } = useUser();
+  const { cartCount, setIsOpen } = useCart();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -50,6 +52,23 @@ const Navbar = () => {
 
           {/* User Portal & Hamburger */}
           <div className="flex items-center gap-3 md:gap-6">
+            
+            {/* Cart Toggle Button */}
+            <button
+              onClick={() => setIsOpen(true)}
+              className="relative p-2.5 rounded-full bg-[#124B70]/10 hover:bg-[#124B70]/20 text-[#124B70] transition-all duration-300 border border-[#124B70]/10"
+              title="View Cart"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1,0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0,1-1.12-1.243l1.264-12A1.125 1.125 0 0,1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1,1-.75 0 .375.375 0 0,1 .75 0Zm7.5 0a.375.375 0 1,1-.75 0 .375.375 0 0,1 .75 0Z" />
+              </svg>
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-gold text-[#23212e] text-[9px] font-black w-4.5 h-4.5 rounded-full flex items-center justify-center border border-white shadow-sm font-sans animate-in zoom-in duration-300">
+                  {cartCount}
+                </span>
+              )}
+            </button>
+
             <div className="hidden md:block">
               {user ? (
                 <div className="flex items-center gap-4">

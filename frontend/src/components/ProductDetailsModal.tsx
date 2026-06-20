@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useUser } from '@/context/UserContext';
+import { useCart } from '@/context/CartContext';
 import UserAuthModal from './UserAuthModal';
 
 interface ProductDetailsModalProps {
@@ -12,6 +13,7 @@ interface ProductDetailsModalProps {
 
 export default function ProductDetailsModal({ product, isOpen, onClose }: ProductDetailsModalProps) {
   const { user } = useUser();
+  const { addToCart } = useCart();
   const [selectedSize, setSelectedSize] = useState<any>(null);
   const [activeImage, setActiveImage] = useState(0);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -72,6 +74,18 @@ Total Price: ₹${Math.round(totalPrice)}`;
     window.open(`https://wa.me/918660013411?text=${text}`, '_blank');
     setAddedToCart(true);
     setTimeout(() => setAddedToCart(false), 3000);
+  };
+
+  const handleAddToCart = () => {
+    if (!product) return;
+    addToCart({
+      id: product.id,
+      name: product.name,
+      image: allImages[0] || '',
+      size: selectedSize?.size || 'Standard',
+      basePrice: finalPrice,
+      originalPrice: selectedSize?.baseCost || finalPrice
+    }, quantity);
   };
 
   const modalBody = (
@@ -251,12 +265,20 @@ Total Price: ₹${Math.round(totalPrice)}`;
 
           {/* CTA Actions */}
           <div className="space-y-3 pt-6 border-t border-white/10">
-            <button
-              onClick={handleWhatsAppOrder}
-              className={`w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-[0.3em] shadow-xl transition-all duration-500 flex items-center justify-center gap-2.5 active:scale-[0.98] ${addedToCart ? 'bg-green-600 text-white' : 'bg-[#25D366] text-white hover:bg-green-600 hover:shadow-green-500/20'}`}
-            >
-              {addedToCart ? '✓ Order Sent!' : 'Order via WhatsApp'}
-            </button>
+            <div className="grid grid-cols-2 gap-2.5">
+              <button
+                onClick={handleAddToCart}
+                className="w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-[0.3em] shadow-xl transition-all duration-500 flex items-center justify-center gap-2.5 active:scale-[0.98] bg-gold text-[#23212e] hover:bg-[#fdce47] hover:shadow-gold/15"
+              >
+                Add to Cart
+              </button>
+              <button
+                onClick={handleWhatsAppOrder}
+                className={`w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-[0.3em] shadow-xl transition-all duration-500 flex items-center justify-center gap-2.5 active:scale-[0.98] ${addedToCart ? 'bg-green-600 text-white' : 'bg-[#25D366] text-white hover:bg-green-600 hover:shadow-green-500/20'}`}
+              >
+                {addedToCart ? '✓ Order Sent!' : 'WhatsApp Buy'}
+              </button>
+            </div>
 
             <div className="grid grid-cols-2 gap-2">
               <button

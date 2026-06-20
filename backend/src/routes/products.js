@@ -43,7 +43,7 @@ router.get('/:id', async (req, res) => {
 // Add a new product (Protected)
 router.post('/', authMiddleware, async (req, res) => {
   try {
-    const { name, description, image_url, quantity_options } = req.body;
+    const { name, description, image_url, quantity_options, amazon_url, blinkit_url } = req.body;
 
     if (!name || !quantity_options) {
       return res.status(400).json({ error: 'Name and quantity options are required' });
@@ -52,7 +52,7 @@ router.post('/', authMiddleware, async (req, res) => {
     const { data, error } = await supabase
       .from('products')
       .insert([
-        { name, description, image_url, quantity_options }
+        { name, description, image_url, quantity_options, amazon_url, blinkit_url }
       ])
       .select();
 
@@ -67,13 +67,13 @@ router.post('/', authMiddleware, async (req, res) => {
 router.put('/:id', authMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, description, image_url, quantity_options } = req.body;
+    const { name, description, image_url, quantity_options, amazon_url, blinkit_url } = req.body;
 
     console.log(`[Updating Product ${id}]`, { name });
 
     const { data, error } = await supabase
       .from('products')
-      .update({ name, description, image_url, quantity_options })
+      .update({ name, description, image_url, quantity_options, amazon_url, blinkit_url })
       .eq('id', id)
       .select();
 

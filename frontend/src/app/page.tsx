@@ -135,7 +135,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-24 md:space-y-10 relative z-10">
           <div className="flex flex-col items-center text-center space-y-6 max-w-2xl mx-auto">
             <span className="text-[#124B70]/70 text-[10px] font-black uppercase tracking-[0.8em]">Artisanal Selection</span>
-            <h2 className="text-3xl md:text-5xl font-serif font-bold text-[#124B70] tracking-tighter leading-tight italic">Liquid Gold, <span className="not-italic text-3xl md:text-5xl tracking-[0.5px] headline-stroke-green">Captured.</span></h2>
+            <h2 className="text-3xl md:text-5xl font-serif font-bold text-[#124B70] tracking-tighter leading-tight italic">DELIVERING QUALITY <span className="not-italic text-3xl md:text-5xl tracking-[0.5px] headline-stroke-green">EVERYTIME.</span></h2>
           </div>
 
           {loading ? (
@@ -323,12 +323,12 @@ export default function Home() {
               <img
                 src="/image/founder.png"
                 className="w-full h-full object-contain object-top transition-transform duration-[3000ms] group-hover:scale-105"
-                alt="Anand, Founder of Milgan"
+                alt="Anand, Founder of Milgen"
               />
               <div className="absolute inset-0 bg-[#124B70]/5 opacity-0 group-hover:opacity-100 transition-all duration-1000" />
               <div className="absolute bottom-8 left-8 right-8 p-6 bg-[#124B70]/90 backdrop-blur-xl border border-[#124B70]/20 rounded-3xl text-center shadow-[0_8px_30px_rgba(18,75,112,0.15)]">
                 <span className="text-[10px] font-black text-[#ffdb71] uppercase tracking-[0.4em]">Anand</span>
-                <p className="text-white/80 font-serif italic text-xs mt-1">Founder, Milgan Foods</p>
+                <p className="text-white/80 font-serif italic text-xs mt-1">Founder, Milgen Foods</p>
               </div>
             </div>
 
@@ -340,13 +340,13 @@ export default function Home() {
               </div>
               <div className="space-y-6 text-[#124B70]/80 text-base md:text-lg font-serif leading-relaxed text-left md:text-justify">
                 <p>
-                  "When we set out to create Milgan, our goal wasn't to build a business, but to restore a sacred ritual. In a world chasing speed and volume, real purity has become a forgotten whisper."
+                  "When we set out to create Milgen Foods, our goal wasn't to build a business, but to restore a sacred ritual. In a world chasing speed and volume, real purity has become a forgotten whisper."
                 </p>
                 <p>
-                  "Every batch of our ghee carries the warmth of the gentle wood fire, the patience of the Bilona double-direction churn, and the purity of grass-fed cows. We believe that food is not just sustenance—it is a vessel of life-force, or <em>Prana</em>."
+                  "Every batch of our food products carries the warmth of the gentle wood fire, the patience of traditional methods, and the purity of natural ingredients. We believe that food is not just sustenance—it is a vessel of life-force, or <em>Prana</em>."
                 </p>
                 <p>
-                  "Thank you for welcoming Milgan into your kitchen and trusting us with your health. We promise to never compromise on the slow, honest methods that make our ghee liquid gold."
+                  "Thank you for welcoming Milgen Foods into your kitchen and trusting us with your health. We promise to never compromise on the slow, honest methods that make our food products a source of true nourishment."
                 </p>
               </div>
 
