@@ -173,7 +173,7 @@ export default function VideoSection() {
         {/* CTA below video */}
         <div className="text-center space-y-4">
           <a
-            href="https://www.youtube.com/@milganfoods"
+            href="https://www.youtube.com/@MilganFoods-b2b7p"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-8 py-4 border border-[#fdce47]/40 text-[#fdce47] rounded-full text-[10px] font-black uppercase tracking-[0.4em] hover:bg-[#fdce47] hover:text-[#124B70] transition-all duration-300 group"
