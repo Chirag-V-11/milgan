@@ -82,9 +82,16 @@ router.get('/orders', async (req, res) => {
       .order('created_at', { ascending: false });
 
     if (phone) {
-      query = query.eq('phone', phone);
+      // Extract last 10 digits to handle country code prefixes (+91, 0, etc.) flexibly
+      const digits = phone.replace(/\D/g, '');
+      const last10 = digits.slice(-10);
+      if (last10.length === 10) {
+        query = query.ilike('phone', `%${last10}`);
+      } else {
+        query = query.eq('phone', phone);
+      }
     } else if (email) {
-      query = query.eq('email', email);
+      query = query.ilike('email', email.trim());
     }
 
     const { data: orders, error } = await query;
