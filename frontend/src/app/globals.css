@@ -291,3 +291,19 @@ body.client-body [class*="bg-[#23212e]"] .hover\:bg-gold:hover {
   background: #FFDB71;
   background: linear-gradient(180deg, rgba(255, 219, 113, 1) 0%, rgba(253, 206, 71, 0.62) 50%, rgba(253, 206, 71, 1) 100%);
 }
+
+/* Prevent browser autofill from adding a solid white/blue background */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border-bottom: 1px solid #fcc433 !important;
+  -webkit-text-fill-color: #ffffff !important;
+  -webkit-box-shadow: 0 0 0px 1000px #23212e inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}

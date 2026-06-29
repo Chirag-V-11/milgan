@@ -11,11 +11,23 @@ const Navbar = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = React.useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   return (
@@ -69,11 +81,42 @@ const Navbar = () => {
               )}
             </button>
 
-            <div className="hidden md:block">
+            <div className="hidden md:block" ref={dropdownRef}>
               {user ? (
-                <div className="flex items-center gap-4">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-[#124B70]">Hello, {user.name.split(' ')[0]}</span>
-                  <button onClick={logout} className="text-[9px] font-black uppercase tracking-[0.2em] text-[#124B70]/60 hover:text-red-500 transition-colors border border-[#124B70]/20 hover:border-red-500/30 px-4 py-2 rounded-xl">Logout</button>
+                <div className="relative">
+                  <button 
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                    className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-[0.25em] text-[#124B70] hover:opacity-80 transition-opacity focus:outline-none"
+                  >
+                    <span>Hello, {user.name.split(' ')[0]}</span>
+                    <svg className={`w-3 h-3 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                    </svg>
+                  </button>
+                  
+                  {isDropdownOpen && (
+                    <div className="absolute right-0 mt-3.5 w-44 bg-white/95 backdrop-blur-2xl border border-[#124B70]/15 rounded-2xl shadow-xl py-2 z-[110] animate-in fade-in slide-in-from-top-2 duration-200">
+                      <Link 
+                        href="/orders" 
+                        onClick={() => setIsDropdownOpen(false)}
+                        className="flex items-center gap-2.5 px-4 py-3 text-[10px] font-black uppercase tracking-wider text-[#124B70] hover:bg-[#124B70]/5 transition-colors"
+                      >
+                        <svg className="w-4 h-4 text-[#124B70]/70" fill="none" stroke="currentColor" strokeWidth="2.2" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1,0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0,1-1.12-1.243l1.264-12A1.125 1.125 0 0,1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1,1-.75 0 .375.375 0 0,1 .75 0Zm7.5 0a.375.375 0 1,1-.75 0 .375.375 0 0,1 .75 0Z" />
+                        </svg>
+                        Your Orders
+                      </Link>
+                      <button 
+                        onClick={() => { logout(); setIsDropdownOpen(false); }}
+                        className="w-full text-left flex items-center gap-2.5 px-4 py-3 text-[10px] font-black uppercase tracking-wider text-red-500 hover:bg-red-500/5 transition-colors border-t border-[#124B70]/5"
+                      >
+                        <svg className="w-4 h-4 text-red-500/80" fill="none" stroke="currentColor" strokeWidth="2.2" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0,0 13.5 3h-6a2.25 2.25 0 0,0-2.25 2.25v13.5A2.25 2.25 0 0,0 7.5 21h6a2.25 2.25 0 0,0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75" />
+                        </svg>
+                        Logout
+                      </button>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <button onClick={() => setIsAuthModalOpen(true)} className="bg-gradient-to-r from-[#ffdb71] to-[#fdce47] text-[#124B70] px-8 py-3.5 rounded-full text-[9px] font-black uppercase tracking-[0.3em] transition-all duration-500 shadow-md hover:shadow-[0_8px_30px_rgba(253,206,71,0.3)] hover:-translate-y-0.5 active:scale-[0.98] border border-white/50">Join Legacy</button>
@@ -109,12 +152,37 @@ const Navbar = () => {
               </Link>
             ))}
           </div>
-          <div className="pt-10 border-t border-[#124B70]/10 flex flex-col items-center gap-6">
+          <div className="pt-10 border-t border-[#124B70]/10 flex flex-col items-center gap-6 w-full">
             {user ? (
-              <>
-                <span className="text-[10px] font-black uppercase tracking-widest text-[#124B70]">Hi, {user.name}</span>
-                <button onClick={logout} className="text-[10px] font-black uppercase tracking-widest text-red-500">Logout</button>
-              </>
+              <div className="flex flex-col items-center gap-4 w-full">
+                <button 
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-[#124B70] focus:outline-none"
+                >
+                  <span>Hi, {user.name}</span>
+                  <svg className={`w-3.5 h-3.5 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                  </svg>
+                </button>
+                
+                {isDropdownOpen && (
+                  <div className="w-full flex flex-col items-center bg-[#124B70]/5 rounded-2xl py-3 space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
+                    <Link 
+                      href="/orders" 
+                      onClick={() => { setIsDropdownOpen(false); setIsMobileMenuOpen(false); }}
+                      className="text-[10px] font-black uppercase tracking-[0.25em] text-[#124B70] py-2"
+                    >
+                      Your Orders
+                    </Link>
+                    <button 
+                      onClick={() => { logout(); setIsDropdownOpen(false); setIsMobileMenuOpen(false); }}
+                      className="text-[10px] font-black uppercase tracking-[0.25em] text-red-500 py-2 border-t border-[#124B70]/10 w-3/4 text-center"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
             ) : (
               <button onClick={() => { setIsAuthModalOpen(true); setIsMobileMenuOpen(false); }} className="w-full bg-gradient-to-r from-[#ffdb71] to-[#fdce47] text-[#124B70] py-5 rounded-full text-[10px] font-black uppercase tracking-[0.4em] hover:scale-105 transition-all shadow-md border border-white/50">Join Legacy</button>
             )}

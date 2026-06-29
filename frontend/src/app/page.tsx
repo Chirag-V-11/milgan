@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import VideoSection from '@/components/VideoSection';
 
 const galleryItems = [
   {
@@ -256,6 +257,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* VIDEO SECTION — The Milgan Story */}
+      <VideoSection />
 
       {/* 5. ARTISAN WALL OF TRUST */}
       <section className="py-18 relative overflow-hidden bg-gold-gradient">

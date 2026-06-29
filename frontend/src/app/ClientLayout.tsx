@@ -49,7 +49,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
           {/* 7. MODERN EDITORIAL FOOTER */}
           <footer className="pt-24 pb-20 relative overflow-hidden bg-transparent">
             <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-24 md:gap-12">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-24 md:gap-12">
                 <div className="md:col-span-2 space-y-12 text-center md:text-left">
                   <div className="flex items-center justify-center md:justify-start gap-4">
                     <img src="/image/milgan logo-0.png" alt="Milgan logo" className="w-12 h-12 object-contain" style={{ filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }} />
@@ -61,15 +61,16 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
                   <h4 className="text-[11px] font-black uppercase tracking-[0.5em] text-[#124B70]/70">The Vault</h4>
                   <ul className="space-y-4">{['Collection', 'Legacy', 'Purity', 'Wisdom'].map(item => <li key={item}><Link href="/" className="text-sm font-bold text-[#124B70] hover:text-[#124B70]/70 transition-colors">{item}</Link></li>)}</ul>
                 </div>
-                <div className="space-y-10 text-center md:text-left">
-                  <h4 className="text-[11px] font-black uppercase tracking-[0.5em] text-[#124B70]/70">Control</h4>
-                  <ul className="space-y-4"><li><Link href="/admin" className="text-sm font-bold text-[#124B70] hover:text-[#124B70]/70 transition-colors">Artisan Portal</Link></li><li><Link href="/admin" className="text-sm font-bold text-[#124B70] hover:text-[#124B70]/70 transition-colors">Curation Room</Link></li></ul>
-                </div>
               </div>
               <div className="mt-20 pt-12 border-t border-[#124B70]/10 flex flex-col md:flex-row justify-between items-center gap-8">
                 <div className="text-[10px] font-black text-[#124B70] uppercase tracking-[0.5em]">Crafted with Purity in India</div>
                 <div className="text-[10px] font-black text-[#124B70]/60 uppercase tracking-[0.4em] text-center md:text-left">© {new Date().getFullYear()} Milgan Natural Alchemy. All rights reserved.</div>
-                <div className="flex items-center gap-4"><div className="w-2 h-2 bg-[#124B70] rounded-full animate-pulse" /><span className="text-[9px] font-black text-[#124B70] uppercase tracking-[0.3em]">Authenticity Verified</span></div>
+                <div className="flex items-center gap-4">
+                  <div className="w-2 h-2 bg-[#124B70] rounded-full animate-pulse" />
+                  <a href="https://weandyoumarketing.com" target="_blank" rel="noopener noreferrer" className="text-[9px] font-black text-[#124B70]/70 hover:text-[#124B70] uppercase tracking-[0.3em] transition-colors">
+                    Developed and Maintained by WE&YOU
+                  </a>
+                </div>
               </div>
             </div>
           </footer>

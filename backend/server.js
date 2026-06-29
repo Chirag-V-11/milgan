@@ -11,7 +11,7 @@ const app = express();
 app.use(cors({
   origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-user-id']
 }));
 app.use(express.json());
 
@@ -28,6 +28,7 @@ const authRoutes = require('./src/routes/auth');
 const userRoutes = require('./src/routes/users');
 const inquiryRoutes = require('./src/routes/inquiry');
 const shippingRoutes = require('./src/routes/shipping');
+const cartRoutes = require('./src/routes/cart');
 
 app.use('/api/whatsapp', whatsappRoutes);
 app.use('/api/products', productRoutes);
@@ -35,6 +36,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/inquiry', inquiryRoutes);
 app.use('/api/shipping', shippingRoutes);
+app.use('/api/cart', cartRoutes);
 
 app.get('/', (req, res) => {
   res.send('API is running...');

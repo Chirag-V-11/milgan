@@ -19,6 +19,7 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const [authAction, setAuthAction] = useState<'whatsapp' | 'cart' | null>(null);
 
   useEffect(() => {
     if (product && product.quantity_options?.length > 0) {
@@ -52,17 +53,18 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
     : 0;
   const totalPrice = finalPrice * quantity;
 
-  const handleWhatsAppOrder = () => {
-    if (!user) {
+  const handleWhatsAppOrder = (currentUser = user) => {
+    if (!currentUser) {
+      setAuthAction('whatsapp');
       setIsAuthModalOpen(true);
       return;
     }
 
     const message = `NEW ORDER RECEIVED
 Customer Details:
-Name: ${user.name}
-Phone: ${user.phone}
-Location: ${user.address}
+Name: ${currentUser.name}
+Phone: ${currentUser.phone}
+Location: ${currentUser.address}
 
 Product Details:
 Item: ${product.name}
@@ -76,8 +78,13 @@ Total Price: ₹${Math.round(totalPrice)}`;
     setTimeout(() => setAddedToCart(false), 3000);
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (currentUser = user) => {
     if (!product) return;
+    if (!currentUser) {
+      setAuthAction('cart');
+      setIsAuthModalOpen(true);
+      return;
+    }
     addToCart({
       id: product.id,
       name: product.name,
@@ -267,13 +274,13 @@ Total Price: ₹${Math.round(totalPrice)}`;
           <div className="space-y-3 pt-6 border-t border-white/10">
             <div className="grid grid-cols-2 gap-2.5">
               <button
-                onClick={handleAddToCart}
+                onClick={() => handleAddToCart()}
                 className="w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-[0.3em] shadow-xl transition-all duration-500 flex items-center justify-center gap-2.5 active:scale-[0.98] bg-gold text-[#23212e] hover:bg-[#fdce47] hover:shadow-gold/15"
               >
                 Add to Cart
               </button>
               <button
-                onClick={handleWhatsAppOrder}
+                onClick={() => handleWhatsAppOrder()}
                 className={`w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-[0.3em] shadow-xl transition-all duration-500 flex items-center justify-center gap-2.5 active:scale-[0.98] ${addedToCart ? 'bg-green-600 text-white' : 'bg-[#25D366] text-white hover:bg-green-600 hover:shadow-green-500/20'}`}
               >
                 {addedToCart ? '✓ Order Sent!' : 'WhatsApp Buy'}
@@ -308,8 +315,20 @@ Total Price: ₹${Math.round(totalPrice)}`;
 
       <UserAuthModal
         isOpen={isAuthModalOpen}
-        onClose={() => setIsAuthModalOpen(false)}
-        onAuthenticated={() => handleWhatsAppOrder()}
+        onClose={() => {
+          setIsAuthModalOpen(false);
+          setAuthAction(null);
+        }}
+        onAuthenticated={() => {
+          const saved = localStorage.getItem('boutiqueUser');
+          const currentUser = saved ? JSON.parse(saved) : null;
+          if (authAction === 'whatsapp') {
+            handleWhatsAppOrder(currentUser);
+          } else if (authAction === 'cart') {
+            handleAddToCart(currentUser);
+          }
+          setAuthAction(null);
+        }}
       />
     </div>
   );

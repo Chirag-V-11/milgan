@@ -1,80 +1,67 @@
 const express = require('express');
 const router = express.Router();
-const ShippingService = require('../services/shippingService');
-const TrackingService = require('../services/trackingService');
-
-// Initialize the Shipping and Tracking Services
-const shippingService = new ShippingService();
-const trackingService = new TrackingService();
+const supabase = require('../config/supabase');
 
 /**
  * @route   POST /api/shipping/upload
- * @desc    Upload order metadata to DTDC logistics and receive Airway Bill (AWB)
- * @access  Public (or protected if admin authorization middleware is desired)
+ * @desc    Add new customer order in database
+ * @access  Public
  */
 router.post('/upload', async (req, res) => {
   try {
     const orderData = req.body;
-
-    // Trigger the shipping service to validate, format and send consignment
-    const awbNumber = await shippingService.uploadOrder(orderData);
-
-    return res.status(200).json({
-      success: true,
-      message: 'Shipment uploaded successfully to DTDC.',
-      awbNumber: awbNumber,
-      environment: shippingService.env
-    });
-
-  } catch (error) {
-    console.error('[Shipping Route Error]', error.message);
     
-    // Check specific validation vs API server errors to respond with appropriate status codes
-    const isValidationError = error.message.includes('Missing required fields') || error.message.includes('Invalid order data');
-    const isAuthError = error.message.includes('Unauthorized/Forbidden');
+    const newOrder = {
+      id: orderData.orderId || `MLG-${Date.now()}`,
+      customer_name: orderData.customerName,
+      phone: orderData.mobile,
+      email: orderData.email || 'customer@example.com',
+      address: orderData.address,
+      pincode: orderData.pincode,
+      city: orderData.city,
+      state: orderData.state,
+      items: orderData.description,
+      declared_value: Number(orderData.declaredValue),
+      payment_method: orderData.paymentMethod,
+      status: 'Pending Booking'
+    };
 
-    let statusCode = 500;
-    if (isValidationError) statusCode = 400;
-    else if (isAuthError) statusCode = 401;
+    const { data: createdOrder, error } = await supabase
+      .from('orders')
+      .insert([newOrder])
+      .select()
+      .single();
 
-    return res.status(statusCode).json({
-      success: false,
-      error: error.message
-    });
-  }
-});
-
-/**
- * @route   POST /api/shipping/generate-label
- * @desc    Generate PDF shipping label for a booked shipment reference (AWB)
- * @access  Public (or protected if admin authorization middleware is desired)
- */
-router.post('/generate-label', async (req, res) => {
-  try {
-    const { referenceNumber, labelCode, labelFormat } = req.body;
-
-    if (!referenceNumber) {
-      return res.status(400).json({
-        success: false,
-        error: 'Missing required field: referenceNumber'
-      });
+    if (error) {
+      console.error('[Supabase Order Insert Error]', error.message);
+      throw error;
     }
 
-    const labelResult = await shippingService.generateLabel(referenceNumber, labelCode, labelFormat);
+    // Map to camelCase for frontend compatibility
+    const responseOrder = {
+      id: createdOrder.id,
+      customerName: createdOrder.customer_name,
+      phone: createdOrder.phone,
+      email: createdOrder.email,
+      address: createdOrder.address,
+      pincode: createdOrder.pincode,
+      city: createdOrder.city,
+      state: createdOrder.state,
+      items: createdOrder.items,
+      declaredValue: createdOrder.declared_value,
+      paymentMethod: createdOrder.payment_method,
+      status: createdOrder.status,
+      createdAt: createdOrder.created_at
+    };
 
     return res.status(200).json({
       success: true,
-      message: 'Shipping label generated successfully.',
-      ...labelResult
+      message: 'Order registered successfully.',
+      awbNumber: '', 
+      order: responseOrder
     });
-
   } catch (error) {
-    console.error('[Shipping Label Route Error]', error.message);
-
-    const isAuthError = error.message.includes('Unauthorized/Forbidden');
-    const statusCode = isAuthError ? 401 : 500;
-
-    return res.status(statusCode).json({
+    return res.status(500).json({
       success: false,
       error: error.message
     });
@@ -82,78 +69,105 @@ router.post('/generate-label', async (req, res) => {
 });
 
 /**
- * @route   POST /api/shipping/cancel
- * @desc    Cancel a booked shipment by AWB reference
- * @access  Public (or protected if admin authorization middleware is desired)
- */
-router.post('/cancel', async (req, res) => {
-  try {
-    const { referenceNumber, cancellationReason, orderId } = req.body;
-
-    if (!referenceNumber) {
-      return res.status(400).json({
-        success: false,
-        error: 'Missing required field: referenceNumber'
-      });
-    }
-
-    const cancelResult = await shippingService.cancelShipment(referenceNumber, cancellationReason, orderId);
-
-    return res.status(200).json({
-      success: true,
-      ...cancelResult
-    });
-
-  } catch (error) {
-    console.error('[Shipping Cancellation Route Error]', error.message);
-
-    const isAuthError = error.message.includes('Unauthorized/Forbidden');
-    const isTransitRejection = error.message.includes('Cancellation Rejected');
-    
-    let statusCode = 500;
-    if (isAuthError) statusCode = 401;
-    else if (isTransitRejection) statusCode = 400;
-
-    return res.status(statusCode).json({
-      success: false,
-      error: error.message
-    });
-  }
-});
-
-/**
- * @route   GET /api/shipping/track/:awb
- * @desc    Get shipment tracking updates timeline
+ * @route   GET /api/shipping/orders
+ * @desc    Get list of all current customer orders from Supabase
  * @access  Public
  */
-router.get('/track/:awb', async (req, res) => {
+router.get('/orders', async (req, res) => {
   try {
-    const { awb } = req.params;
+    const { phone, email } = req.query;
+    let query = supabase
+      .from('orders')
+      .select('*')
+      .order('created_at', { ascending: false });
 
-    if (!awb) {
-      return res.status(400).json({
-        success: false,
-        error: 'Missing AWB tracking number parameter'
-      });
+    if (phone) {
+      query = query.eq('phone', phone);
+    } else if (email) {
+      query = query.eq('email', email);
     }
 
-    const trackingResult = await trackingService.trackShipment(awb);
+    const { data: orders, error } = await query;
+    if (error) {
+      console.error('[Supabase Orders Fetch Error]', error.message);
+      throw error;
+    }
+
+    // Map to camelCase for frontend compatibility
+    const mappedOrders = (orders || []).map(o => ({
+      id: o.id,
+      customerName: o.customer_name,
+      phone: o.phone,
+      email: o.email,
+      address: o.address,
+      pincode: o.pincode,
+      city: o.city,
+      state: o.state,
+      items: o.items,
+      declaredValue: Number(o.declared_value),
+      paymentMethod: o.payment_method,
+      status: o.status,
+      createdAt: o.created_at
+    }));
 
     return res.status(200).json({
       success: true,
-      tracking: trackingResult
+      orders: mappedOrders
     });
-
   } catch (error) {
-    console.error('[Shipping Tracking Route Error]', error.message);
+    return res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
 
-    const isAuthError = error.message.includes('Authentication rejected') || 
-                        error.message.includes('Authorization rejected') ||
-                        error.message.includes('Unauthorized/Forbidden');
+/**
+ * @route   PUT /api/shipping/orders/:id/status
+ * @desc    Update order status
+ * @access  Public
+ */
+router.put('/orders/:id/status', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
 
-    const statusCode = isAuthError ? 401 : 500;
+    const { data: updatedOrder, error } = await supabase
+      .from('orders')
+      .update({ status: status })
+      .eq('id', id)
+      .select()
+      .single();
 
-    return res.status(statusCode).json({
+    if (error) {
+      console.error('[Supabase Order Status Update Error]', error.message);
+      throw error;
+    }
+
+    // Map to camelCase for frontend compatibility
+    const responseOrder = {
+      id: updatedOrder.id,
+      customerName: updatedOrder.customer_name,
+      phone: updatedOrder.phone,
+      email: updatedOrder.email,
+      address: updatedOrder.address,
+      pincode: updatedOrder.pincode,
+      city: updatedOrder.city,
+      state: updatedOrder.state,
+      items: updatedOrder.items,
+      declaredValue: Number(updatedOrder.declared_value),
+      paymentMethod: updatedOrder.payment_method,
+      status: updatedOrder.status,
+      createdAt: updatedOrder.created_at
+    };
+
+    return res.status(200).json({
+      success: true,
+      message: 'Order status updated successfully',
+      order: responseOrder
+    });
+  } catch (error) {
+    return res.status(500).json({
       success: false,
       error: error.message
     });
