@@ -100,13 +100,18 @@ router.post('/register-otp', async (req, res) => {
       return res.status(400).json({ error: 'All fields are required to join the boutique' });
     }
     email = email.trim().toLowerCase();
+    
+    const digits = phone.replace(/\D/g, '');
+    const last10 = digits.slice(-10);
 
     // Check if user already exists
-    const { data: existingUser } = await supabase
-      .from('users')
-      .select('id')
-      .or(`phone.eq.${phone},email.ilike.${email}`)
-      .maybeSingle();
+    let query = supabase.from('users').select('id');
+    if (last10.length === 10) {
+      query = query.or(`phone.ilike.%${last10},email.ilike.${email}`);
+    } else {
+      query = query.or(`phone.eq.${phone},email.ilike.${email}`);
+    }
+    const { data: existingUser } = await query.maybeSingle();
 
     if (existingUser) {
       return res.status(400).json({ error: 'An artisan with this phone or email already exists. Please login.' });
@@ -147,11 +152,13 @@ router.post('/verify-register-otp', async (req, res) => {
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
+    const cleanPhone = phone.replace(/\D/g, '').slice(-10);
+    const savedPhone = cleanPhone.length === 10 ? cleanPhone : phone;
 
     // Create user in Supabase
     const { data: newUser, error: insertError } = await supabase
       .from('users')
-      .insert([{ name, phone, email, address, password: hashedPassword }])
+      .insert([{ name, phone: savedPhone, email, address, password: hashedPassword }])
       .select('id, name, phone, email, address, created_at')
       .single();
 
@@ -179,14 +186,19 @@ router.post('/profile', async (req, res) => {
     }
     email = email.trim().toLowerCase();
 
+    const digits = phone.replace(/\D/g, '');
+    const last10 = digits.slice(-10);
+
     console.log('[New Registration Attempt]', { name, phone, email });
 
     // Check if user already exists
-    const { data: existingUser } = await supabase
-      .from('users')
-      .select('id')
-      .or(`phone.eq.${phone},email.ilike.${email}`)
-      .maybeSingle();
+    let query = supabase.from('users').select('id');
+    if (last10.length === 10) {
+      query = query.or(`phone.ilike.%${last10},email.ilike.${email}`);
+    } else {
+      query = query.or(`phone.eq.${phone},email.ilike.${email}`);
+    }
+    const { data: existingUser } = await query.maybeSingle();
 
     if (existingUser) {
       return res.status(400).json({ error: 'An artisan with this phone or email already exists. Please login.' });
@@ -225,12 +237,17 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ error: 'Phone and Password are required' });
     }
 
-    // Find user by phone
-    const { data: user, error: findError } = await supabase
-      .from('users')
-      .select('*')
-      .eq('phone', phone)
-      .maybeSingle();
+    const digits = phone.replace(/\D/g, '');
+    const last10 = digits.slice(-10);
+
+    // Find user by phone (flexible matching on last 10 digits)
+    let query = supabase.from('users').select('*');
+    if (last10.length === 10) {
+      query = query.ilike('phone', `%${last10}`);
+    } else {
+      query = query.eq('phone', phone);
+    }
+    const { data: user, error: findError } = await query.maybeSingle();
 
     if (findError || !user) {
       console.log(`[Login Failed] User not found for phone: ${phone}`);
