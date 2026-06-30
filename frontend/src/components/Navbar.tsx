@@ -155,33 +155,23 @@ const Navbar = () => {
           <div className="pt-10 border-t border-[#124B70]/10 flex flex-col items-center gap-6 w-full">
             {user ? (
               <div className="flex flex-col items-center gap-4 w-full">
-                <button 
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-[#124B70] focus:outline-none"
-                >
-                  <span>Hi, {user.name}</span>
-                  <svg className={`w-3.5 h-3.5 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                  </svg>
-                </button>
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#124B70]/60">Hi, {user.name}</span>
                 
-                {isDropdownOpen && (
-                  <div className="w-full flex flex-col items-center bg-[#124B70]/5 rounded-2xl py-3 space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
-                    <Link 
-                      href="/orders" 
-                      onClick={() => { setIsDropdownOpen(false); setIsMobileMenuOpen(false); }}
-                      className="text-[10px] font-black uppercase tracking-[0.25em] text-[#124B70] py-2"
-                    >
-                      Your Orders
-                    </Link>
-                    <button 
-                      onClick={() => { logout(); setIsDropdownOpen(false); setIsMobileMenuOpen(false); }}
-                      className="text-[10px] font-black uppercase tracking-[0.25em] text-red-500 py-2 border-t border-[#124B70]/10 w-3/4 text-center"
-                    >
-                      Logout
-                    </button>
-                  </div>
-                )}
+                <div className="w-full flex flex-col items-center bg-[#124B70]/5 rounded-2xl py-2 space-y-2">
+                  <Link 
+                    href="/orders" 
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="text-[10px] font-black uppercase tracking-[0.25em] text-[#124B70] py-2 w-full text-center hover:bg-[#124B70]/5 rounded-xl transition-colors"
+                  >
+                    Your Orders
+                  </Link>
+                  <button 
+                    onClick={() => { logout(); setIsMobileMenuOpen(false); }}
+                    className="text-[10px] font-black uppercase tracking-[0.25em] text-red-500 py-2 border-t border-[#124B70]/10 w-3/4 text-center hover:bg-red-500/5 rounded-xl transition-colors"
+                  >
+                    Logout
+                  </button>
+                </div>
               </div>
             ) : (
               <button onClick={() => { setIsAuthModalOpen(true); setIsMobileMenuOpen(false); }} className="w-full bg-gradient-to-r from-[#ffdb71] to-[#fdce47] text-[#124B70] py-5 rounded-full text-[10px] font-black uppercase tracking-[0.4em] hover:scale-105 transition-all shadow-md border border-white/50">Join Legacy</button>
