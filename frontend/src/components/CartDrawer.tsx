@@ -89,10 +89,6 @@ export default function CartDrawer() {
   };
 
   const triggerBuyNow = () => {
-    if (!user) {
-      setIsAuthModalOpen(true);
-      return;
-    }
     openCheckout();
   };
 

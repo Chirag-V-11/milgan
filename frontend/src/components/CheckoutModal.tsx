@@ -156,22 +156,6 @@ export default function CheckoutModal({
               {step === 'success' && 'Your order is placed and on its way!'}
             </p>
           </div>
-
-          {/* Step dots */}
-          <div className="flex items-center gap-2">
-            {['address', 'success'].map((s, i) => (
-              <div
-                key={s}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  step === s
-                    ? 'bg-[#fdce47] scale-125'
-                    : step === 'success'
-                    ? 'bg-[#fdce47]/40'
-                    : 'bg-white/15'
-                }`}
-              />
-            ))}
-          </div>
           <button
             onClick={onClose}
             className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/5 border border-white/10 text-white/50 hover:text-white hover:bg-white/10 flex items-center justify-center text-sm transition-all"

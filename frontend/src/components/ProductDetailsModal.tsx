@@ -54,17 +54,13 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
   const totalPrice = finalPrice * quantity;
 
   const handleWhatsAppOrder = (currentUser = user) => {
-    if (!currentUser) {
-      setAuthAction('whatsapp');
-      setIsAuthModalOpen(true);
-      return;
-    }
+    const customerDetails = currentUser 
+      ? `Name: ${currentUser.name}\nPhone: ${currentUser.phone}\nLocation: ${currentUser.address}`
+      : `Name: [Guest Customer]\nLocation: [Provide Delivery Address]`;
 
     const message = `NEW ORDER RECEIVED
 Customer Details:
-Name: ${currentUser.name}
-Phone: ${currentUser.phone}
-Location: ${currentUser.address}
+${customerDetails}
 
 Product Details:
 Item: ${product.name}
@@ -78,13 +74,8 @@ Total Price: ₹${Math.round(totalPrice)}`;
     setTimeout(() => setAddedToCart(false), 3000);
   };
 
-  const handleAddToCart = (currentUser = user) => {
+  const handleAddToCart = (currentUser?: any) => {
     if (!product) return;
-    if (!currentUser) {
-      setAuthAction('cart');
-      setIsAuthModalOpen(true);
-      return;
-    }
     addToCart({
       id: product.id,
       name: product.name,
