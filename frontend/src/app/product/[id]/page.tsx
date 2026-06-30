@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useUser } from '@/context/UserContext';
 import { useCart } from '@/context/CartContext';
 import UserAuthModal from '@/components/UserAuthModal';
+import { getApiUrl } from '@/config/api';
 
 export default function ProductDetails() {
   const { id } = useParams();
@@ -23,7 +24,7 @@ export default function ProductDetails() {
   useEffect(() => {
     async function fetchProduct() {
       try {
-        const apiBase = process.env.NEXT_PUBLIC_API_URL || 'https://milgan-backend.onrender.com';
+        const apiBase = getApiUrl();
         const res = await fetch(`${apiBase}/api/products/${id}`);
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useUser } from '@/context/UserContext';
+import { getApiUrl } from '@/config/api';
 
 export default function UserAuthModal({ isOpen, onClose, onAuthenticated }: {
   isOpen: boolean;
@@ -77,7 +78,7 @@ export default function UserAuthModal({ isOpen, onClose, onAuthenticated }: {
     e.preventDefault();
     setLoading(true);
     setNotification(null);
-    const apiBase = process.env.NEXT_PUBLIC_API_URL || 'https://milgan-backend.onrender.com';
+    const apiBase = getApiUrl();
 
     try {
       if (isForgotPasswordMode) {

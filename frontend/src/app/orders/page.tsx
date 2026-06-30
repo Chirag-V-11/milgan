@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useUser } from '@/context/UserContext';
+import { getApiUrl } from '@/config/api';
 
 interface OrderItem {
   id: string;
@@ -51,7 +52,7 @@ export default function CustomerOrdersPage() {
     if (!user) return;
     setLoadingOrders(true);
     try {
-      const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+      const apiBase = getApiUrl();
       // Fetch orders filtered by user phone number
       const response = await fetch(`${apiBase}/api/shipping/orders?phone=${encodeURIComponent(user.phone)}`);
       const data = await response.json();

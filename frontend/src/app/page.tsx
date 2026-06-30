@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import VideoSection from '@/components/VideoSection';
+import { getApiUrl } from '@/config/api';
 
 const galleryItems = [
   {
@@ -54,7 +55,7 @@ export default function Home() {
 
     const fetchProducts = async () => {
       try {
-        const apiBase = process.env.NEXT_PUBLIC_API_URL || 'https://milgan-backend.onrender.com';
+        const apiBase = getApiUrl();
         const response = await fetch(`${apiBase}/api/products?t=${Date.now()}`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

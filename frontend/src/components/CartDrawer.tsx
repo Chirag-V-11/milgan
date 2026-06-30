@@ -5,6 +5,7 @@ import { useCart } from '@/context/CartContext';
 import { useUser } from '@/context/UserContext';
 import UserAuthModal from './UserAuthModal';
 import CheckoutModal, { CheckoutData } from './CheckoutModal';
+import { getApiUrl } from '@/config/api';
 
 export default function CartDrawer() {
   const { cart, isOpen, setIsOpen, updateQuantity, removeFromCart, cartTotal, clearCart } = useCart();
@@ -44,7 +45,7 @@ export default function CartDrawer() {
     };
 
     try {
-      const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+      const apiBase = getApiUrl();
       const response = await fetch(`${apiBase}/api/shipping/upload`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
