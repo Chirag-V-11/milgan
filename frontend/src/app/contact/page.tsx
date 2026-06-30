@@ -101,7 +101,7 @@ export default function ContactPage() {
             </div>
             <div>
               <h3 className="text-[10px] font-black text-[#124B70]/40 uppercase tracking-[0.2em] mb-2">Direct Liaison</h3>
-              <p className="text-[#124B70] font-serif text-xl italic font-semibold">+91 86600 13411</p>
+              <p className="text-[#124B70] font-serif text-xl italic font-semibold">+91 81232 82168</p>
               <p className="text-[#124B70] font-serif text-xl italic font-semibold">info@milganfoods.com</p>
             </div>
           </div>

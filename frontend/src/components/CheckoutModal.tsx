@@ -38,7 +38,7 @@ export interface CheckoutData {
 }
 
 // UPI ID for Milgan Foods — update this to your actual UPI ID
-const MERCHANT_UPI_ID = '8660013411@ybl';
+const MERCHANT_UPI_ID = '8123282168@ybl';
 const MERCHANT_NAME = 'Milgan Foods';
 
 type Step = 'address' | 'success';

@@ -68,7 +68,7 @@ export default function CartDrawer() {
           const message = `*NEW ORDER RECEIVED - MILGEN FOODS* 🌾🏺\n\n*Customer Details:*\n👤 Name: ${checkoutData.name}\n📞 Phone: ${checkoutData.phone}\n📍 Address: ${checkoutData.address}, ${checkoutData.city} - ${checkoutData.pincode}, ${checkoutData.state}\n📧 Email: ${checkoutData.email || 'N/A'}\n\n*Order Curation:*\n${orderItemsText}\n\n--------------------------------\n💰 *Subtotal:* ₹${cartTotal}\n🚚 *Shipping:* FREE\n💵 *Total Payable:* ₹${cartTotal}\n\nThank you for choosing Milgen Foods!`;
 
           const text = encodeURIComponent(message);
-          window.open(`https://wa.me/918660013411?text=${text}`, '_blank');
+          window.open(`https://wa.me/918123282168?text=${text}`, '_blank');
         }
 
         await clearCart();

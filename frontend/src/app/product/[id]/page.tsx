@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useUser } from '@/context/UserContext';
 import { useCart } from '@/context/CartContext';
 import UserAuthModal from '@/components/UserAuthModal';
+import CheckoutModal, { CheckoutData } from '@/components/CheckoutModal';
 import { getApiUrl } from '@/config/api';
 
 export default function ProductDetails() {
@@ -20,6 +21,10 @@ export default function ProductDetails() {
   const [addedToCart, setAddedToCart] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [authAction, setAuthAction] = useState<'whatsapp' | 'cart' | null>(null);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [isBooking, setIsBooking] = useState(false);
+  const [bookingError, setBookingError] = useState('');
+  const [bookingSuccess, setBookingSuccess] = useState(false);
 
   useEffect(() => {
     async function fetchProduct() {
@@ -76,25 +81,62 @@ export default function ProductDetails() {
     : 0;
   const totalPrice = finalPrice * quantity;
 
-  const handleWhatsAppOrder = (currentUser = user) => {
-    const customerDetails = currentUser 
-      ? `Name: ${currentUser.name}\nPhone: ${currentUser.phone}\nLocation: ${currentUser.address}`
-      : `Name: [Guest Customer]\nLocation: [Provide Delivery Address]`;
+  const handleWhatsAppOrder = () => {
+    setBookingError('');
+    setBookingSuccess(false);
+    setIsCheckoutOpen(true);
+  };
 
-    const message = `NEW ORDER RECEIVED
-Customer Details:
-${customerDetails}
+  const handleConfirmOrder = async (checkoutData: CheckoutData) => {
+    setIsBooking(true);
+    setBookingError('');
+    setBookingSuccess(false);
 
-Product Details:
-Item: ${product.name}
-Size: ${selectedSize?.size}
-Quantity: ${quantity}
-Total Price: ₹${Math.round(totalPrice)}`;
+    const itemText = `${quantity}x ${selectedSize?.size || 'Standard'} ${product.name}`;
+    const itemWeight = (quantity * 0.5).toFixed(1);
 
-    const text = encodeURIComponent(message);
-    window.open(`https://wa.me/918660013411?text=${text}`, '_blank');
-    setAddedToCart(true);
-    setTimeout(() => setAddedToCart(false), 3000);
+    const payload = {
+      orderId: `MLG-${Date.now()}`,
+      customerName: checkoutData.name,
+      mobile: checkoutData.phone,
+      email: checkoutData.email || user?.email || 'customer@example.com',
+      address: checkoutData.address,
+      city: checkoutData.city,
+      pincode: checkoutData.pincode,
+      state: checkoutData.state,
+      declaredValue: String(totalPrice),
+      weight: String(itemWeight),
+      packages: quantity,
+      description: itemText,
+      paymentMethod: 'WhatsApp',
+    };
+
+    try {
+      const apiBase = getApiUrl();
+      const response = await fetch(`${apiBase}/api/shipping/upload`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+      if (response.ok && data.success) {
+        setBookingSuccess(true);
+
+        const orderItemText = `1. *${product.name}* (${selectedSize?.size || 'Standard'})\n   Qty: ${quantity} x ₹${finalPrice} = ₹${totalPrice}`;
+        const message = `*NEW ORDER RECEIVED - MILGEN FOODS* 🌾🏺\n\n*Customer Details:*\n👤 Name: ${checkoutData.name}\n📞 Phone: ${checkoutData.phone}\n📍 Address: ${checkoutData.address}, ${checkoutData.city} - ${checkoutData.pincode}, ${checkoutData.state}\n📧 Email: ${checkoutData.email || 'N/A'}\n\n*Order Curation:*\n${orderItemText}\n\n--------------------------------\n💰 *Subtotal:* ₹${totalPrice}\n🚚 *Shipping:* FREE\n💵 *Total Payable:* ₹${totalPrice}\n\nThank you for choosing Milgen Foods!`;
+
+        const text = encodeURIComponent(message);
+        window.open(`https://wa.me/918123282168?text=${text}`, '_blank');
+      } else {
+        setBookingError(data.error || 'Failed to register order. Please try again.');
+      }
+    } catch (err) {
+      console.error(err);
+      setBookingError('Server unreachable. Please try again later.');
+    } finally {
+      setIsBooking(false);
+    }
   };
 
   const handleAddToCart = (currentUser?: any) => {
@@ -337,12 +379,34 @@ Total Price: ₹${Math.round(totalPrice)}`;
           const saved = localStorage.getItem('boutiqueUser');
           const currentUser = saved ? JSON.parse(saved) : null;
           if (authAction === 'whatsapp') {
-            handleWhatsAppOrder(currentUser);
+            handleWhatsAppOrder();
           } else if (authAction === 'cart') {
             handleAddToCart(currentUser);
           }
           setAuthAction(null);
         }}
+      />
+
+      <CheckoutModal
+        isOpen={isCheckoutOpen}
+        onClose={() => { setIsCheckoutOpen(false); setBookingError(''); setBookingSuccess(false); }}
+        onConfirm={handleConfirmOrder}
+        cart={[{
+          id: product.id,
+          name: product.name,
+          image: allImages[0] || '',
+          size: selectedSize?.size || 'Standard',
+          basePrice: finalPrice,
+          quantity: quantity
+        }]}
+        cartTotal={totalPrice}
+        defaultName={user?.name || ''}
+        defaultPhone={user?.phone || ''}
+        defaultEmail={user?.email || ''}
+        defaultAddress={user?.address || ''}
+        isBooking={isBooking}
+        bookingError={bookingError}
+        bookingSuccess={bookingSuccess}
       />
     </div>
   );
