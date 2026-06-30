@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { getApiUrl } from '@/config/api';
 
 export default function CustomerTrackingPage() {
   const [awb, setAwb] = useState('');
@@ -16,7 +17,7 @@ export default function CustomerTrackingPage() {
     setTrackingData(null);
 
     try {
-      const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+      const apiBase = getApiUrl();
       const response = await fetch(`${apiBase}/api/shipping/orders`);
       
       const data = await response.json();

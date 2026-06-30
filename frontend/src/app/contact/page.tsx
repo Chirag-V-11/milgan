@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useUser } from '@/context/UserContext';
 import UserAuthModal from '@/components/UserAuthModal';
+import { getApiUrl } from '@/config/api';
 
 export default function ContactPage() {
   const { user } = useUser();
@@ -34,7 +35,7 @@ export default function ContactPage() {
     try {
       setSent(true);
 
-      const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+      const apiBase = getApiUrl();
       const response = await fetch(`${apiBase}/api/inquiry`, {
         method: 'POST',
         headers: {
