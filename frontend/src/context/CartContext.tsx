@@ -140,7 +140,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       }
     }
 
-    setIsOpen(true);
   };
 
   const removeFromCart = async (id: string, size: string) => {
