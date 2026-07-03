@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { getApiUrl } from '@/config/api';
 
 interface MockOrder {
   id: string;
@@ -41,7 +42,7 @@ export default function AdminShippingDashboard() {
   const fetchOrders = async () => {
     setLoading(true);
     try {
-      const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+      const apiBase = getApiUrl();
       const response = await fetch(`${apiBase}/api/shipping/orders`);
       const data = await response.json();
       if (response.ok && data.success) {
@@ -56,7 +57,7 @@ export default function AdminShippingDashboard() {
 
   const handleStatusChange = async (orderId: string, newStatus: 'Pending Booking' | 'Shipped' | 'Cancelled') => {
     try {
-      const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+      const apiBase = getApiUrl();
       const response = await fetch(`${apiBase}/api/shipping/orders/${orderId}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
