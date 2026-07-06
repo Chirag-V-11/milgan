@@ -129,7 +129,7 @@ export default function Home() {
       </section>
 
       {/* 3. STAGGERED BOUTIQUE GALLERY */}
-      <section id="boutique" className="pt-18 pb-24 md:pt-18 md:pb-18 relative scroll-mt-24 overflow-hidden bg-gold-gradient">
+      <section id="boutique" className="pt-28 pb-24 md:pt-36 md:pb-18 relative scroll-mt-36 overflow-hidden bg-gold-gradient">
         <div className="absolute top-1/2 left-0 -translate-y-1/2 text-[20vw] font-serif font-black text-[#124B70]/[0.03] select-none pointer-events-none whitespace-nowrap tracking-tighter">
           COLLECTION COLLECTION COLLECTION
         </div>
@@ -183,29 +183,14 @@ export default function Home() {
                         </div>
                         <div className="pt-4 border-t border-white/20">
                           <span className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-[#fdce47] transition-colors">
-                            Acquire Curation ➔
+                            Buy Now ➔
                           </span>
                         </div>
                       </div>
                     </div>
 
-                    <div className="mt-6 space-y-2">
-                      <div className="flex items-center justify-between gap-4">
-                        <h3 className="text-lg font-serif font-bold text-[#124B70] group-hover:text-[#124B70]/80 transition-colors">{product.name}</h3>
-                        <div className="flex items-center gap-1.5 flex-shrink-0">
-                          <div className="w-1.5 h-1.5 bg-[#124B70] rounded-full animate-pulse" />
-                          <span className="text-[9px] font-black uppercase tracking-widest text-[#124B70]/60">Limited Batch</span>
-                        </div>
-                      </div>
-                      <div className="flex justify-between items-center mt-1">
-                        <span className="px-3 py-1 bg-[#10751e]/10 text-[#10751e] rounded-full text-xl font-serif font-black shadow-sm">
-                          ₹{finalPrice}
-                        </span>
-                        {discount > 0 && (
-                          <span className="text-sm text-[#124B70]/50 line-through font-semibold">₹{baseCost}</span>
-                        )}
-                      </div>
-                      <div className="h-px w-full bg-[#124B70]/10" />
+                    <div className="mt-6 text-center">
+                      <span className="text-lg font-serif italic font-bold text-[#124B70] tracking-wide">Liquid Gold Captured</span>
                     </div>
                   </Link>
                 );
@@ -285,7 +270,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-t from-[#124B70] via-[#124B70]/60 to-transparent opacity-95" />
               <div className="absolute bottom-10 left-10 right-10 space-y-4">
                 <div className="text-[#ffdb71] text-[9px] font-black uppercase tracking-widest opacity-90">Seeker Story</div>
-                <h3 className="text-2xl font-serif font-bold text-white">The Milgan Family</h3>
+                <h3 className="text-2xl font-serif font-bold text-white">The Anand Family</h3>
                 <p className="text-white/80 text-sm italic">"Milgan has become the heart of our kitchen. Every meal feels like a blessing."</p>
               </div>
             </a>
@@ -312,8 +297,13 @@ export default function Home() {
                 <div className="text-[9px] font-black uppercase tracking-widest text-[#124B70]/70 transition-colors">Wellness Editor</div>
               </div>
             </div>
-            <div className="break-inside-avoid relative aspect-square rounded-[2.5rem] overflow-hidden border border-[#124B70]/10 shadow-[0_8px_30px_rgba(18,75,112,0.05)]">
-              <img src="/image/place_the_ghee_jar_2K_202605141500.jpeg" className="w-full h-full object-cover" alt="Process" />
+            <div className="break-inside-avoid relative aspect-square rounded-[2.5rem] overflow-hidden flex items-center justify-center">
+              <img
+                src="/image/milgan logo-0.png"
+                className="w-1/2 h-1/2 object-contain"
+                alt="Process"
+                style={{ filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }}
+              />
             </div>
           </div>
         </div>
@@ -416,7 +406,7 @@ export default function Home() {
           <div className="fixed inset-0 cursor-pointer" onClick={() => setSelectedGalleryItem(null)} />
 
           {/* Main Container */}
-          <div className="relative bg-[#FDFDFD] w-full max-w-4xl rounded-[2.5rem] sm:rounded-[3.5rem] shadow-[0_30px_60px_rgba(18,75,112,0.15),0_0_80px_rgba(18,75,112,0.05)] overflow-hidden transition-all duration-700 border border-[#124B70]/10 animate-in zoom-in-95 duration-500 flex flex-col lg:flex-row max-h-[90vh] lg:max-h-none">
+          <div className="relative bg-[#FDFDFD] w-full max-w-4xl rounded-[2.5rem] sm:rounded-[3.5rem] shadow-[0_30px_60px_rgba(18,75,112,0.15),0_0_80px_rgba(18,75,112,0.05)] overflow-hidden transition-all duration-700 border border-[#124B70]/10 animate-in zoom-in-95 duration-500 flex flex-col lg:flex-row max-h-[85vh]">
 
             {/* Close Button */}
             <button
@@ -428,8 +418,8 @@ export default function Home() {
             </button>
 
             {/* Left: Image */}
-            <div className="lg:w-1/2 p-6 sm:p-10 flex flex-col justify-center bg-white border-b lg:border-b-0 lg:border-r border-[#124B70]/10 overflow-hidden shrink-0">
-              <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden bg-white shadow-[0_10px_30px_rgba(0,0,0,0.05)] border border-[#124B70]/5">
+            <div className="lg:w-1/2 p-4 sm:p-6 lg:p-8 flex flex-col justify-center bg-white border-b lg:border-b-0 lg:border-r border-[#124B70]/10 overflow-hidden shrink-0 max-h-[35vh] lg:max-h-none">
+              <div className="relative aspect-video lg:aspect-[4/5] rounded-[2rem] overflow-hidden bg-white shadow-[0_10px_30px_rgba(0,0,0,0.05)] border border-[#124B70]/5 w-full h-full">
                 <img
                   src={selectedGalleryItem.image}
                   alt={selectedGalleryItem.title}
@@ -439,7 +429,7 @@ export default function Home() {
             </div>
 
             {/* Right: Details */}
-            <div className="lg:w-1/2 p-6 sm:p-10 lg:p-12 overflow-y-auto space-y-6 flex flex-col justify-center">
+            <div className="lg:w-1/2 p-6 sm:p-10 lg:p-12 overflow-y-auto space-y-6 flex flex-col justify-start lg:justify-center">
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
                   <span className="text-[9px] font-black text-[#124B70]/70 uppercase tracking-[0.5em]">{selectedGalleryItem.category}</span>

@@ -41,7 +41,9 @@ export default function CartDrawer() {
       weight: String((cart.reduce((sum, item) => sum + item.quantity, 0) * 0.5).toFixed(1)),
       packages: cart.reduce((sum, item) => sum + item.quantity, 0),
       description: orderItems,
-      paymentMethod: checkoutData.paymentMethod === 'cod' ? 'COD' : checkoutData.paymentMethod === 'whatsapp' ? 'WhatsApp' : 'UPI',
+      paymentMethod: checkoutData.paymentMethod === 'cod' 
+        ? 'COD' 
+        : (checkoutData.transactionId ? `UPI (UTR: ${checkoutData.transactionId})` : 'WhatsApp'),
     };
 
     try {
@@ -56,7 +58,7 @@ export default function CartDrawer() {
       if (response.ok && data.success) {
         setBookingSuccess(true);
 
-        if (checkoutData.paymentMethod === 'whatsapp') {
+        if (checkoutData.paymentMethod === 'whatsapp' || checkoutData.paymentMethod === 'cod') {
           // Format WhatsApp order message
           const orderItemsText = cart
             .map(
@@ -65,7 +67,11 @@ export default function CartDrawer() {
             )
             .join('\n\n');
 
-          const message = `*NEW ORDER RECEIVED - MILGEN FOODS* 🌾🏺\n\n*Customer Details:*\n👤 Name: ${checkoutData.name}\n📞 Phone: ${checkoutData.phone}\n📍 Address: ${checkoutData.address}, ${checkoutData.city} - ${checkoutData.pincode}, ${checkoutData.state}\n📧 Email: ${checkoutData.email || 'N/A'}\n\n*Order Curation:*\n${orderItemsText}\n\n--------------------------------\n💰 *Subtotal:* ₹${cartTotal}\n🚚 *Shipping:* FREE\n💵 *Total Payable:* ₹${cartTotal}\n\nThank you for choosing Milgen Foods!`;
+          const paymentDetails = checkoutData.paymentMethod === 'cod'
+            ? 'Cash on Delivery (COD)'
+            : `UPI (UTR: ${checkoutData.transactionId || 'N/A'})`;
+
+          const message = `*NEW ORDER RECEIVED - MILGEN FOODS* 🌾🏺\n\n*Customer Details:*\n👤 Name: ${checkoutData.name}\n📞 Phone: ${checkoutData.phone}\n📍 Address: ${checkoutData.address}, ${checkoutData.city} - ${checkoutData.pincode}, ${checkoutData.state}\n📧 Email: ${checkoutData.email || 'N/A'}\n\n*Order Curation:*\n${orderItemsText}\n\n--------------------------------\n💰 *Subtotal:* ₹${cartTotal}\n🚚 *Shipping:* FREE\n💳 *Payment:* ${paymentDetails}\n💵 *Total Payable:* ₹${cartTotal}\n\nThank you for choosing Milgen Foods!`;
 
           const text = encodeURIComponent(message);
           window.open(`https://wa.me/918123282168?text=${text}`, '_blank');

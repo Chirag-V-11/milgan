@@ -35,13 +35,14 @@ export interface CheckoutData {
   pincode: string;
   state: string;
   paymentMethod: 'cod' | 'upi' | 'whatsapp';
+  transactionId?: string;
 }
 
-// UPI ID for Milgan Foods — update this to your actual UPI ID
-const MERCHANT_UPI_ID = '8123282168@ybl';
+// UPI ID for Milgan Foods
+const MERCHANT_UPI_ID = '8660013411@ybl';
 const MERCHANT_NAME = 'Milgan Foods';
 
-type Step = 'address' | 'success';
+type Step = 'address' | 'payment' | 'success';
 
 export default function CheckoutModal({
   isOpen,
@@ -58,7 +59,7 @@ export default function CheckoutModal({
   bookingSuccess,
 }: CheckoutModalProps) {
   const [step, setStep] = useState<Step>('address');
-  const [paymentMethod, setPaymentMethod] = useState<'cod' | 'upi' | 'whatsapp' | null>(null);
+  const [paymentMethod, setPaymentMethod] = useState<'cod' | 'upi' | 'whatsapp' | null>('upi');
 
   // Address form state
   const [name, setName] = useState(defaultName || '');
@@ -69,6 +70,11 @@ export default function CheckoutModal({
   const [pincode, setPincode] = useState('');
   const [state, setState] = useState('Karnataka');
   const [formError, setFormError] = useState('');
+
+  // Payment confirmation state
+  const [transactionId, setTransactionId] = useState('');
+  const [paymentConfirmed, setPaymentConfirmed] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   // Parse default address into fields if available
   useEffect(() => {
@@ -84,8 +90,10 @@ export default function CheckoutModal({
   useEffect(() => {
     if (isOpen) {
       setStep('address');
-      setPaymentMethod(null);
+      setPaymentMethod('upi');
       setFormError('');
+      setTransactionId('');
+      setPaymentConfirmed(false);
     }
   }, [isOpen]);
 
@@ -111,12 +119,41 @@ export default function CheckoutModal({
   const handleConfirmWhatsAppOrder = async () => {
     const err = validateAddress();
     if (err) { setFormError(err); return; }
+    if (!paymentMethod) { setFormError('Please select a payment method.'); return; }
+    setFormError('');
+    
+    if (paymentMethod === 'upi') {
+      setStep('payment');
+    } else {
+      await onConfirm({
+        name, phone, email, address, city, pincode, state,
+        paymentMethod: 'cod',
+      });
+    }
+  };
+
+  const handleCompletePaymentOrder = async () => {
+    if (!paymentConfirmed) {
+      setFormError('Please check the confirmation box below to verify your payment.');
+      return;
+    }
+    if (!transactionId.trim() || transactionId.trim().length < 6) {
+      setFormError('Please enter a valid Transaction ID / UTR.');
+      return;
+    }
     setFormError('');
     setPaymentMethod('whatsapp');
     await onConfirm({
       name, phone, email, address, city, pincode, state,
       paymentMethod: 'whatsapp',
+      transactionId: transactionId.trim(),
     });
+  };
+
+  const handleCopyUpi = () => {
+    navigator.clipboard.writeText(MERCHANT_UPI_ID);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   // UPI deep link for QR
@@ -149,10 +186,12 @@ export default function CheckoutModal({
           <div className="space-y-0.5">
             <h2 className="text-lg font-serif font-bold text-white">
               {step === 'address' && '📦 Delivery Details'}
+              {step === 'payment' && '💳 UPI Payment Curation'}
               {step === 'success' && '✅ Order Confirmed!'}
             </h2>
             <p className="text-[9px] font-black uppercase tracking-widest text-white/40">
               {step === 'address' && 'Where should we deliver your order?'}
+              {step === 'payment' && 'Scan & pay to complete transaction'}
               {step === 'success' && 'Your order is placed and on its way!'}
             </p>
           </div>
@@ -253,6 +292,36 @@ export default function CheckoutModal({
                 </select>
               </div>
 
+              <div>
+                <label className={labelClass}>Payment Option</label>
+                <div className="grid grid-cols-2 gap-4">
+                  <button
+                    type="button"
+                    onClick={() => { setPaymentMethod('upi'); setFormError(''); }}
+                    className={`p-4 rounded-2xl border flex flex-col items-center gap-2 transition-all text-center ${
+                      paymentMethod === 'upi'
+                        ? 'border-[#fdce47] bg-[#fdce47]/10 text-white'
+                        : 'border-white/10 bg-white/5 text-white/60 hover:border-white/20'
+                    }`}
+                  >
+                    <span className="text-xl">💳</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest">UPI / Pay Now</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setPaymentMethod('cod'); setFormError(''); }}
+                    className={`p-4 rounded-2xl border flex flex-col items-center gap-2 transition-all text-center ${
+                      paymentMethod === 'cod'
+                        ? 'border-[#fdce47] bg-[#fdce47]/10 text-white'
+                        : 'border-white/10 bg-white/5 text-white/60 hover:border-white/20'
+                    }`}
+                  >
+                    <span className="text-xl">💵</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest">Cash On Delivery</span>
+                  </button>
+                </div>
+              </div>
+
               {formError && (
                 <div className="text-red-400 text-[10px] font-semibold bg-red-500/10 border border-red-500/20 rounded-xl p-3">
                   ⚠️ {formError}
@@ -282,6 +351,84 @@ export default function CheckoutModal({
             </div>
           )}
 
+          {/* ── STEP 2: UPI PAYMENT ── */}
+          {step === 'payment' && (
+            <div className="p-6 space-y-6 flex flex-col items-center">
+              <div className="text-center space-y-1">
+                <span className="text-[9px] font-black text-amber-500 uppercase tracking-widest">Milgan Premium Butter & Ghee</span>
+                <h3 className="text-xs font-serif italic text-white/70">Scan the QR code below via any UPI App (GPay, PhonePe, Paytm)</h3>
+              </div>
+
+              {/* QR Code Container */}
+              <div className="bg-[#fef9ec] p-4 rounded-3xl border border-white/10 shadow-lg flex flex-col items-center">
+                <img src={qrUrl} alt="UPI Payment QR Code" className="w-48 h-48 object-contain" />
+                <div className="text-center mt-2">
+                  <span className="text-[9px] font-black uppercase tracking-widest text-[#124B70]/60">Total Amount</span>
+                  <div className="text-2xl font-black font-mono text-[#124B70]">₹{cartTotal}</div>
+                </div>
+              </div>
+
+              {/* UPI Details */}
+              <div className="w-full space-y-3 bg-white/[0.03] border border-white/8 rounded-2xl p-4">
+                <div className="flex justify-between items-center text-xs">
+                  <span className="text-white/40 font-semibold">UPI ID:</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-white font-mono font-bold">{MERCHANT_UPI_ID}</span>
+                    <button
+                      onClick={handleCopyUpi}
+                      className="px-2 py-1 bg-white/5 border border-white/10 rounded-md text-[8px] font-black uppercase tracking-wider text-amber-500 hover:bg-white/10 hover:text-white transition-all"
+                    >
+                      {copied ? 'Copied!' : 'Copy'}
+                    </button>
+                  </div>
+                </div>
+                <div className="flex justify-between items-center text-xs">
+                  <span className="text-white/40 font-semibold">Payee Name:</span>
+                  <span className="text-white font-bold">{MERCHANT_NAME}</span>
+                </div>
+              </div>
+
+              {/* Payment Verification Form */}
+              <div className="w-full space-y-4">
+                <div>
+                  <label className={labelClass}>UPI Transaction ID / UTR (12-Digit)</label>
+                  <input
+                    type="text"
+                    value={transactionId}
+                    onChange={e => setTransactionId(e.target.value.replace(/\D/g, '').slice(0, 12))}
+                    placeholder="e.g. 345678901234"
+                    className={inputClass}
+                  />
+                  <p className="text-[9px] text-white/30 mt-1 font-medium">You can find this 12-digit number in your UPI app payment details.</p>
+                </div>
+
+                <label className="flex items-start gap-3 p-3 bg-white/[0.02] border border-white/5 rounded-xl cursor-pointer hover:bg-white/[0.05] transition-all">
+                  <input
+                    type="checkbox"
+                    checked={paymentConfirmed}
+                    onChange={e => setPaymentConfirmed(e.target.checked)}
+                    className="mt-0.5 accent-amber-500 rounded"
+                  />
+                  <span className="text-[10px] text-white/70 font-semibold select-none leading-relaxed">
+                    I confirm that I have sent exactly <span className="text-amber-500 font-bold">₹{cartTotal}</span> to <span className="text-white font-bold">{MERCHANT_UPI_ID}</span>.
+                  </span>
+                </label>
+              </div>
+
+              {formError && (
+                <div className="w-full text-red-400 text-[10px] font-semibold bg-red-500/10 border border-red-500/20 rounded-xl p-3">
+                  ⚠️ {formError}
+                </div>
+              )}
+
+              {bookingError && (
+                <div className="w-full text-red-400 text-[10px] font-semibold bg-red-500/10 border border-red-500/20 rounded-xl p-3">
+                  ⚠️ {bookingError}
+                </div>
+              )}
+            </div>
+          )}
+
 
           {/* ── STEP 4: SUCCESS ── */}
           {step === 'success' && (
@@ -308,9 +455,9 @@ export default function CheckoutModal({
                   <span className="text-[#fdce47] font-black font-mono">₹{cartTotal}</span>
                 </div>
                 <div className="flex justify-between text-xs">
-                  <span className="text-white/40 font-semibold">Payment</span>
-                  <span className="text-white font-bold capitalize">
-                    WhatsApp
+                  <span className="text-white/40 font-semibold">Payment Method</span>
+                  <span className="text-white font-bold">
+                    {paymentMethod === 'cod' ? 'Cash on Delivery (COD)' : 'UPI / Scan to Pay'}
                   </span>
                 </div>
               </div>
@@ -324,21 +471,46 @@ export default function CheckoutModal({
           )}
         </div>
 
-        {/* Footer action — Address step only */}
+        {/* Footer actions */}
         {step === 'address' && (
           <div className="p-6 border-t border-white/8 flex-shrink-0">
             <button
               onClick={handleConfirmWhatsAppOrder}
               disabled={isBooking}
-              className="w-full py-4 bg-[#25D366] text-white hover:bg-green-600 rounded-xl font-black text-[10px] uppercase tracking-[0.3em] shadow-lg active:scale-[0.98] disabled:opacity-50 transition-all flex items-center justify-center gap-2"
+              className="w-full py-4 bg-gradient-to-r from-[#ffdb71] to-[#fdce47] text-[#124B70] rounded-xl font-black text-[10px] uppercase tracking-[0.3em] shadow-lg active:scale-[0.98] disabled:opacity-50 transition-all flex items-center justify-center gap-2"
+            >
+              {isBooking ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-[#124B70]/30 border-t-[#124B70] rounded-full animate-spin" />
+                  Processing Order...
+                </>
+              ) : (
+                paymentMethod === 'upi' ? 'Proceed to Payment' : '✓ Confirm & Order via WhatsApp'
+              )}
+            </button>
+          </div>
+        )}
+
+        {step === 'payment' && (
+          <div className="p-6 border-t border-white/8 flex-shrink-0 flex gap-3">
+            <button
+              onClick={() => { setStep('address'); setFormError(''); }}
+              className="px-6 py-4 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-xl font-black text-[10px] uppercase tracking-[0.2em] transition-all"
+            >
+              Back
+            </button>
+            <button
+              onClick={handleCompletePaymentOrder}
+              disabled={isBooking || !paymentConfirmed || transactionId.length < 12}
+              className="flex-1 py-4 bg-[#25D366] text-white hover:bg-green-600 rounded-xl font-black text-[10px] uppercase tracking-[0.3em] shadow-lg active:scale-[0.98] disabled:opacity-50 transition-all flex items-center justify-center gap-2"
             >
               {isBooking ? (
                 <>
                   <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Redirecting to WhatsApp...
+                  Verifying & Redirecting...
                 </>
               ) : (
-                '✓ Order via WhatsApp'
+                '✓ Confirm & Order via WhatsApp'
               )}
             </button>
           </div>

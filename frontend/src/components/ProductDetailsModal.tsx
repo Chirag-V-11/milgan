@@ -86,7 +86,9 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
       weight: String(itemWeight),
       packages: quantity,
       description: itemText,
-      paymentMethod: 'WhatsApp',
+      paymentMethod: checkoutData.paymentMethod === 'cod' 
+        ? 'COD' 
+        : (checkoutData.transactionId ? `UPI (UTR: ${checkoutData.transactionId})` : 'WhatsApp'),
     };
 
     try {
@@ -102,7 +104,10 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
         setBookingSuccess(true);
 
         const orderItemText = `1. *${product.name}* (${selectedSize?.size || 'Standard'})\n   Qty: ${quantity} x ₹${finalPrice} = ₹${totalPrice}`;
-        const message = `*NEW ORDER RECEIVED - MILGEN FOODS* 🌾🏺\n\n*Customer Details:*\n👤 Name: ${checkoutData.name}\n📞 Phone: ${checkoutData.phone}\n📍 Address: ${checkoutData.address}, ${checkoutData.city} - ${checkoutData.pincode}, ${checkoutData.state}\n📧 Email: ${checkoutData.email || 'N/A'}\n\n*Order Curation:*\n${orderItemText}\n\n--------------------------------\n💰 *Subtotal:* ₹${totalPrice}\n🚚 *Shipping:* FREE\n💵 *Total Payable:* ₹${totalPrice}\n\nThank you for choosing Milgen Foods!`;
+        const paymentDetails = checkoutData.paymentMethod === 'cod'
+          ? 'Cash on Delivery (COD)'
+          : `UPI (UTR: ${checkoutData.transactionId || 'N/A'})`;
+        const message = `*NEW ORDER RECEIVED - MILGEN FOODS* 🌾🏺\n\n*Customer Details:*\n👤 Name: ${checkoutData.name}\n📞 Phone: ${checkoutData.phone}\n📍 Address: ${checkoutData.address}, ${checkoutData.city} - ${checkoutData.pincode}, ${checkoutData.state}\n📧 Email: ${checkoutData.email || 'N/A'}\n\n*Order Curation:*\n${orderItemText}\n\n--------------------------------\n💰 *Subtotal:* ₹${totalPrice}\n🚚 *Shipping:* FREE\n💳 *Payment:* ${paymentDetails}\n💵 *Total Payable:* ₹${totalPrice}\n\nThank you for choosing Milgen Foods!`;
 
         const text = encodeURIComponent(message);
         window.open(`https://wa.me/918123282168?text=${text}`, '_blank');
