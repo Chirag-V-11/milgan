@@ -265,7 +265,7 @@ export default function Home() {
               <div className="text-5xl drop-shadow-sm">🏆</div>
             </div>
             <a
-              href="https://youtu.be/OhfpbErg0l8?si=RuRqWAWHQQDfOduh"
+              href="/videos/milgan1.mp4"
               target="_blank"
               rel="noopener noreferrer"
               className="block break-inside-avoid relative aspect-[4/5] rounded-[2.5rem] overflow-hidden group border border-[#124B70]/10 shadow-[0_8px_30px_rgba(18,75,112,0.05)] hover:scale-[1.01] transition-all duration-500"
