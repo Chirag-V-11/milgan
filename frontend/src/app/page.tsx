@@ -10,21 +10,21 @@ const galleryItems = [
     title: "The Sacred Churn",
     category: "Vedic Bilona",
     description: "Our milk is cultured overnight and hand-churned in two directions before dawn using traditional wooden churning rods (bilona) to preserve the rich, fragile fatty acids.",
-    image: "/image/image.webp"
+    video: "/videos/milgan.mp4"
   },
   {
     id: 2,
     title: "Liquid Life Force",
     category: "Sacred Cooking",
     description: "Butter is slow-cooked over a gentle wood fire. As it clarifies, the golden liquid is infused with cardamoms, pepper, methi, cloves, betel leaf, and turmeric.",
-    image: "/image/place_the_ghee_jar_2K_202605141500.webp"
+    video: "/videos/milgan2.mp4"
   },
   {
     id: 3,
     title: "Nurtured by Nature",
     category: "Ethical Sourcing",
     description: "Sourced directly from indigenous farms where grass-fed Gir and Sahiwal cows graze freely under open skies, loved and respected as family.",
-    image: "/image/nature.webp"
+    video: "/videos/milgan3.mp4"
   }
 ];
 
@@ -214,10 +214,14 @@ export default function Home() {
                   className="group transition-all duration-700 cursor-pointer flex flex-col justify-between w-full"
                 >
                   <div className="block relative aspect-[3/2] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden bg-white/10 backdrop-blur-md border border-[#124B70]/10 shadow-[0_8px_30px_rgba(18,75,112,0.05)] group-hover:shadow-[0_15px_40px_rgba(18,75,112,0.15)] transition-all duration-700 w-full">
-                    <img
-                      src={item.image}
-                      className="w-full h-full object-cover transition-transform duration-[2000ms] group-hover:scale-110"
-                      alt={item.title}
+                    <video
+                      key={item.video}
+                      src={item.video}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-full object-cover transition-transform duration-[2000ms] group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#124B70]/80 via-[#124B70]/20 to-transparent opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
@@ -266,11 +270,11 @@ export default function Home() {
               rel="noopener noreferrer"
               className="block break-inside-avoid relative aspect-[4/5] rounded-[2.5rem] overflow-hidden group border border-[#124B70]/10 shadow-[0_8px_30px_rgba(18,75,112,0.05)] hover:scale-[1.01] transition-all duration-500"
             >
-              <img src="/image/nature.webp" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt="Customer" />
+              <img src="/image/milgan-family.jpg" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt="Customer" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#124B70] via-[#124B70]/60 to-transparent opacity-95" />
               <div className="absolute bottom-10 left-10 right-10 space-y-4">
                 <div className="text-[#ffdb71] text-[9px] font-black uppercase tracking-widest opacity-90">Seeker Story</div>
-                <h3 className="text-2xl font-serif font-bold text-white">The Anand Family</h3>
+                <h3 className="text-2xl font-serif font-bold text-white">The Milgan Family</h3>
                 <p className="text-white/80 text-sm italic">"Milgan has become the heart of our kitchen. Every meal feels like a blessing."</p>
               </div>
             </a>
@@ -417,12 +421,17 @@ export default function Home() {
               ×
             </button>
 
-            {/* Left: Image */}
+            {/* Left: Media (Image or Video) */}
             <div className="lg:w-1/2 p-4 sm:p-6 lg:p-8 flex flex-col justify-center bg-white border-b lg:border-b-0 lg:border-r border-[#124B70]/10 overflow-hidden shrink-0 max-h-[35vh] lg:max-h-none">
               <div className="relative aspect-video lg:aspect-[4/5] rounded-[2rem] overflow-hidden bg-white shadow-[0_10px_30px_rgba(0,0,0,0.05)] border border-[#124B70]/5 w-full h-full">
-                <img
-                  src={selectedGalleryItem.image}
-                  alt={selectedGalleryItem.title}
+                <video
+                  key={selectedGalleryItem.video}
+                  src={selectedGalleryItem.video}
+                  controls
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
                   className="w-full h-full object-cover"
                 />
               </div>

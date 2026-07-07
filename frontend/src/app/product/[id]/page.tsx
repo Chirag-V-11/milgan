@@ -19,7 +19,7 @@ export default function ProductDetails() {
   const [loading, setLoading] = useState(true);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
-  const [quantity, setQuantity] = useState(1);
+  const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [authAction, setAuthAction] = useState<'whatsapp' | 'cart' | null>(null);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [isBooking, setIsBooking] = useState(false);
@@ -42,6 +42,11 @@ export default function ProductDetails() {
         setProduct(data);
         if (data && data.quantity_options?.length > 0) {
           setSelectedSize(data.quantity_options[0]);
+          const initialQtys: Record<string, number> = {};
+          data.quantity_options.forEach((opt: any) => {
+            initialQtys[opt.size] = 0;
+          });
+          setQuantities(initialQtys);
         }
       } catch (err) {
         console.error('Failed to fetch product:', err);
@@ -76,10 +81,24 @@ export default function ProductDetails() {
 
   if (allImages.length === 0) allImages.push("https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=1000");
 
+  const quantitiesList = product?.quantity_options?.map((opt: any) => {
+    const optFinal = Math.round(opt.baseCost * (1 - (opt.discountPercentage || 0) / 100));
+    const qty = quantities[opt.size] || 0;
+    return {
+      opt,
+      qty,
+      optFinal
+    };
+  }) || [];
+
+  const totalPrice = quantitiesList.reduce((acc: number, item: any) => acc + (item.optFinal * item.qty), 0);
+  const totalBaseCost = quantitiesList.reduce((acc: number, item: any) => acc + (item.opt.baseCost * item.qty), 0);
+  const totalSavings = totalBaseCost - totalPrice;
+  const totalPackages = quantitiesList.reduce((acc: number, item: any) => acc + item.qty, 0);
+
   const finalPrice = selectedSize
     ? Math.round(selectedSize.baseCost * (1 - (selectedSize.discountPercentage || 0) / 100))
     : 0;
-  const totalPrice = finalPrice * quantity;
 
   const handleWhatsAppOrder = () => {
     setBookingError('');
@@ -92,8 +111,19 @@ export default function ProductDetails() {
     setBookingError('');
     setBookingSuccess(false);
 
-    const itemText = `${quantity}x ${selectedSize?.size || 'Standard'} ${product.name}`;
-    const itemWeight = (quantity * 0.5).toFixed(1);
+    const activeItems = quantitiesList.filter((item: any) => item.qty > 0);
+    if (activeItems.length === 0) {
+      setBookingError('Please select a quantity greater than 0.');
+      setIsBooking(false);
+      return;
+    }
+
+    const itemText = activeItems.map((item: any) => `${item.qty}x ${item.opt.size} ${product.name}`).join(', ');
+    const itemWeight = activeItems.reduce((acc: number, item: any) => {
+      const numericSize = parseFloat(item.opt.size) || 0.5;
+      const unitFactor = item.opt.size.toLowerCase().includes('ml') || item.opt.size.toLowerCase().includes('g') ? 0.001 : 1;
+      return acc + (item.qty * numericSize * unitFactor);
+    }, 0).toFixed(1);
 
     const payload = {
       orderId: `MLG-${Date.now()}`,
@@ -106,7 +136,7 @@ export default function ProductDetails() {
       state: checkoutData.state,
       declaredValue: String(totalPrice),
       weight: String(itemWeight),
-      packages: quantity,
+      packages: totalPackages,
       description: itemText,
       paymentMethod: 'WhatsApp',
     };
@@ -123,7 +153,7 @@ export default function ProductDetails() {
       if (response.ok && data.success) {
         setBookingSuccess(true);
 
-        const orderItemText = `1. *${product.name}* (${selectedSize?.size || 'Standard'})\n   Qty: ${quantity} x ₹${finalPrice} = ₹${totalPrice}`;
+        const orderItemText = activeItems.map((item: any, idx: number) => `${idx + 1}. *${product.name}* (${item.opt.size})\n   Qty: ${item.qty} x ₹${item.optFinal} = ₹${item.optFinal * item.qty}`).join('\n');
         const message = `*NEW ORDER RECEIVED - MILGEN FOODS* 🌾🏺\n\n*Customer Details:*\n👤 Name: ${checkoutData.name}\n📞 Phone: ${checkoutData.phone}\n📍 Address: ${checkoutData.address}, ${checkoutData.city} - ${checkoutData.pincode}, ${checkoutData.state}\n📧 Email: ${checkoutData.email || 'N/A'}\n\n*Order Curation:*\n${orderItemText}\n\n--------------------------------\n💰 *Subtotal:* ₹${totalPrice}\n🚚 *Shipping:* FREE\n💵 *Total Payable:* ₹${totalPrice}\n\nThank you for choosing Milgen Foods!`;
 
         const text = encodeURIComponent(message);
@@ -141,14 +171,26 @@ export default function ProductDetails() {
 
   const handleAddToCart = (currentUser?: any) => {
     if (!product) return;
-    addToCart({
-      id: product.id,
-      name: product.name,
-      image: allImages[0] || '',
-      size: selectedSize?.size || 'Standard',
-      basePrice: finalPrice,
-      originalPrice: selectedSize?.baseCost || finalPrice
-    }, quantity);
+    let addedAny = false;
+    product.quantity_options?.forEach((opt: any) => {
+      const q = quantities[opt.size] || 0;
+      if (q > 0) {
+        const optFinal = Math.round(opt.baseCost * (1 - (opt.discountPercentage || 0) / 100));
+        addToCart({
+          id: product.id,
+          name: product.name,
+          image: allImages[0] || '',
+          size: opt.size,
+          basePrice: optFinal,
+          originalPrice: opt.baseCost
+        }, q);
+        addedAny = true;
+      }
+    });
+    if (addedAny) {
+      setAddedToCart(true);
+      setTimeout(() => setAddedToCart(false), 2000);
+    }
   };
 
   return (
@@ -254,76 +296,90 @@ export default function ProductDetails() {
               </div>
             )}
 
-            {/* Price */}
-            <div className="flex items-end gap-4 py-6 border-y border-[#124B70]/10">
-              <div className="flex flex-col gap-1">
-                {quantity > 1 && (
-                  <span className="text-[10px] font-black text-[#124B70]/50 uppercase tracking-widest">
-                    ₹{finalPrice} per item
-                  </span>
-                )}
-                <span className="text-5xl font-serif font-bold text-[#124B70]">₹{totalPrice}</span>
-              </div>
-              {selectedSize?.discountPercentage > 0 && (
-                <div className="mb-1 space-y-0.5">
-                  <div className="text-sm text-[#124B70]/50 line-through font-medium">₹{selectedSize.baseCost * quantity}</div>
-                  <div className="text-[9px] font-black text-red-500 uppercase tracking-widest">You save ₹{(selectedSize.baseCost - finalPrice) * quantity}</div>
-                </div>
-              )}
-              <span className="ml-auto text-[9px] font-black text-[#124B70]/50 uppercase tracking-widest">Free Delivery</span>
-            </div>
-
-            {/* Size Selector */}
+            {/* Size & Quantity Selector */}
             {product.quantity_options?.length > 0 && (
               <div className="space-y-4">
-                <h3 className="text-[10px] font-black text-[#124B70]/50 uppercase tracking-[0.3em]">Select Volume</h3>
-                <div className="grid grid-cols-2 gap-3 sm:flex sm:flex-wrap">
+                <h3 className="text-[10px] font-black text-[#124B70]/50 uppercase tracking-[0.3em]">Select Volume & Quantity</h3>
+                <div className="flex flex-col gap-3">
                   {product.quantity_options.map((opt: any) => {
                     const optFinal = Math.round(opt.baseCost * (1 - (opt.discountPercentage || 0) / 100));
-                    const isSelected = selectedSize?.size === opt.size;
+                    const currentQty = quantities[opt.size] || 0;
                     return (
-                      <button
+                      <div
                         key={opt.size}
-                        onClick={() => setSelectedSize(opt)}
-                        className={`relative px-6 py-4 rounded-2xl border-2 transition-all duration-300 text-left group ${isSelected
-                          ? 'border-[#124B70] bg-[#124B70] text-[#FDFDFD] shadow-md shadow-[#124B70]/10'
-                          : 'border-[#124B70]/15 text-[#124B70] hover:border-[#124B70]/40 bg-white/40'}`}
+                        className={`flex items-center justify-between p-4 rounded-2xl border-2 transition-all duration-300 ${
+                          currentQty > 0
+                            ? 'border-[#124B70] bg-[#124B70]/5 shadow-sm'
+                            : 'border-[#124B70]/15 bg-white/40 hover:border-[#124B70]/40'
+                        }`}
                       >
-                        <div className={`text-xs font-black uppercase tracking-widest ${isSelected ? 'text-[#FDFDFD]' : 'text-[#124B70]'}`}>{opt.size}</div>
-                        <div className={`text-xs font-medium mt-0.5 ${isSelected ? 'text-[#FDFDFD]/80' : 'text-[#124B70]/60'}`}>₹{optFinal}</div>
-                        {opt.discountPercentage > 0 && (
-                          <div className="absolute -top-2 -right-2 bg-red-500 text-white text-[8px] font-black px-2 py-0.5 rounded-full">
-                            -{opt.discountPercentage}%
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-black text-[#124B70] uppercase tracking-wider">{opt.size}</span>
+                            {opt.discountPercentage > 0 && (
+                              <span className="bg-red-500 text-white text-[8px] font-black px-2 py-0.5 rounded-full">
+                                -{opt.discountPercentage}%
+                              </span>
+                            )}
                           </div>
-                        )}
-                      </button>
+                          <div className="text-xs text-[#124B70]/60 font-medium">
+                            ₹{optFinal} <span className="line-through text-[10px] ml-1">₹{opt.baseCost}</span>
+                          </div>
+                        </div>
+
+                        {/* Quantity Counter for this option */}
+                        <div className="flex items-center gap-3 bg-white/85 border border-[#124B70]/15 rounded-xl p-1 shadow-sm">
+                          <button
+                            onClick={() => {
+                              setQuantities(prev => ({
+                                ...prev,
+                                [opt.size]: Math.max(0, (prev[opt.size] || 0) - 1)
+                              }));
+                            }}
+                            className="w-8 h-8 rounded-lg bg-white border border-[#124B70]/10 text-[#124B70] flex items-center justify-center font-bold hover:bg-[#124B70] hover:text-[#FDFDFD] active:scale-95 transition-all disabled:opacity-40"
+                            disabled={currentQty === 0}
+                          >
+                            −
+                          </button>
+                          <span className="w-8 text-center text-sm font-black text-[#124B70] select-none font-mono">
+                            {currentQty}
+                          </span>
+                          <button
+                            onClick={() => {
+                              setQuantities(prev => ({
+                                ...prev,
+                                [opt.size]: (prev[opt.size] || 0) + 1
+                              }));
+                            }}
+                            className="w-8 h-8 rounded-lg bg-white border border-[#124B70]/10 text-[#124B70] flex items-center justify-center font-bold hover:bg-[#124B70] hover:text-[#FDFDFD] active:scale-95 transition-all"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
                     );
                   })}
                 </div>
               </div>
             )}
 
-            {/* Quantity Selector */}
-            <div className="space-y-4">
-              <h3 className="text-[10px] font-black text-[#124B70]/50 uppercase tracking-[0.3em]">Select Quantity</h3>
-              <div className="flex items-center gap-4 bg-white/40 border border-[#124B70]/15 w-fit rounded-2xl p-1.5 shadow-sm">
-                <button
-                  onClick={() => setQuantity(prev => Math.max(1, prev - 1))}
-                  className="w-10 h-10 rounded-xl bg-white border border-[#124B70]/10 text-[#124B70] flex items-center justify-center font-bold text-lg hover:bg-[#124B70] hover:text-[#FDFDFD] active:scale-95 transition-all shadow-sm disabled:opacity-40 disabled:hover:bg-white disabled:hover:text-[#124B70] disabled:cursor-not-allowed"
-                  disabled={quantity <= 1}
-                >
-                  −
-                </button>
-                <span className="w-12 text-center text-base font-black text-[#124B70] select-none font-mono">
-                  {quantity}
-                </span>
-                <button
-                  onClick={() => setQuantity(prev => prev + 1)}
-                  className="w-10 h-10 rounded-xl bg-white border border-[#124B70]/10 text-[#124B70] flex items-center justify-center font-bold text-lg hover:bg-[#124B70] hover:text-[#FDFDFD] active:scale-95 transition-all shadow-sm"
-                >
-                  +
-                </button>
+            {/* Price */}
+            <div className="flex items-end gap-4 py-6 border-y border-[#124B70]/10">
+              <div className="flex flex-col gap-1">
+                {totalPackages > 1 && (
+                  <span className="text-[10px] font-black text-[#124B70]/50 uppercase tracking-widest">
+                    {totalPackages} items selected
+                  </span>
+                )}
+                <span className="text-5xl font-serif font-bold text-[#124B70]">₹{totalPrice}</span>
               </div>
+              {totalSavings > 0 && (
+                <div className="mb-1 space-y-0.5">
+                  <div className="text-sm text-[#124B70]/50 line-through font-medium">₹{totalBaseCost}</div>
+                  <div className="text-[9px] font-black text-red-500 uppercase tracking-widest">You save ₹{totalSavings}</div>
+                </div>
+              )}
+              <span className="ml-auto text-[9px] font-black text-[#124B70]/50 uppercase tracking-widest">Free Delivery</span>
             </div>
 
             {/* CTA Buttons */}
@@ -331,15 +387,17 @@ export default function ProductDetails() {
               <div className="grid grid-cols-2 gap-4">
                 <button
                   onClick={() => handleAddToCart()}
-                  className="w-full py-5 rounded-2xl font-black text-xs uppercase tracking-[0.3em] bg-[#124B70] text-[#FDFDFD] hover:bg-[#124B70]/90 shadow-lg shadow-[#124B70]/10 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300"
+                  disabled={totalPackages === 0}
+                  className="w-full py-5 rounded-2xl font-black text-xs uppercase tracking-[0.3em] bg-[#124B70] text-[#FDFDFD] hover:bg-[#124B70]/90 shadow-lg shadow-[#124B70]/10 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:translate-y-0"
                 >
                   Add to Cart
                 </button>
                 <button
                   onClick={() => handleWhatsAppOrder()}
-                  className={`w-full py-5 rounded-2xl font-black text-xs uppercase tracking-[0.3em] shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group active:scale-[0.98] ${addedToCart ? 'bg-green-600 text-white' : 'bg-[#25D366] text-white hover:bg-green-600 hover:shadow-green-500/10 hover:-translate-y-0.5'}`}
+                  disabled={totalPackages === 0}
+                  className={`w-full py-5 rounded-2xl font-black text-xs uppercase tracking-[0.3em] shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:translate-y-0 ${addedToCart ? 'bg-green-600 text-white' : 'bg-[#25D366] text-white hover:bg-green-600 hover:shadow-green-500/10 hover:-translate-y-0.5'}`}
                 >
-                  {addedToCart ? '✓ Sent' : 'WhatsApp Buy'}
+                  {addedToCart ? '✓ Sent' : 'Milgan Buy'}
                 </button>
               </div>
 
@@ -391,14 +449,14 @@ export default function ProductDetails() {
         isOpen={isCheckoutOpen}
         onClose={() => { setIsCheckoutOpen(false); setBookingError(''); setBookingSuccess(false); }}
         onConfirm={handleConfirmOrder}
-        cart={[{
+        cart={quantitiesList.filter((item: any) => item.qty > 0).map((item: any) => ({
           id: product.id,
           name: product.name,
           image: allImages[0] || '',
-          size: selectedSize?.size || 'Standard',
-          basePrice: finalPrice,
-          quantity: quantity
-        }]}
+          size: item.opt.size,
+          basePrice: item.optFinal,
+          quantity: item.qty
+        }))}
         cartTotal={totalPrice}
         defaultName={user?.name || ''}
         defaultPhone={user?.phone || ''}

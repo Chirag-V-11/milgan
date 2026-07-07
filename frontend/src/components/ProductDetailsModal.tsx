@@ -20,7 +20,7 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
   const [activeImage, setActiveImage] = useState(0);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
-  const [quantity, setQuantity] = useState(1);
+  const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [authAction, setAuthAction] = useState<'whatsapp' | 'cart' | null>(null);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [isBooking, setIsBooking] = useState(false);
@@ -30,9 +30,13 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
   useEffect(() => {
     if (product && product.quantity_options?.length > 0) {
       setSelectedSize(product.quantity_options[0]);
+      const initialQtys: Record<string, number> = {};
+      product.quantity_options.forEach((opt: any) => {
+        initialQtys[opt.size] = 0;
+      });
+      setQuantities(initialQtys);
     }
     setActiveImage(0);
-    setQuantity(1);
   }, [product]);
 
   useEffect(() => {
@@ -54,10 +58,24 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
     allImages.push("https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=1000");
   }
 
+  const quantitiesList = product?.quantity_options?.map((opt: any) => {
+    const optFinal = Math.round(opt.baseCost * (1 - (opt.discountPercentage || 0) / 100));
+    const qty = quantities[opt.size] || 0;
+    return {
+      opt,
+      qty,
+      optFinal
+    };
+  }) || [];
+
+  const totalPrice = quantitiesList.reduce((acc: number, item: any) => acc + (item.optFinal * item.qty), 0);
+  const totalBaseCost = quantitiesList.reduce((acc: number, item: any) => acc + (item.opt.baseCost * item.qty), 0);
+  const totalSavings = totalBaseCost - totalPrice;
+  const totalPackages = quantitiesList.reduce((acc: number, item: any) => acc + item.qty, 0);
+
   const finalPrice = selectedSize
     ? Math.round(selectedSize.baseCost * (1 - (selectedSize.discountPercentage || 0) / 100))
     : 0;
-  const totalPrice = finalPrice * quantity;
 
   const handleWhatsAppOrder = () => {
     setBookingError('');
@@ -70,8 +88,19 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
     setBookingError('');
     setBookingSuccess(false);
 
-    const itemText = `${quantity}x ${selectedSize?.size || 'Standard'} ${product.name}`;
-    const itemWeight = (quantity * 0.5).toFixed(1);
+    const activeItems = quantitiesList.filter((item: any) => item.qty > 0);
+    if (activeItems.length === 0) {
+      setBookingError('Please select a quantity greater than 0.');
+      setIsBooking(false);
+      return;
+    }
+
+    const itemText = activeItems.map((item: any) => `${item.qty}x ${item.opt.size} ${product.name}`).join(', ');
+    const itemWeight = activeItems.reduce((acc: number, item: any) => {
+      const numericSize = parseFloat(item.opt.size) || 0.5;
+      const unitFactor = item.opt.size.toLowerCase().includes('ml') || item.opt.size.toLowerCase().includes('g') ? 0.001 : 1;
+      return acc + (item.qty * numericSize * unitFactor);
+    }, 0).toFixed(1);
 
     const payload = {
       orderId: `MLG-${Date.now()}`,
@@ -84,7 +113,7 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
       state: checkoutData.state,
       declaredValue: String(totalPrice),
       weight: String(itemWeight),
-      packages: quantity,
+      packages: totalPackages,
       description: itemText,
       paymentMethod: checkoutData.paymentMethod === 'cod' 
         ? 'COD' 
@@ -103,7 +132,7 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
       if (response.ok && data.success) {
         setBookingSuccess(true);
 
-        const orderItemText = `1. *${product.name}* (${selectedSize?.size || 'Standard'})\n   Qty: ${quantity} x ₹${finalPrice} = ₹${totalPrice}`;
+        const orderItemText = activeItems.map((item: any, idx: number) => `${idx + 1}. *${product.name}* (${item.opt.size})\n   Qty: ${item.qty} x ₹${item.optFinal} = ₹${item.optFinal * item.qty}`).join('\n');
         const paymentDetails = checkoutData.paymentMethod === 'cod'
           ? 'Cash on Delivery (COD)'
           : `UPI (UTR: ${checkoutData.transactionId || 'N/A'})`;
@@ -124,14 +153,26 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
 
   const handleAddToCart = (currentUser?: any) => {
     if (!product) return;
-    addToCart({
-      id: product.id,
-      name: product.name,
-      image: allImages[0] || '',
-      size: selectedSize?.size || 'Standard',
-      basePrice: finalPrice,
-      originalPrice: selectedSize?.baseCost || finalPrice
-    }, quantity);
+    let addedAny = false;
+    product.quantity_options?.forEach((opt: any) => {
+      const q = quantities[opt.size] || 0;
+      if (q > 0) {
+        const optFinal = Math.round(opt.baseCost * (1 - (opt.discountPercentage || 0) / 100));
+        addToCart({
+          id: product.id,
+          name: product.name,
+          image: allImages[0] || '',
+          size: opt.size,
+          basePrice: optFinal,
+          originalPrice: opt.baseCost
+        }, q);
+        addedAny = true;
+      }
+    });
+    if (addedAny) {
+      setAddedToCart(true);
+      setTimeout(() => setAddedToCart(false), 2000);
+    }
   };
 
   const modalBody = (
@@ -235,78 +276,92 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
                   </div>
                 </div>
               )}
-
-            {/* Price */}
-            <div className="flex items-end gap-3 py-5 border-y border-white/10">
-              <div className="flex flex-col gap-0.5">
-                {quantity > 1 && (
-                  <span className="text-[8px] font-black text-foreground/40 uppercase tracking-widest">
-                    ₹{finalPrice} per item
-                  </span>
-                )}
-                <span className="text-4xl font-serif font-bold text-gold">₹{totalPrice}</span>
-              </div>
-              {selectedSize?.discountPercentage > 0 && (
-                <div className="space-y-0.5">
-                  <div className="text-xs text-foreground/40 line-through font-medium">₹{selectedSize.baseCost * quantity}</div>
-                  <div className="text-[8px] font-black text-red-500 uppercase tracking-widest">You save ₹{(selectedSize.baseCost - finalPrice) * quantity}</div>
-                </div>
-              )}
-              <span className="ml-auto text-[8px] font-black text-foreground/40 uppercase tracking-widest">Free Delivery</span>
-            </div>
-
-            {/* Size Selector */}
+                           {/* Size & Quantity Selector */}
             {product.quantity_options?.length > 0 && (
               <div className="space-y-3">
-                <h3 className="text-[9px] font-black text-foreground/40 uppercase tracking-[0.3em]">Select Volume</h3>
-                <div className="flex flex-wrap gap-2">
+                <h3 className="text-[9px] font-black text-foreground/40 uppercase tracking-[0.3em]">Select Volume & Quantity</h3>
+                <div className="flex flex-col gap-3">
                   {product.quantity_options.map((opt: any) => {
                     const optFinal = Math.round(opt.baseCost * (1 - (opt.discountPercentage || 0) / 100));
-                    const isSelected = selectedSize?.size === opt.size;
+                    const currentQty = quantities[opt.size] || 0;
                     return (
-                      <button
+                      <div
                         key={opt.size}
-                        onClick={() => setSelectedSize(opt)}
-                        className={`relative px-4 py-3 rounded-xl border transition-all duration-300 text-left ${isSelected
-                          ? 'border-gold bg-gold text-[#23212e] shadow-lg shadow-gold/15'
-                          : 'border-white/10 text-foreground hover:border-gold/50 bg-white/[0.03]'}`}
+                        className={`flex items-center justify-between p-4 rounded-2xl border-2 transition-all duration-300 ${
+                          currentQty > 0
+                            ? 'border-gold bg-gold/5 shadow-sm'
+                            : 'border-white/10 bg-white/[0.02] hover:border-gold/30'
+                        }`}
                       >
-                        <div className={`text-[10px] font-black uppercase tracking-widest ${isSelected ? 'text-[#23212e]' : 'text-foreground'}`}>{opt.size}</div>
-                        <div className={`text-[10px] font-medium mt-0.5 ${isSelected ? 'text-[#23212e]/70' : 'text-foreground/40'}`}>₹{optFinal}</div>
-                        {opt.discountPercentage > 0 && (
-                          <div className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[7px] font-black px-1.5 py-0.5 rounded-full">
-                            -{opt.discountPercentage}%
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-black text-white uppercase tracking-wider">{opt.size}</span>
+                            {opt.discountPercentage > 0 && (
+                              <span className="bg-red-500 text-white text-[8px] font-black px-2 py-0.5 rounded-full">
+                                -{opt.discountPercentage}%
+                              </span>
+                            )}
                           </div>
-                        )}
-                      </button>
+                          <div className="text-xs text-foreground/60 font-medium">
+                            ₹{optFinal} <span className="line-through text-[10px] ml-1">₹{opt.baseCost}</span>
+                          </div>
+                        </div>
+
+                        {/* Quantity Counter for this option */}
+                        <div className="flex items-center gap-3 bg-[#23212e]/80 border border-white/10 rounded-xl p-1 shadow-sm">
+                          <button
+                            onClick={() => {
+                              setQuantities(prev => ({
+                                ...prev,
+                                [opt.size]: Math.max(0, (prev[opt.size] || 0) - 1)
+                              }));
+                            }}
+                            className="w-8 h-8 rounded-lg bg-white/10 text-white border border-white/10 flex items-center justify-center font-bold hover:bg-gold hover:text-[#23212e] active:scale-95 transition-all disabled:opacity-40"
+                            disabled={currentQty === 0}
+                          >
+                            −
+                          </button>
+                          <span className="w-8 text-center text-sm font-black text-white select-none font-mono">
+                            {currentQty}
+                          </span>
+                          <button
+                            onClick={() => {
+                              setQuantities(prev => ({
+                                ...prev,
+                                [opt.size]: (prev[opt.size] || 0) + 1
+                              }));
+                            }}
+                            className="w-8 h-8 rounded-lg bg-white/10 text-white border border-white/10 flex items-center justify-center font-bold hover:bg-gold hover:text-[#23212e] active:scale-95 transition-all"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
                     );
                   })}
                 </div>
               </div>
             )}
 
-            {/* Quantity Selector */}
-            <div className="space-y-3">
-              <h3 className="text-[9px] font-black text-foreground/40 uppercase tracking-[0.3em]">Select Quantity</h3>
-              <div className="flex items-center gap-3 bg-white/[0.03] border border-white/10 w-fit rounded-xl p-1 shadow-sm">
-                <button
-                  onClick={() => setQuantity(prev => Math.max(1, prev - 1))}
-                  className="w-8 h-8 rounded-lg bg-white/10 text-white border border-white/10 flex items-center justify-center font-bold text-md hover:bg-gold hover:text-[#23212e] active:scale-95 transition-all shadow-sm disabled:opacity-40 disabled:hover:bg-white/10 disabled:hover:text-white disabled:cursor-not-allowed"
-                  disabled={quantity <= 1}
-                >
-                  −
-                </button>
-                <span className="w-10 text-center text-sm font-black text-foreground select-none font-mono">
-                  {quantity}
-                </span>
-                <button
-                  onClick={() => setQuantity(prev => prev + 1)}
-                  className="w-8 h-8 rounded-lg bg-white/10 text-white border border-white/10 flex items-center justify-center font-bold text-md hover:bg-gold hover:text-[#23212e] active:scale-95 transition-all shadow-sm"
-                >
-                  +
-                </button>
+            {/* Price */}
+            <div className="flex items-end gap-3 py-5 border-y border-white/10">
+              <div className="flex flex-col gap-0.5">
+                {totalPackages > 1 && (
+                  <span className="text-[8px] font-black text-foreground/40 uppercase tracking-widest">
+                    {totalPackages} items selected
+                  </span>
+                )}
+                <span className="text-4xl font-serif font-bold text-gold">₹{totalPrice}</span>
               </div>
+              {totalSavings > 0 && (
+                <div className="space-y-0.5">
+                  <div className="text-xs text-foreground/40 line-through font-medium">₹{totalBaseCost}</div>
+                  <div className="text-[8px] font-black text-red-500 uppercase tracking-widest">You save ₹{totalSavings}</div>
+                </div>
+              )}
+              <span className="ml-auto text-[8px] font-black text-foreground/40 uppercase tracking-widest">Free Delivery</span>
             </div>
+
           </div>
 
           {/* CTA Actions */}
@@ -314,15 +369,17 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
             <div className="grid grid-cols-2 gap-2.5">
               <button
                 onClick={() => handleAddToCart()}
-                className="w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-[0.3em] shadow-xl transition-all duration-500 flex items-center justify-center gap-2.5 active:scale-[0.98] bg-gold text-[#23212e] hover:bg-[#fdce47] hover:shadow-gold/15"
+                disabled={totalPackages === 0}
+                className="w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-[0.3em] shadow-xl transition-all duration-500 flex items-center justify-center gap-2.5 active:scale-[0.98] bg-gold text-[#23212e] hover:bg-[#fdce47] hover:shadow-gold/15 disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 Add to Cart
               </button>
               <button
                 onClick={() => handleWhatsAppOrder()}
-                className={`w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-[0.3em] shadow-xl transition-all duration-500 flex items-center justify-center gap-2.5 active:scale-[0.98] ${addedToCart ? 'bg-green-600 text-white' : 'bg-[#25D366] text-white hover:bg-green-600 hover:shadow-green-500/20'}`}
+                disabled={totalPackages === 0}
+                className={`w-full py-4 rounded-xl font-black text-[10px] uppercase tracking-[0.3em] shadow-xl transition-all duration-500 flex items-center justify-center gap-2.5 active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed ${addedToCart ? 'bg-green-600 text-white' : 'bg-[#25D366] text-white hover:bg-green-600 hover:shadow-green-500/20'}`}
               >
-                {addedToCart ? '✓ Order Sent!' : 'WhatsApp Buy'}
+                {addedToCart ? '✓ Order Sent!' : 'Milgan Buy'}
               </button>
             </div>
 
@@ -374,14 +431,14 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
         isOpen={isCheckoutOpen}
         onClose={() => { setIsCheckoutOpen(false); setBookingError(''); setBookingSuccess(false); }}
         onConfirm={handleConfirmOrder}
-        cart={[{
+        cart={quantitiesList.filter((item: any) => item.qty > 0).map((item: any) => ({
           id: product.id,
           name: product.name,
           image: allImages[0] || '',
-          size: selectedSize?.size || 'Standard',
-          basePrice: finalPrice,
-          quantity: quantity
-        }]}
+          size: item.opt.size,
+          basePrice: item.optFinal,
+          quantity: item.qty
+        }))}
         cartTotal={totalPrice}
         defaultName={user?.name || ''}
         defaultPhone={user?.phone || ''}

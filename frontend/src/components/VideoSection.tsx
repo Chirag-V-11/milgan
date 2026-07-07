@@ -170,25 +170,6 @@ export default function VideoSection() {
           ))}
         </div>
 
-        {/* Instagram Reels Section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 justify-center max-w-4xl mx-auto pt-6">
-          <div className="relative aspect-[9/16] rounded-3xl overflow-hidden border border-white/10 shadow-[0_15px_40px_rgba(0,0,0,0.3)] bg-black max-w-[320px] mx-auto w-full">
-            <iframe
-              src="https://www.instagram.com/reel/DMCNaWazfe2/embed"
-              className="w-full h-full absolute inset-0 border-0"
-              allowFullScreen
-              scrolling="no"
-            />
-          </div>
-          <div className="relative aspect-[9/16] rounded-3xl overflow-hidden border border-white/10 shadow-[0_15px_40px_rgba(0,0,0,0.3)] bg-black max-w-[320px] mx-auto w-full">
-            <iframe
-              src="https://www.instagram.com/reel/DQWWReuk0Al/embed"
-              className="w-full h-full absolute inset-0 border-0"
-              allowFullScreen
-              scrolling="no"
-            />
-          </div>
-        </div>
 
         {/* CTA below video */}
         <div className="text-center space-y-4">
