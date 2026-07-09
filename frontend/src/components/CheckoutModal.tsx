@@ -59,7 +59,7 @@ export default function CheckoutModal({
   bookingSuccess,
 }: CheckoutModalProps) {
   const [step, setStep] = useState<Step>('address');
-  const [paymentMethod, setPaymentMethod] = useState<'cod' | 'upi' | 'whatsapp' | null>('upi');
+  const [paymentMethod, setPaymentMethod] = useState<'cod' | 'upi' | 'whatsapp' | null>('whatsapp');
 
   // Address form state
   const [name, setName] = useState(defaultName || '');
@@ -90,7 +90,7 @@ export default function CheckoutModal({
   useEffect(() => {
     if (isOpen) {
       setStep('address');
-      setPaymentMethod('upi');
+      setPaymentMethod('whatsapp');
       setFormError('');
       setTransactionId('');
       setPaymentConfirmed(false);
@@ -119,17 +119,12 @@ export default function CheckoutModal({
   const handleConfirmWhatsAppOrder = async () => {
     const err = validateAddress();
     if (err) { setFormError(err); return; }
-    if (!paymentMethod) { setFormError('Please select a payment method.'); return; }
     setFormError('');
     
-    if (paymentMethod === 'upi') {
-      setStep('payment');
-    } else {
-      await onConfirm({
-        name, phone, email, address, city, pincode, state,
-        paymentMethod: 'cod',
-      });
-    }
+    await onConfirm({
+      name, phone, email, address, city, pincode, state,
+      paymentMethod: 'whatsapp',
+    });
   };
 
   const handleCompletePaymentOrder = async () => {
@@ -292,35 +287,7 @@ export default function CheckoutModal({
                 </select>
               </div>
 
-              <div>
-                <label className={labelClass}>Payment Option</label>
-                <div className="grid grid-cols-2 gap-4">
-                  <button
-                    type="button"
-                    onClick={() => { setPaymentMethod('upi'); setFormError(''); }}
-                    className={`p-4 rounded-2xl border flex flex-col items-center gap-2 transition-all text-center ${
-                      paymentMethod === 'upi'
-                        ? 'border-[#fdce47] bg-[#fdce47]/10 text-white'
-                        : 'border-white/10 bg-white/5 text-white/60 hover:border-white/20'
-                    }`}
-                  >
-                    <span className="text-xl">💳</span>
-                    <span className="text-[10px] font-black uppercase tracking-widest">UPI / Pay Now</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => { setPaymentMethod('cod'); setFormError(''); }}
-                    className={`p-4 rounded-2xl border flex flex-col items-center gap-2 transition-all text-center ${
-                      paymentMethod === 'cod'
-                        ? 'border-[#fdce47] bg-[#fdce47]/10 text-white'
-                        : 'border-white/10 bg-white/5 text-white/60 hover:border-white/20'
-                    }`}
-                  >
-                    <span className="text-xl">💵</span>
-                    <span className="text-[10px] font-black uppercase tracking-widest">Cash On Delivery</span>
-                  </button>
-                </div>
-              </div>
+
 
               {formError && (
                 <div className="text-red-400 text-[10px] font-semibold bg-red-500/10 border border-red-500/20 rounded-xl p-3">
@@ -457,7 +424,7 @@ export default function CheckoutModal({
                 <div className="flex justify-between text-xs">
                   <span className="text-white/40 font-semibold">Payment Method</span>
                   <span className="text-white font-bold">
-                    {paymentMethod === 'cod' ? 'Cash on Delivery (COD)' : 'UPI / Scan to Pay'}
+                    WhatsApp Order
                   </span>
                 </div>
               </div>
@@ -485,7 +452,7 @@ export default function CheckoutModal({
                   Processing Order...
                 </>
               ) : (
-                paymentMethod === 'upi' ? 'Proceed to Payment' : '✓ Confirm & Order via WhatsApp'
+                '✓ Confirm & Order via WhatsApp'
               )}
             </button>
           </div>
