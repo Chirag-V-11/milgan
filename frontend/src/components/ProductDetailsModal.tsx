@@ -104,6 +104,7 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
 
     const payload = {
       orderId: `MLG-${Date.now()}`,
+      productId: product.id || '615df5ef',
       customerName: checkoutData.name,
       mobile: checkoutData.phone,
       email: checkoutData.email || user?.email || 'customer@example.com',

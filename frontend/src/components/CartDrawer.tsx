@@ -30,6 +30,7 @@ export default function CartDrawer() {
 
     const payload = {
       orderId: `MLG-${Date.now()}`,
+      productId: cart[0]?.id || '615df5ef',
       customerName: checkoutData.name,
       mobile: checkoutData.phone,
       email: checkoutData.email || user?.email || 'customer@example.com',

@@ -11,8 +11,25 @@ router.post('/upload', async (req, res) => {
   try {
     const orderData = req.body;
     
+    // 1. Get present year
+    const presentYear = new Date().getFullYear();
+
+    // 2. Get product id from orderData.productId (or fallback to a default/cleaned string)
+    const rawProductId = orderData.productId || '615df5ef';
+    const productIdClean = String(rawProductId).replace(/[^a-zA-Z0-9]/g, '').substring(0, 8);
+
+    // 3. Get counting numbers (count of existing orders + 1)
+    const { count, error: countError } = await supabase
+      .from('orders')
+      .select('*', { count: 'exact', head: true });
+    
+    if (countError) throw countError;
+    const nextCount = (count || 0) + 1;
+
+    const generatedId = `${presentYear}${productIdClean}${nextCount}`;
+
     const newOrder = {
-      id: orderData.orderId || `MLG-${Date.now()}`,
+      id: generatedId,
       customer_name: orderData.customerName,
       phone: orderData.mobile,
       email: orderData.email || 'customer@example.com',
