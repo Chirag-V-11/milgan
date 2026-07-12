@@ -324,7 +324,7 @@ export default function ProductDetails() {
                             )}
                           </div>
                           <div className="text-xs text-[#124B70]/60 font-medium">
-                            ₹{optFinal} <span className="line-through text-[10px] ml-1">₹{opt.baseCost}</span>
+                            ₹{optFinal} {opt.discountPercentage > 0 && <span className="line-through text-[10px] ml-1">₹{opt.baseCost}</span>}
                           </div>
                         </div>
 
