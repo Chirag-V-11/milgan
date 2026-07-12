@@ -156,7 +156,42 @@ export default function CheckoutModal({
   const qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(upiLink)}&size=220&margin=2&ecLevel=M&dark=124B70&light=fef9ec`;
 
   const indianStates = [
+    'Andhra Pradesh',
+    'Arunachal Pradesh',
+    'Assam',
+    'Bihar',
+    'Chhattisgarh',
+    'Goa',
+    'Gujarat',
+    'Haryana',
+    'Himachal Pradesh',
+    'Jharkhand',
     'Karnataka',
+    'Kerala',
+    'Madhya Pradesh',
+    'Maharashtra',
+    'Manipur',
+    'Meghalaya',
+    'Mizoram',
+    'Nagaland',
+    'Odisha',
+    'Punjab',
+    'Rajasthan',
+    'Sikkim',
+    'Tamil Nadu',
+    'Telangana',
+    'Tripura',
+    'Uttar Pradesh',
+    'Uttarakhand',
+    'West Bengal',
+    'Andaman and Nicobar Islands',
+    'Chandigarh',
+    'Dadra and Nagar Haveli and Daman and Diu',
+    'Delhi',
+    'Jammu and Kashmir',
+    'Ladakh',
+    'Lakshadweep',
+    'Puducherry'
   ];
 
   const inputClass = "w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white text-sm placeholder:text-white/30 focus:outline-none focus:border-[#fdce47]/60 focus:bg-white/8 transition-all duration-200";
@@ -252,15 +287,13 @@ export default function CheckoutModal({
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className={labelClass}>City</label>
-                  <select
+                  <input
+                    type="text"
                     value={city}
                     onChange={e => setCity(e.target.value)}
-                    className={`${inputClass} cursor-pointer`}
-                  >
-                    <option value="" className="bg-[#1a1828] text-white/50">Select your city</option>
-                    <option value="Tumkur" className="bg-[#1a1828] text-white">Tumkur</option>
-                    <option value="Bengalore" className="bg-[#1a1828] text-white">Bengalore</option>
-                  </select>
+                    placeholder="Enter your city"
+                    className={inputClass}
+                  />
                 </div>
                 <div>
                   <label className={labelClass}>Pincode</label>
