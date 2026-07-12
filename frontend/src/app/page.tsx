@@ -16,14 +16,14 @@ const galleryItems = [
     id: 2,
     title: "Liquid Life Force",
     category: "Sacred Cooking",
-    description: "Butter is slow-cooked over a gentle wood fire. As it clarifies, the golden liquid is infused with cardamoms, pepper, methi, cloves, betel leaf, and turmeric.",
+    description: "Butter is clarified using a gentle slow cooking process. As it clarifies, the golden liquid is infused with cardamoms, pepper, methi, cloves, betel leaf, and turmeric.",
     video: "/videos/milgan2.mp4"
   },
   {
     id: 3,
     title: "Nurtured by Nature",
     category: "Ethical Sourcing",
-    description: "Sourced directly from indigenous farms where grass-fed Gir and Sahiwal cows graze freely under open skies, loved and respected as family.",
+    description: "Sourced directly from indigenous farms where grass-fed Natural cows graze freely under open skies, loved and respected as family.",
     video: "/videos/milgan3.mp4"
   }
 ];
@@ -182,7 +182,7 @@ export default function Home() {
                           <p className="text-white/80 text-xs md:text-sm italic line-clamp-2">{product.description}</p>
                         </div>
                         <div className="pt-4 border-t border-white/20">
-                          <span className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-[#fdce47] transition-colors">
+                          <span className="inline-block px-5 py-2.5 bg-[#fdce47] text-[#124B70] rounded-full text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all duration-300 hover:scale-105 animate-glow">
                             Buy Now ➔
                           </span>
                         </div>
@@ -274,7 +274,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-t from-[#124B70] via-[#124B70]/60 to-transparent opacity-95" />
               <div className="absolute bottom-10 left-10 right-10 space-y-4">
                 <div className="text-[#ffdb71] text-[9px] font-black uppercase tracking-widest opacity-90">Seeker Story</div>
-                <h3 className="text-2xl font-serif font-bold text-white">The Milgan Family</h3>
+                <h3 className="text-2xl font-serif font-bold text-white">The Blessings</h3>
                 <p className="text-white/80 text-sm italic">"Milgan has become the heart of our kitchen. Every meal feels like a blessing."</p>
               </div>
             </a>
@@ -342,7 +342,7 @@ export default function Home() {
                   "When we set out to create Milgen Foods, our goal wasn't to build a business, but to restore a sacred ritual. In a world chasing speed and volume, real purity has become a forgotten whisper."
                 </p>
                 <p>
-                  "Every batch of our food products carries the warmth of the gentle wood fire, the patience of traditional methods, and the purity of natural ingredients. We believe that food is not just sustenance—it is a vessel of life-force, or <em>Prana</em>."
+                  "Every batch of our food products carries the warmth of the gentle slow cooking, the patience of traditional methods, and the purity of natural ingredients. We believe that food is not just sustenance—it is a vessel of life-force, or <em>Prana</em>."
                 </p>
                 <p>
                   "Thank you for welcoming Milgen Foods into your kitchen and trusting us with your health. We promise to never compromise on the slow, honest methods that make our food products a source of true nourishment."

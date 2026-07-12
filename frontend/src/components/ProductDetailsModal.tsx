@@ -257,7 +257,7 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
                     <div className="h-px flex-1 bg-white/10" />
                   </div>
                   <p className="text-foreground/70 text-[11px] leading-relaxed font-serif italic">
-                    Clarified using pure Cow Butter, infused with traditional elements during slow wood-fire cooking to enrich aroma, shelf-life, and wellness:
+                    Clarified using pure Cow Butter, infused with traditional elements during slow cooking to enrich aroma, shelf-life, and wellness:
                   </p>
                   <div className="grid grid-cols-2 gap-2">
                     {[

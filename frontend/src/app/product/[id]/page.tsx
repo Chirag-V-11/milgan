@@ -274,7 +274,7 @@ export default function ProductDetails() {
                   <div className="h-px flex-1 bg-[#124B70]/10" />
                 </div>
                 <p className="text-[#124B70]/80 text-xs leading-relaxed font-serif italic">
-                  Clarified using pure Cow Butter, infused with traditional elements during slow wood-fire cooking to enrich aroma, shelf-life, and wellness:
+                  Clarified using pure Cow Butter, infused with traditional elements during slow cooking to enrich aroma, shelf-life, and wellness:
                 </p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {[

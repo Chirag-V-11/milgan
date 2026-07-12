@@ -28,6 +28,7 @@
   --animate-shimmer: shimmer 2s linear infinite;
   --animate-spin-slow: spin 12s linear infinite;
   --animate-pop: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+  --animate-glow: glow 2s ease-in-out infinite;
 }
 
 @layer base {
@@ -83,6 +84,15 @@
 
   to {
     background-position: -200% 0;
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(253, 206, 71, 0.4), 0 0 15px rgba(253, 206, 71, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(253, 206, 71, 0.7), 0 0 28px rgba(253, 206, 71, 0.4);
   }
 }
 

@@ -21,7 +21,7 @@ export default function VideoSection() {
     {
       icon: '🌿',
       label: 'Pure Ingredients',
-      description: 'From indigenous grass-fed Gir & Sahiwal cows',
+      description: 'From indigenous grass-fed Natural cows',
     },
     {
       icon: '🔥',
