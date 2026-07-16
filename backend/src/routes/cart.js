@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const supabase = require('../config/supabase');
+const { authenticatedRateLimiter } = require('../middleware/rateLimiter');
+const { validate } = require('../middleware/validator');
+
+router.use(authenticatedRateLimiter);
 
 // Helper to extract user ID from request headers
 const getUserId = (req) => {
@@ -68,16 +72,13 @@ router.get('/', async (req, res) => {
 });
 
 // 2. POST /api/cart - Add item to cart
-router.post('/', async (req, res) => {
+router.post('/', validate('cartAdd'), async (req, res) => {
   try {
     const userId = getUserId(req);
     const { productId, size, quantity } = req.body;
 
     if (!userId) {
       return res.status(400).json({ error: 'User authorization ID is required' });
-    }
-    if (!productId || !size || !quantity) {
-      return res.status(400).json({ error: 'Missing required parameters' });
     }
 
     // Check if the item already exists in the cart
@@ -116,16 +117,13 @@ router.post('/', async (req, res) => {
 });
 
 // 3. PUT /api/cart - Update item quantity directly
-router.put('/', async (req, res) => {
+router.put('/', validate('cartUpdate'), async (req, res) => {
   try {
     const userId = getUserId(req);
     const { productId, size, quantity } = req.body;
 
     if (!userId) {
       return res.status(400).json({ error: 'User authorization ID is required' });
-    }
-    if (!productId || !size || quantity === undefined) {
-      return res.status(400).json({ error: 'Missing required parameters' });
     }
 
     if (quantity <= 0) {

@@ -1,14 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const nodemailer = require('nodemailer');
+const { validate } = require('../middleware/validator');
 
-router.post('/', async (req, res) => {
+router.post('/', validate('inquiry'), async (req, res) => {
   try {
     const { name, contact, inquiry, userEmail } = req.body;
-
-    if (!name || !contact || !inquiry) {
-      return res.status(400).json({ error: 'Missing required fields' });
-    }
 
     console.log(`\n========================================\n[NEW INQUIRY RECEIVED]\nName: ${name}\nContact: ${contact}\nMessage: ${inquiry}\n========================================\n`);
 

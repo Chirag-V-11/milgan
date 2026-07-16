@@ -9,16 +9,13 @@ interface Particle {
 }
 
 export default function Preloader() {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const [progress, setProgress] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
   const [particles, setParticles] = useState<Particle[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Show preloader on every page refresh to guarantee visibility
-    setIsVisible(true);
-
     // Add scroll lock class to body
     document.body.classList.add('antigravity-scroll-lock');
 

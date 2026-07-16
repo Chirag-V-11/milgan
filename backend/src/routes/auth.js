@@ -6,8 +6,11 @@ const supabase = require('../config/supabase');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-luxury-secret-key';
 
+const { authRateLimiter } = require('../middleware/rateLimiter');
+const { validate } = require('../middleware/validator');
+
 // Admin Login
-router.post('/login', async (req, res) => {
+router.post('/login', authRateLimiter, validate('adminLogin'), async (req, res) => {
   try {
     const { email, password } = req.body;
     console.log(`Login attempt for: ${email}`);

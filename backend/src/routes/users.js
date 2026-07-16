@@ -3,6 +3,8 @@ const router = express.Router();
 const supabase = require('../config/supabase');
 const bcrypt = require('bcryptjs');
 const { sendOTPEmail } = require('../services/emailService');
+const { authRateLimiter } = require('../middleware/rateLimiter');
+const { validate } = require('../middleware/validator');
 
 // In-memory stores for OTPs
 const otpStore = new Map(); // email -> { otp, expiresAt, type }
@@ -10,7 +12,7 @@ const pendingRegistrationStore = new Map(); // email -> { otp, expiresAt, data }
 
 
 // Forgot Password - Send OTP
-router.post('/forgot-password', async (req, res) => {
+router.post('/forgot-password', authRateLimiter, validate('forgotPassword'), async (req, res) => {
   try {
     let { email } = req.body;
     if (!email) {
@@ -47,7 +49,7 @@ router.post('/forgot-password', async (req, res) => {
 });
 
 // Reset Password - Verify OTP and Save
-router.post('/reset-password', async (req, res) => {
+router.post('/reset-password', authRateLimiter, validate('resetPassword'), async (req, res) => {
   try {
     let { email, otp, newPassword } = req.body;
     if (!email || !otp || !newPassword) {
@@ -93,7 +95,7 @@ router.post('/reset-password', async (req, res) => {
 });
 
 // Register OTP - Send OTP for Registration
-router.post('/register-otp', async (req, res) => {
+router.post('/register-otp', authRateLimiter, validate('registerOtp'), async (req, res) => {
   try {
     let { name, phone, email, address, password } = req.body;
     if (!name || !phone || !email || !address || !password) {
@@ -135,7 +137,7 @@ router.post('/register-otp', async (req, res) => {
 });
 
 // Verify Register OTP - Save Profile
-router.post('/verify-register-otp', async (req, res) => {
+router.post('/verify-register-otp', authRateLimiter, validate('verifyRegisterOtp'), async (req, res) => {
   try {
     let { email, otp } = req.body;
     if (!email || !otp) {
@@ -177,7 +179,7 @@ router.post('/verify-register-otp', async (req, res) => {
 });
 
 // Create or Get User Profile (Registration) - Legacy direct register
-router.post('/profile', async (req, res) => {
+router.post('/profile', authRateLimiter, validate('registerOtp'), async (req, res) => {
   try {
     let { name, phone, email, address, password } = req.body;
 
@@ -227,7 +229,7 @@ router.post('/profile', async (req, res) => {
 });
 
 // Secure Login with Phone and Password
-router.post('/login', async (req, res) => {
+router.post('/login', authRateLimiter, validate('userLogin'), async (req, res) => {
   try {
     const { phone, password } = req.body;
     console.log(`[Login Attempt] Phone: ${phone}`);

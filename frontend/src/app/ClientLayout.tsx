@@ -38,13 +38,17 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   return (
     <>
       <Preloader />
-      {!isAdminPage && !isPreloading && <Navbar />}
-      {!isAdminPage && <CartDrawer />}
-      {!isAdminPage && <FloatingSocials />}
+      {!isAdminPage && !isPreloading && (
+        <>
+          <Navbar />
+          <CartDrawer />
+          <FloatingSocials />
+        </>
+      )}
       <main className={`${mainClassName || ""} relative z-10`}>
         {children}
       </main>
-      {!isAdminPage && (
+      {!isAdminPage && !isPreloading && (
         <>
           {/* 7. MODERN EDITORIAL FOOTER */}
           <footer className="pt-24 pb-20 relative overflow-hidden bg-transparent">

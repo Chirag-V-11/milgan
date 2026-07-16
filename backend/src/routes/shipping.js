@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const supabase = require('../config/supabase');
+const { authenticatedRateLimiter } = require('../middleware/rateLimiter');
+const { validate } = require('../middleware/validator');
 
-/**
- * @route   POST /api/shipping/upload
- * @desc    Add new customer order in database
- * @access  Public
- */
-router.post('/upload', async (req, res) => {
+router.use(authenticatedRateLimiter);
+
+// 1. POST /api/shipping/upload
+router.post('/upload', validate('orderUpload'), async (req, res) => {
   try {
     const orderData = req.body;
     
@@ -146,12 +146,8 @@ router.get('/orders', async (req, res) => {
   }
 });
 
-/**
- * @route   PUT /api/shipping/orders/:id/status
- * @desc    Update order status
- * @access  Public
- */
-router.put('/orders/:id/status', async (req, res) => {
+// 3. PUT /api/shipping/orders/:id/status
+router.put('/orders/:id/status', validate('orderStatusUpdate'), async (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body;

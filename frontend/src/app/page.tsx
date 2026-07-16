@@ -42,16 +42,21 @@ export default function Home() {
   }, []);
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setScrollY(window.scrollY);
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = (window.scrollY / totalHeight) * 100;
-      setScrollProgress(progress);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const progress = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0;
+          setScrollProgress(progress);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     const fetchProducts = async () => {
       try {
@@ -77,6 +82,41 @@ export default function Home() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  if (loading) {
+    return (
+      <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#fdce47] select-none">
+        <div className="flex flex-col items-center space-y-6 max-w-xs text-center animate-in fade-in duration-700">
+          {/* Logo Container */}
+          <div className="relative w-36 h-36 flex items-center justify-center">
+            <img
+              src="/image/milgan logo-1.png"
+              alt="Milgan Logo"
+              width={112}
+              height={112}
+              className="w-28 h-28 object-contain animate-pulse duration-[1500ms]"
+              style={{ filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }}
+            />
+            {/* Spinning Golden Aura */}
+            <div className="absolute inset-0 rounded-full border-2 border-dashed border-[#124B70]/30 animate-spin" style={{ animationDuration: '10s' }} />
+          </div>
+
+          {/* Loading status */}
+          <div className="space-y-3">
+            <div className="flex justify-center">
+              <div className="w-10 h-10 rounded-full border-4 border-[#124B70]/10 border-t-[#124B70] animate-spin" />
+            </div>
+            <p className="text-[#124B70] font-serif italic text-base font-bold tracking-wide">
+              Culturing Vedic Purity...
+            </p>
+            <p className="text-[#124B70]/60 text-[9px] uppercase tracking-[0.2em]">
+              Invoking the sanctuary
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-transparent text-[#124B70] font-sans selection:bg-[#124B70] selection:text-[#fce389] overflow-x-clip scroll-smooth relative">
 
@@ -100,6 +140,8 @@ export default function Home() {
               <img
                 src="/image/milgan logo-1.png"
                 alt="Milgan Logo"
+                width={320}
+                height={320}
                 className="block sm:hidden w-full max-w-[20rem] min-[375px]:max-w-[23rem] object-contain select-none animate-in fade-in zoom-in duration-700"
                 style={{ filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }}
               />
@@ -107,6 +149,8 @@ export default function Home() {
               <img
                 src="/image/milgan side logo-2.png"
                 alt="Milgan Kannada Logo"
+                width={768}
+                height={256}
                 className="hidden sm:block w-full max-w-[44rem] sm:max-w-[48rem] object-contain select-none animate-in fade-in duration-1000"
                 style={{ filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }}
               />

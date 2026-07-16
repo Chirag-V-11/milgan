@@ -2,9 +2,11 @@ const express = require('express');
 const router = express.Router();
 const supabase = require('../config/supabase');
 const authMiddleware = require('../middleware/auth');
+const { publicRateLimiter } = require('../middleware/rateLimiter');
+const { validate } = require('../middleware/validator');
 
 // Get all products
-router.get('/', async (req, res) => {
+router.get('/', publicRateLimiter, async (req, res) => {
   try {
     const { data, error } = await supabase
       .from('products')
@@ -19,7 +21,7 @@ router.get('/', async (req, res) => {
 });
 
 // Get product by ID
-router.get('/:id', async (req, res) => {
+router.get('/:id', publicRateLimiter, async (req, res) => {
   try {
     const { id } = req.params;
     const { data, error } = await supabase
@@ -41,13 +43,9 @@ router.get('/:id', async (req, res) => {
 });
 
 // Add a new product (Protected)
-router.post('/', authMiddleware, async (req, res) => {
+router.post('/', authMiddleware, validate('productSave'), async (req, res) => {
   try {
     const { name, description, image_url, quantity_options, amazon_url, blinkit_url } = req.body;
-
-    if (!name || !quantity_options) {
-      return res.status(400).json({ error: 'Name and quantity options are required' });
-    }
 
     const { data, error } = await supabase
       .from('products')
@@ -64,7 +62,7 @@ router.post('/', authMiddleware, async (req, res) => {
 });
 
 // Update an existing product (Protected)
-router.put('/:id', authMiddleware, async (req, res) => {
+router.put('/:id', authMiddleware, validate('productSave'), async (req, res) => {
   try {
     const { id } = req.params;
     const { name, description, image_url, quantity_options, amazon_url, blinkit_url } = req.body;
