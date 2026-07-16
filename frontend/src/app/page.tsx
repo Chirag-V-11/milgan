@@ -75,47 +75,15 @@ export default function Home() {
         console.error("Failed to fetch products:", error);
       } finally {
         setLoading(false);
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new Event('milgan-products-loaded'));
+        }
       }
     };
 
     fetchProducts();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  if (loading) {
-    return (
-      <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#fdce47] select-none">
-        <div className="flex flex-col items-center space-y-6 max-w-xs text-center animate-in fade-in duration-700">
-          {/* Logo Container */}
-          <div className="relative w-36 h-36 flex items-center justify-center">
-            <img
-              src="/image/milgan logo-1.png"
-              alt="Milgan Logo"
-              width={112}
-              height={112}
-              className="w-28 h-28 object-contain animate-pulse duration-[1500ms]"
-              style={{ filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }}
-            />
-            {/* Spinning Golden Aura */}
-            <div className="absolute inset-0 rounded-full border-2 border-dashed border-[#124B70]/30 animate-spin" style={{ animationDuration: '10s' }} />
-          </div>
-
-          {/* Loading status */}
-          <div className="space-y-3">
-            <div className="flex justify-center">
-              <div className="w-10 h-10 rounded-full border-4 border-[#124B70]/10 border-t-[#124B70] animate-spin" />
-            </div>
-            <p className="text-[#124B70] font-serif italic text-base font-bold tracking-wide">
-              Culturing Vedic Purity...
-            </p>
-            <p className="text-[#124B70]/60 text-[9px] uppercase tracking-[0.2em]">
-              Invoking the sanctuary
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-transparent text-[#124B70] font-sans selection:bg-[#124B70] selection:text-[#fce389] overflow-x-clip scroll-smooth relative">

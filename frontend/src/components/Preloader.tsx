@@ -164,22 +164,22 @@ export default function Preloader() {
         {/* Logo Container with Liquid Morph & Shimmer Reveal */}
         <div className="relative w-44 h-44 flex items-center justify-center preloader-logo-morph shine-effect">
           <img
-            src="/image/milgan logo-0.png"
+            src="/image/milgan logo-1.png"
             alt="Milgan Logo"
-            className="w-full h-full object-contain"
+            className="w-32 h-32 object-contain"
             style={{ filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }}
           />
         </div>
 
-        {/* Elegant Progress Text Counter */}
-        {/* <div className="absolute bottom-6 flex flex-col items-center gap-1">
-          <span className="text-[10px] font-black tracking-[0.4em] text-white/40 uppercase">
-            Sanctuary Loading
-          </span>
-          <span className="text-xs font-mono font-bold text-white/80 tracking-wider">
-            {progress}%
-          </span>
-        </div> */}
+        {/* Elegant Progress & Status Text */}
+        <div className="absolute bottom-[-100px] flex flex-col items-center space-y-2 text-center w-[250px]">
+          <p className="text-[#124B70] font-serif italic text-base font-bold tracking-wide">
+            Culturing Vedic Purity...
+          </p>
+          <p className="text-[#124B70]/60 text-[9px] uppercase tracking-[0.2em] font-sans">
+            Invoking the sanctuary
+          </p>
+        </div>
 
       </div>
 

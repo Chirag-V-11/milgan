@@ -23,11 +23,35 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   }, [isAdminPage]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsPreloading(false);
-    }, 1500);
-    return () => clearTimeout(timer);
-  }, []);
+    if (isHomePage) {
+      const startTime = Date.now();
+      const minDuration = 1500;
+
+      const handleLoaded = () => {
+        const elapsed = Date.now() - startTime;
+        const remaining = Math.max(0, minDuration - elapsed);
+        setTimeout(() => {
+          setIsPreloading(false);
+        }, remaining);
+      };
+
+      window.addEventListener('milgan-products-loaded', handleLoaded);
+
+      const fallbackTimer = setTimeout(() => {
+        setIsPreloading(false);
+      }, 5000);
+
+      return () => {
+        window.removeEventListener('milgan-products-loaded', handleLoaded);
+        clearTimeout(fallbackTimer);
+      };
+    } else {
+      const timer = setTimeout(() => {
+        setIsPreloading(false);
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [isHomePage]);
 
   // Apply pt-24 top padding to non-admin, non-home pages to push their content below the fixed navbar.
   // Home page starts at y=0 so the full-screen hero section gradient extends behind the floating navbar.
