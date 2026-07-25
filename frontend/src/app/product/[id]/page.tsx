@@ -135,7 +135,7 @@ export default function ProductDetails() {
       city: checkoutData.city,
       pincode: checkoutData.pincode,
       state: checkoutData.state,
-      declaredValue: String(totalPrice),
+      declaredValue: totalPrice,
       weight: String(itemWeight),
       packages: totalPackages,
       description: itemText,

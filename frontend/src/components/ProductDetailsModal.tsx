@@ -112,7 +112,7 @@ export default function ProductDetailsModal({ product, isOpen, onClose }: Produc
       city: checkoutData.city,
       pincode: checkoutData.pincode,
       state: checkoutData.state,
-      declaredValue: String(totalPrice),
+      declaredValue: totalPrice,
       weight: String(itemWeight),
       packages: totalPackages,
       description: itemText,

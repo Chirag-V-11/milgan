@@ -44,7 +44,7 @@ const schemas = {
     state: { type: 'string', required: true, minLength: 2, maxLength: 100 },
     description: { type: 'string', required: true, minLength: 2, maxLength: 500 },
     declaredValue: { type: 'number', required: true, min: 0 },
-    paymentMethod: { type: 'string', required: true, enum: ['COD', 'UPI', 'WhatsApp', 'whatsapp', 'cod', 'upi', 'WhatsApp Order'] },
+    paymentMethod: { type: 'string', required: true, minLength: 2, maxLength: 100 },
     weight: { type: 'string', required: false, maxLength: 20 },
     packages: { type: 'number', required: false, min: 1 }
   },
@@ -136,20 +136,27 @@ function validate(schemaName) {
           errors.push(`Field '${key}' must be a valid UUID`);
         }
       } else if (rules.type === 'number') {
-        if (typeof val !== 'number') {
+        let num = val;
+        if (typeof val === 'string') {
+          num = Number(val);
+        }
+        if (typeof num !== 'number' || isNaN(num)) {
           errors.push(`Field '${key}' must be a number`);
           continue;
         }
 
-        if (rules.integer && !Number.isInteger(val)) {
+        if (rules.integer && !Number.isInteger(num)) {
           errors.push(`Field '${key}' must be an integer`);
         }
-        if (rules.min !== undefined && val < rules.min) {
+        if (rules.min !== undefined && num < rules.min) {
           errors.push(`Field '${key}' must be at least ${rules.min}`);
         }
-        if (rules.max !== undefined && val > rules.max) {
+        if (rules.max !== undefined && num > rules.max) {
           errors.push(`Field '${key}' cannot exceed ${rules.max}`);
         }
+        
+        // Coerce back to requested body data
+        data[key] = num;
       } else if (rules.type === 'object') {
         if (typeof val !== 'object' || val === null) {
           errors.push(`Field '${key}' must be an object or array`);

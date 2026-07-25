@@ -38,7 +38,7 @@ export default function CartDrawer() {
       city: checkoutData.city,
       pincode: checkoutData.pincode,
       state: checkoutData.state,
-      declaredValue: String(cartTotal),
+      declaredValue: cartTotal,
       weight: String((cart.reduce((sum, item) => sum + item.quantity, 0) * 0.5).toFixed(1)),
       packages: cart.reduce((sum, item) => sum + item.quantity, 0),
       description: orderItems,
