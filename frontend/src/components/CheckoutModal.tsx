@@ -198,7 +198,7 @@ export default function CheckoutModal({
   const labelClass = "block text-[9px] font-black uppercase tracking-widest text-white/50 mb-1.5";
 
   const modalContent = (
-    <div className="fixed inset-0 w-screen h-screen z-[99999] flex items-center justify-center p-4 font-sans">
+    <div className="fixed inset-0 w-screen h-[100dvh] z-[99999] flex items-center justify-center p-2 sm:p-4 font-sans">
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/70 backdrop-blur-md"
@@ -206,7 +206,7 @@ export default function CheckoutModal({
       />
 
       {/* Modal Card */}
-      <div className="relative w-full max-w-lg bg-[#1a1828] border border-white/10 rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_30px_80px_rgba(0,0,0,0.6)] overflow-hidden animate-in zoom-in-95 fade-in duration-300 max-h-[88vh] md:max-h-[95vh] flex flex-col">
+      <div className="relative w-full max-w-lg bg-[#1a1828] border border-white/10 rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_30px_80px_rgba(0,0,0,0.6)] overflow-hidden animate-in zoom-in-95 fade-in duration-300 max-h-[88vh] md:max-h-[95vh] flex flex-col mobile-keyboard-friendly-modal">
 
         {/* Ambient glow */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-80 h-40 bg-[#fdce47]/10 rounded-full blur-3xl pointer-events-none" />
