@@ -206,20 +206,20 @@ export default function CheckoutModal({
       />
 
       {/* Modal Card */}
-      <div className="relative w-full max-w-lg bg-[#1a1828] border border-white/10 rounded-[2.5rem] shadow-[0_30px_80px_rgba(0,0,0,0.6)] overflow-hidden animate-in zoom-in-95 fade-in duration-300 max-h-[95vh] flex flex-col">
+      <div className="relative w-full max-w-lg bg-[#1a1828] border border-white/10 rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_30px_80px_rgba(0,0,0,0.6)] overflow-hidden animate-in zoom-in-95 fade-in duration-300 max-h-[88vh] md:max-h-[95vh] flex flex-col">
 
         {/* Ambient glow */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-80 h-40 bg-[#fdce47]/10 rounded-full blur-3xl pointer-events-none" />
 
         {/* Header */}
-        <div className="relative p-6 border-b border-white/8 flex items-center justify-between flex-shrink-0">
+        <div className="relative p-4 sm:p-6 border-b border-white/8 flex items-center justify-between flex-shrink-0">
           <div className="space-y-0.5">
-            <h2 className="text-lg font-serif font-bold text-white">
+            <h2 className="text-base sm:text-lg font-serif font-bold text-white">
               {step === 'address' && '📦 Delivery Details'}
               {step === 'payment' && '💳 UPI Payment Curation'}
               {step === 'success' && '✅ Order Confirmed!'}
             </h2>
-            <p className="text-[9px] font-black uppercase tracking-widest text-white/40">
+            <p className="text-[8px] sm:text-[9px] font-black uppercase tracking-widest text-white/40">
               {step === 'address' && 'Where should we deliver your order?'}
               {step === 'payment' && 'Scan & pay to complete transaction'}
               {step === 'success' && 'Your order is placed and on its way!'}
@@ -227,7 +227,7 @@ export default function CheckoutModal({
           </div>
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/5 border border-white/10 text-white/50 hover:text-white hover:bg-white/10 flex items-center justify-center text-sm transition-all"
+            className="absolute top-3 sm:top-4 right-3 sm:right-4 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/5 border border-white/10 text-white/50 hover:text-white hover:bg-white/10 flex items-center justify-center text-xs sm:text-sm transition-all"
           >
             ✕
           </button>
@@ -238,7 +238,7 @@ export default function CheckoutModal({
 
           {/* ── STEP 1: ADDRESS FORM ── */}
           {step === 'address' && (
-            <div className="p-6 space-y-4">
+            <div className="p-4 sm:p-6 space-y-3 sm:space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="col-span-2 sm:col-span-1">
                   <label className={labelClass}>Full Name</label>
@@ -353,7 +353,7 @@ export default function CheckoutModal({
 
           {/* ── STEP 2: UPI PAYMENT ── */}
           {step === 'payment' && (
-            <div className="p-6 space-y-6 flex flex-col items-center">
+            <div className="p-4 sm:p-6 space-y-4 sm:space-y-6 flex flex-col items-center">
               <div className="text-center space-y-1">
                 <span className="text-[9px] font-black text-amber-500 uppercase tracking-widest">Milgan Premium Butter & Ghee</span>
                 <h3 className="text-xs font-serif italic text-white/70">Scan the QR code below via any UPI App (GPay, PhonePe, Paytm)</h3>
@@ -432,7 +432,7 @@ export default function CheckoutModal({
 
           {/* ── STEP 4: SUCCESS ── */}
           {step === 'success' && (
-            <div className="p-8 text-center space-y-6">
+            <div className="p-5 sm:p-8 text-center space-y-4 sm:space-y-6">
               <div className="relative mx-auto w-24 h-24">
                 <div className="absolute inset-0 bg-[#fdce47]/20 rounded-full animate-ping" />
                 <div className="relative w-24 h-24 bg-[#fdce47]/15 border border-[#fdce47]/40 rounded-full flex items-center justify-center text-4xl">
@@ -473,7 +473,7 @@ export default function CheckoutModal({
 
         {/* Footer actions */}
         {step === 'address' && (
-          <div className="p-6 border-t border-white/8 flex-shrink-0">
+          <div className="p-4 sm:p-6 border-t border-white/8 flex-shrink-0">
             <button
               onClick={handleConfirmWhatsAppOrder}
               disabled={isBooking}
@@ -492,7 +492,7 @@ export default function CheckoutModal({
         )}
 
         {step === 'payment' && (
-          <div className="p-6 border-t border-white/8 flex-shrink-0 flex gap-3">
+          <div className="p-4 sm:p-6 border-t border-white/8 flex-shrink-0 flex gap-3">
             <button
               onClick={() => { setStep('address'); setFormError(''); }}
               className="px-6 py-4 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-xl font-black text-[10px] uppercase tracking-[0.2em] transition-all"
