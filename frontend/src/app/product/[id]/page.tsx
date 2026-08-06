@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useUser } from '@/context/UserContext';
 import { useCart } from '@/context/CartContext';
 import UserAuthModal from '@/components/UserAuthModal';
@@ -207,12 +208,15 @@ export default function ProductDetails() {
           <div className="space-y-4 lg:sticky lg:top-28">
             {/* Main Image */}
             <div className="relative aspect-square rounded-[2.5rem] overflow-hidden bg-white/80 shadow-[0_20px_50px_rgba(18,75,112,0.06)] border border-[#124B70]/10 group">
-              <img
+              <Image
                 key={activeImage}
                 src={allImages[activeImage]}
                 alt={product.name}
-                className="w-full h-full object-cover transition-all duration-[1500ms] group-hover:scale-105"
-                onError={(e) => { e.currentTarget.src = "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=1000"; }}
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover transition-all duration-[1500ms] group-hover:scale-105"
+                priority
+                onError={(e) => { (e.currentTarget as HTMLImageElement).src = "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=1000"; }}
               />
               {/* Discount badge */}
               {selectedSize?.discountPercentage > 0 && (
@@ -237,7 +241,9 @@ export default function ProductDetails() {
                     onClick={() => setActiveImage(idx)}
                     className={`flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 transition-all duration-300 ${activeImage === idx ? 'border-[#124B70] scale-105 shadow-md' : 'border-transparent opacity-60 hover:opacity-95'}`}
                   >
-                    <img src={url} alt={`${product.name} ${idx + 1}`} className="w-full h-full object-cover" />
+                    <div className="relative w-full h-full">
+                      <Image src={url} alt={`${product.name} ${idx + 1}`} fill sizes="80px" className="object-cover" loading="lazy" />
+                    </div>
                   </button>
                 ))}
               </div>

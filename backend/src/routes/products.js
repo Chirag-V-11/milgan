@@ -14,6 +14,8 @@ router.get('/', publicRateLimiter, async (req, res) => {
       .order('created_at', { ascending: false });
 
     if (error) throw error;
+    // Cache for 60s, allow stale content for up to 5 mins while revalidating in background
+    res.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
     res.status(200).json(data);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -36,6 +38,8 @@ router.get('/:id', publicRateLimiter, async (req, res) => {
       }
       throw error;
     }
+    // Cache individual product for 2 mins, allow stale for 10 mins
+    res.set('Cache-Control', 'public, s-maxage=120, stale-while-revalidate=600');
     res.status(200).json(data);
   } catch (error) {
     res.status(500).json({ error: error.message });

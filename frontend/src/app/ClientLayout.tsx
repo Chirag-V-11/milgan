@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import Navbar from '../components/Navbar';
 import Preloader from '../components/Preloader';
 import CartDrawer from '../components/CartDrawer';
@@ -25,7 +26,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   useEffect(() => {
     if (isHomePage) {
       const startTime = Date.now();
-      const minDuration = 1500;
+      const minDuration = 800;
 
       const handleLoaded = () => {
         const elapsed = Date.now() - startTime;
@@ -39,7 +40,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
       const fallbackTimer = setTimeout(() => {
         setIsPreloading(false);
-      }, 5000);
+      }, 3500);
 
       return () => {
         window.removeEventListener('milgan-products-loaded', handleLoaded);
@@ -80,7 +81,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
               <div className="grid grid-cols-1 md:grid-cols-3 gap-24 md:gap-12">
                 <div className="md:col-span-2 space-y-12 text-center md:text-left">
                   <div className="flex items-center justify-center md:justify-start gap-4">
-                    <img src="/image/milgan logo-0.png" alt="Milgan logo" className="w-12 h-12 object-contain" style={{ filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }} />
+                    <Image src="/image/milgan logo-0.png" alt="Milgan logo" width={48} height={48} className="w-12 h-12 object-contain" loading="lazy" style={{ filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }} />
                     <h2 className="text-4xl font-serif font-bold text-[#124B70] tracking-tighter">Milgan.</h2>
                   </div>
                   <p className="text-[#124B70]/70 text-xl font-serif italic max-w-sm mx-auto md:mx-0 leading-relaxed">"Honoring the ancient Vedic rhythms of preparation to deliver the purest natural ghee in the world."</p>
@@ -104,16 +105,22 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
           </footer>
           <div className="fixed bottom-0 left-0 right-0 flex justify-center pointer-events-none z-50">
             {/* Mobile View Signature */}
-            <img
+            <Image
               src="/image/Milgan bottom mobile.png"
               alt="Milgan Sanctuary Signature Mobile"
+              width={960}
+              height={200}
+              loading="lazy"
               className="block sm:hidden w-full max-w-[60rem] h-auto object-contain select-none opacity-100"
               style={{ filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }}
             />
             {/* Desktop View Signature */}
-            <img
+            <Image
               src="/image/Milgan bottom.png"
               alt="Milgan Sanctuary Signature"
+              width={1200}
+              height={200}
+              loading="lazy"
               className="hidden sm:block w-full max-w-[60rem] sm:max-w-[60rem] md:max-w-[75rem] h-auto object-contain select-none opacity-100"
               style={{ filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }}
             />

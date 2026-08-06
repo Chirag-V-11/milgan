@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import VideoSection from '@/components/VideoSection';
 import { getApiUrl } from '@/config/api';
 
@@ -61,7 +62,7 @@ export default function Home() {
     const fetchProducts = async () => {
       try {
         const apiBase = getApiUrl();
-        const response = await fetch(`${apiBase}/api/products?t=${Date.now()}`);
+        const response = await fetch(`${apiBase}/api/products`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -105,20 +106,22 @@ export default function Home() {
           <div className="space-y-4 md:space-y-6 flex flex-col items-center">
             <div className="flex items-center justify-center">
               {/* Mobile View Logo */}
-              <img
+              <Image
                 src="/image/milgan logo-1.png"
                 alt="Milgan Logo"
                 width={320}
                 height={320}
+                priority
                 className="block sm:hidden w-full max-w-[20rem] min-[375px]:max-w-[23rem] object-contain select-none animate-in fade-in zoom-in duration-700"
                 style={{ filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }}
               />
               {/* Desktop View Logo */}
-              <img
+              <Image
                 src="/image/milgan side logo-2.png"
                 alt="Milgan Kannada Logo"
                 width={768}
                 height={256}
+                priority
                 className="hidden sm:block w-full max-w-[44rem] sm:max-w-[48rem] object-contain select-none animate-in fade-in duration-1000"
                 style={{ filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }}
               />
@@ -175,10 +178,13 @@ export default function Home() {
                     <div
                       className="block relative aspect-[4/5] rounded-[2.5rem] md:rounded-[3rem] overflow-hidden bg-white/10 backdrop-blur-md border border-[#124B70]/10 shadow-[0_8px_30px_rgba(18,75,112,0.05)] group-hover:shadow-[0_15px_40px_rgba(18,75,112,0.15)] transition-all duration-700 w-full"
                     >
-                      <img
+                      <Image
                         src={product.image_url || product.image || "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=1000"}
-                        className="w-full h-full object-cover transition-transform duration-[2000ms] group-hover:scale-110"
+                        fill
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        className="object-cover transition-transform duration-[2000ms] group-hover:scale-110"
                         alt={product.name}
+                        loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#124B70]/90 via-[#124B70]/30 to-transparent opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
@@ -233,6 +239,7 @@ export default function Home() {
                       loop
                       muted
                       playsInline
+                      preload="none"
                       className="w-full h-full object-cover transition-transform duration-[2000ms] group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#124B70]/80 via-[#124B70]/20 to-transparent opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
@@ -282,7 +289,7 @@ export default function Home() {
               rel="noopener noreferrer"
               className="block break-inside-avoid relative aspect-[4/5] rounded-[2.5rem] overflow-hidden group border border-[#124B70]/10 shadow-[0_8px_30px_rgba(18,75,112,0.05)] hover:scale-[1.01] transition-all duration-500"
             >
-              <img src="/image/milgan-family.jpg" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt="Customer" />
+              <Image src="/image/milgan-family.jpg" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-1000 group-hover:scale-105" alt="Customer" loading="lazy" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#124B70] via-[#124B70]/60 to-transparent opacity-95" />
               <div className="absolute bottom-10 left-10 right-10 space-y-4">
                 <div className="text-[#ffdb71] text-[9px] font-black uppercase tracking-widest opacity-90">Seeker Story</div>
@@ -314,10 +321,13 @@ export default function Home() {
               </div>
             </div>
             <div className="break-inside-avoid relative aspect-square rounded-[2.5rem] overflow-hidden flex items-center justify-center">
-              <img
+              <Image
                 src="/image/milgan logo-0.png"
+                width={200}
+                height={200}
                 className="w-1/2 h-1/2 object-contain"
                 alt="Process"
+                loading="lazy"
                 style={{ filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }}
               />
             </div>
@@ -331,10 +341,13 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 items-center">
             {/* Founder Image Card */}
             <div className="relative aspect-square md:aspect-[4/5] rounded-[3rem] overflow-hidden border border-[#124B70]/10 shadow-[0_10px_40px_rgba(18,75,112,0.1)] group order-last lg:order-first bg-white/10 backdrop-blur-sm">
-              <img
+              <Image
                 src="/image/founder.png"
-                className="w-full h-full object-contain object-top transition-transform duration-[3000ms] group-hover:scale-105"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-contain object-top transition-transform duration-[3000ms] group-hover:scale-105"
                 alt="Anand, Founder of Milgen"
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-[#124B70]/5 opacity-0 group-hover:opacity-100 transition-all duration-1000" />
               <div className="absolute bottom-8 left-8 right-8 p-6 bg-[#124B70]/90 backdrop-blur-xl border border-[#124B70]/20 rounded-3xl text-center shadow-[0_8px_30px_rgba(18,75,112,0.15)]">

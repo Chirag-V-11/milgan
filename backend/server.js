@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const https = require('https');
 // Supabase Client
 const supabase = require('./src/config/supabase');
 
@@ -43,4 +44,22 @@ app.get('/', (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+
+  // Keep-alive ping: prevents Render free-tier cold starts by pinging self every 10 minutes
+  const RENDER_URL = process.env.RENDER_EXTERNAL_URL || 'https://milgan-backend.onrender.com';
+  const isProduction = process.env.RENDER || process.env.NODE_ENV === 'production';
+  if (isProduction) {
+    setInterval(() => {
+      https.get(`${RENDER_URL}/`, (res) => {
+        console.log(`[Keep-alive] Pinged ${RENDER_URL} — status: ${res.statusCode}`);
+        res.resume(); // discard response body
+      }).on('error', (err) => {
+        console.warn(`[Keep-alive] Ping failed: ${err.message}`);
+      });
+    }, 10 * 60 * 1000); // every 10 minutes
+    console.log(`[Keep-alive] Ping scheduled every 10 minutes → ${RENDER_URL}`);
+  }
+});
+
