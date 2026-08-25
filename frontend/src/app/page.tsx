@@ -113,7 +113,7 @@ export default function Home() {
                 height={320}
                 priority
                 className="block sm:hidden w-full max-w-[20rem] min-[375px]:max-w-[23rem] object-contain select-none animate-in fade-in zoom-in duration-700"
-                style={{ filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }}
+                style={{ height: "auto", filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }}
               />
               {/* Desktop View Logo */}
               <Image
@@ -123,7 +123,7 @@ export default function Home() {
                 height={256}
                 priority
                 className="hidden sm:block w-full max-w-[44rem] sm:max-w-[48rem] object-contain select-none animate-in fade-in duration-1000"
-                style={{ filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }}
+                style={{ height: "auto", filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }}
               />
             </div>
 

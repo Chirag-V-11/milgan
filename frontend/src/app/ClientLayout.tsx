@@ -112,7 +112,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
               height={200}
               loading="lazy"
               className="block sm:hidden w-full max-w-[60rem] h-auto object-contain select-none opacity-100"
-              style={{ filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }}
+              style={{ height: "auto", filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }}
             />
             {/* Desktop View Signature */}
             <Image
@@ -122,7 +122,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
               height={200}
               loading="lazy"
               className="hidden sm:block w-full max-w-[60rem] sm:max-w-[60rem] md:max-w-[75rem] h-auto object-contain select-none opacity-100"
-              style={{ filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }}
+              style={{ height: "auto", filter: "brightness(0) saturate(100%) invert(19%) sepia(21%) saturate(2377%) hue-rotate(193deg) brightness(93%) contrast(92%)" }}
             />
           </div>
         </>
