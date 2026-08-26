@@ -64,7 +64,7 @@ const Navbar = () => {
 
           {/* User Portal & Hamburger */}
           <div className="flex items-center gap-3 md:gap-6">
-            
+
             {/* Cart Toggle Button */}
             <button
               onClick={() => setIsOpen(true)}
@@ -84,7 +84,7 @@ const Navbar = () => {
             <div className="hidden md:block" ref={dropdownRef}>
               {user ? (
                 <div className="relative">
-                  <button 
+                  <button
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                     className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-[0.25em] text-[#124B70] hover:opacity-80 transition-opacity focus:outline-none"
                   >
@@ -93,11 +93,11 @@ const Navbar = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                     </svg>
                   </button>
-                  
+
                   {isDropdownOpen && (
                     <div className="absolute right-0 mt-3.5 w-44 bg-white/95 backdrop-blur-2xl border border-[#124B70]/15 rounded-2xl shadow-xl py-2 z-[110] animate-in fade-in slide-in-from-top-2 duration-200">
-                      <Link 
-                        href="/orders" 
+                      <Link
+                        href="/orders"
                         onClick={() => setIsDropdownOpen(false)}
                         className="flex items-center gap-2.5 px-4 py-3 text-[10px] font-black uppercase tracking-wider text-[#124B70] hover:bg-[#124B70]/5 transition-colors"
                       >
@@ -106,7 +106,7 @@ const Navbar = () => {
                         </svg>
                         Your Orders
                       </Link>
-                      <button 
+                      <button
                         onClick={() => { logout(); setIsDropdownOpen(false); }}
                         className="w-full text-left flex items-center gap-2.5 px-4 py-3 text-[10px] font-black uppercase tracking-wider text-red-500 hover:bg-red-500/5 transition-colors border-t border-[#124B70]/5"
                       >
@@ -156,16 +156,16 @@ const Navbar = () => {
             {user ? (
               <div className="flex flex-col items-center gap-4 w-full">
                 <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#124B70]/60">Hi, {user.name}</span>
-                
+
                 <div className="w-full flex flex-col items-center bg-[#124B70]/5 rounded-2xl py-2 space-y-2">
-                  <Link 
-                    href="/orders" 
+                  <Link
+                    href="/orders"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="text-[10px] font-black uppercase tracking-[0.25em] text-[#124B70] py-2 w-full text-center hover:bg-[#124B70]/5 rounded-xl transition-colors"
                   >
                     Your Orders
                   </Link>
-                  <button 
+                  <button
                     onClick={() => { logout(); setIsMobileMenuOpen(false); }}
                     className="text-[10px] font-black uppercase tracking-[0.25em] text-red-500 py-2 border-t border-[#124B70]/10 w-3/4 text-center hover:bg-red-500/5 rounded-xl transition-colors"
                   >

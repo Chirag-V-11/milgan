@@ -7,6 +7,7 @@ import Navbar from '../components/Navbar';
 import Preloader from '../components/Preloader';
 import CartDrawer from '../components/CartDrawer';
 import FloatingSocials from '../components/FloatingSocials';
+import PromoPopupCard from '../components/PromoPopupCard';
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -68,6 +69,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
           <Navbar />
           <CartDrawer />
           <FloatingSocials />
+          <PromoPopupCard delayMs={300} />
         </>
       )}
       <main className={`${mainClassName || ""} relative z-10`}>
