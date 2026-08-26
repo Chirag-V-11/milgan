@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import VideoSection from '@/components/VideoSection';
+import ProductDetailsModal from '@/components/ProductDetailsModal';
+import PromoPopupCard from '@/components/PromoPopupCard';
 import { getApiUrl } from '@/config/api';
 
 const galleryItems = [
@@ -33,6 +35,9 @@ export default function Home() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedGalleryItem, setSelectedGalleryItem] = useState<any | null>(null);
+  const [selectedProductForModal, setSelectedProductForModal] = useState<any | null>(null);
+  const [isProductModalOpen, setIsProductModalOpen] = useState(false);
+  const [isPromoOpen, setIsPromoOpen] = useState(false);
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -60,25 +65,50 @@ export default function Home() {
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     const fetchProducts = async () => {
+      let loadedProducts = [];
       try {
         const apiBase = getApiUrl();
-        const response = await fetch(`${apiBase}/api/products`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+        const response = await fetch(`${apiBase}/api/products`).catch(() => null);
+        if (response && response.ok) {
+          const contentType = response.headers.get("content-type");
+          if (contentType && contentType.includes("application/json")) {
+            loadedProducts = await response.json();
+          }
         }
-        const contentType = response.headers.get("content-type");
-        if (!contentType || !contentType.includes("application/json")) {
-          throw new TypeError("Expected JSON response from server but received HTML or another format.");
-        }
-        const data = await response.json();
-        setProducts(data);
       } catch (error) {
-        console.error("Failed to fetch products:", error);
-      } finally {
-        setLoading(false);
-        if (typeof window !== 'undefined') {
-          window.dispatchEvent(new Event('milgan-products-loaded'));
-        }
+        console.warn("Failed to fetch products from backend API, using fallback:", error);
+      }
+
+      if (!loadedProducts || loadedProducts.length === 0) {
+        loadedProducts = [
+          {
+            id: 1,
+            name: "Pure A2 Vedic Bilona Cow Ghee",
+            category: "Vedic Bilona",
+            description: "Traditional hand-churned A2 cow ghee crafted from grass-fed Gir cow milk using the ancient wooden bilona process.",
+            price: 1450,
+            image_url: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=1000",
+            quantity_options: [
+              { size: "250ml", baseCost: 450, discountPercentage: 5 },
+              { size: "500ml", baseCost: 850, discountPercentage: 10 },
+              { size: "1L", baseCost: 1600, discountPercentage: 12 }
+            ]
+          }
+        ];
+      }
+
+      setProducts(loadedProducts);
+      setLoading(false);
+
+      if (loadedProducts && loadedProducts.length > 0) {
+        setTimeout(() => {
+          setSelectedProductForModal(loadedProducts[0]);
+          setIsPromoOpen(true);
+        }, 1200);
+      }
+
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new Event('milgan-products-loaded'));
       }
     };
 
@@ -170,9 +200,12 @@ export default function Home() {
                 const finalPrice = discount > 0 ? Math.round(baseCost * (1 - discount / 100)) : baseCost;
 
                 return (
-                  <Link
+                  <div
                     key={product.id}
-                    href={`/product/${product.id}`}
+                    onClick={() => {
+                      setSelectedProductForModal(product);
+                      setIsProductModalOpen(true);
+                    }}
                     className="group transition-all duration-700 cursor-pointer flex flex-col justify-between w-full"
                   >
                     <div
@@ -200,9 +233,17 @@ export default function Home() {
                           <p className="text-white/80 text-xs md:text-sm italic line-clamp-2">{product.description}</p>
                         </div>
                         <div className="pt-4 border-t border-white/20">
-                          <span className="inline-block px-5 py-2.5 bg-[#fdce47] text-[#124B70] rounded-full text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all duration-300 hover:scale-105 animate-glow">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedProductForModal(product);
+                              setIsProductModalOpen(true);
+                            }}
+                            className="inline-block px-5 py-2.5 bg-[#fdce47] text-[#124B70] rounded-full text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all duration-300 hover:scale-105 animate-glow"
+                          >
                             Buy Now ➔
-                          </span>
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -210,7 +251,7 @@ export default function Home() {
                     <div className="mt-6 text-center">
                       <span className="text-lg font-serif italic font-bold text-[#124B70] tracking-wide">Liquid Gold Captured</span>
                     </div>
-                  </Link>
+                  </div>
                 );
               })}
             </div>
@@ -485,6 +526,28 @@ export default function Home() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Custom Promo Image Popup Card */}
+      {selectedProductForModal && (
+        <PromoPopupCard
+          product={selectedProductForModal}
+          isOpen={isPromoOpen}
+          onClose={() => setIsPromoOpen(false)}
+          onBuyNow={() => {
+            setIsPromoOpen(false);
+            setIsProductModalOpen(true);
+          }}
+        />
+      )}
+
+      {/* Detailed Product Purchase & Size Selector Modal */}
+      {selectedProductForModal && (
+        <ProductDetailsModal
+          product={selectedProductForModal}
+          isOpen={isProductModalOpen}
+          onClose={() => setIsProductModalOpen(false)}
+        />
       )}
     </div>
   );
