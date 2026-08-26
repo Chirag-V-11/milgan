@@ -156,7 +156,7 @@ export default function ProductDetails() {
         setBookingSuccess(true);
 
         const orderItemText = activeItems.map((item: any, idx: number) => `${idx + 1}. *${product.name}* (${item.opt.size})\n   Qty: ${item.qty} x ₹${item.optFinal} = ₹${item.optFinal * item.qty}`).join('\n');
-        const message = `*NEW ORDER RECEIVED - MILGEN FOODS* 🌾🏺\n\n*Customer Details:*\n👤 Name: ${checkoutData.name}\n📞 Phone: ${checkoutData.phone}\n📍 Address: ${checkoutData.address}, ${checkoutData.city} - ${checkoutData.pincode}, ${checkoutData.state}\n📧 Email: ${checkoutData.email || 'N/A'}\n\n*Order Curation:*\n${orderItemText}\n\n--------------------------------\n💰 *Subtotal:* ₹${totalPrice}\n🚚 *Shipping:* FREE\n💵 *Total Payable:* ₹${totalPrice}\n\nThank you for choosing Milgen Foods!`;
+        const message = `*NEW ORDER RECEIVED - MILGAN FOODS* 🌾🏺\n\n*Customer Details:*\n👤 Name: ${checkoutData.name}\n📞 Phone: ${checkoutData.phone}\n📍 Address: ${checkoutData.address}, ${checkoutData.city} - ${checkoutData.pincode}, ${checkoutData.state}\n📧 Email: ${checkoutData.email || 'N/A'}\n\n*Order Curation:*\n${orderItemText}\n\n--------------------------------\n💰 *Subtotal:* ₹${totalPrice}\n🚚 *Shipping:* FREE\n💵 *Total Payable:* ₹${totalPrice}\n\nThank you for choosing Milgan Foods!`;
 
         const text = encodeURIComponent(message);
         window.open(`https://wa.me/918123282168?text=${text}`, '_blank');

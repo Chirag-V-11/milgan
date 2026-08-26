@@ -74,7 +74,7 @@ export default function CartDrawer() {
             ? 'WhatsApp Order'
             : `UPI (UTR: ${checkoutData.transactionId || 'N/A'})`;
 
-          const message = `*NEW ORDER RECEIVED - MILGEN FOODS* 🌾🏺\n\n*Customer Details:*\n👤 Name: ${checkoutData.name}\n📞 Phone: ${checkoutData.phone}\n📍 Address: ${checkoutData.address}, ${checkoutData.city} - ${checkoutData.pincode}, ${checkoutData.state}\n📧 Email: ${checkoutData.email || 'N/A'}\n\n*Order Curation:*\n${orderItemsText}\n\n--------------------------------\n💰 *Subtotal:* ₹${cartTotal}\n🚚 *Shipping:* FREE\n💳 *Payment:* ${paymentDetails}\n💵 *Total Payable:* ₹${cartTotal}\n\nThank you for choosing Milgen Foods!`;
+          const message = `*NEW ORDER RECEIVED - MILGAN FOODS* 🌾🏺\n\n*Customer Details:*\n👤 Name: ${checkoutData.name}\n📞 Phone: ${checkoutData.phone}\n📍 Address: ${checkoutData.address}, ${checkoutData.city} - ${checkoutData.pincode}, ${checkoutData.state}\n📧 Email: ${checkoutData.email || 'N/A'}\n\n*Order Curation:*\n${orderItemsText}\n\n--------------------------------\n💰 *Subtotal:* ₹${cartTotal}\n🚚 *Shipping:* FREE\n💳 *Payment:* ${paymentDetails}\n💵 *Total Payable:* ₹${cartTotal}\n\nThank you for choosing Milgan Foods!`;
 
           const text = encodeURIComponent(message);
           window.open(`https://wa.me/918123282168?text=${text}`, '_blank');

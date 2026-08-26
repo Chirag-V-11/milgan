@@ -346,13 +346,13 @@ export default function Home() {
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-contain object-top transition-transform duration-[3000ms] group-hover:scale-105"
-                alt="Anand, Founder of Milgen"
+                alt="Anand, Founder of Milgan"
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-[#124B70]/5 opacity-0 group-hover:opacity-100 transition-all duration-1000" />
               <div className="absolute bottom-8 left-8 right-8 p-6 bg-[#124B70]/90 backdrop-blur-xl border border-[#124B70]/20 rounded-3xl text-center shadow-[0_8px_30px_rgba(18,75,112,0.15)]">
                 <span className="text-[10px] font-black text-[#ffdb71] uppercase tracking-[0.4em]">Anand</span>
-                <p className="text-white/80 font-serif italic text-xs mt-1">Founder, Milgen Foods</p>
+                <p className="text-white/80 font-serif italic text-xs mt-1">Founder, Milgan Foods</p>
               </div>
             </div>
 
@@ -364,13 +364,13 @@ export default function Home() {
               </div>
               <div className="space-y-6 text-[#124B70]/80 text-base md:text-lg font-serif leading-relaxed text-left md:text-justify">
                 <p>
-                  "When we set out to create Milgen Foods, our goal wasn't to build a business, but to restore a sacred ritual. In a world chasing speed and volume, real purity has become a forgotten whisper."
+                  "When we set out to create Milgan Foods, our goal wasn't to build a business, but to restore a sacred ritual. In a world chasing speed and volume, real purity has become a forgotten whisper."
                 </p>
                 <p>
                   "Every batch of our food products carries the warmth of the gentle slow cooking, the patience of traditional methods, and the purity of natural ingredients. We believe that food is not just sustenance—it is a vessel of life-force, or <em>Prana</em>."
                 </p>
                 <p>
-                  "Thank you for welcoming Milgen Foods into your kitchen and trusting us with your health. We promise to never compromise on the slow, honest methods that make our food products a source of true nourishment."
+                  "Thank you for welcoming Milgan Foods into your kitchen and trusting us with your health. We promise to never compromise on the slow, honest methods that make our food products a source of true nourishment."
                 </p>
               </div>
 
